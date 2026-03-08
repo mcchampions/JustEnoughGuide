@@ -38,6 +38,34 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
+import com.balugaq.jeg.api.objects.collection.Pair;
+import com.balugaq.jeg.api.objects.enums.PatchScope;
+import com.balugaq.jeg.api.objects.enums.RecipeCompleteOpenMode;
+import com.balugaq.jeg.api.objects.events.GuideEvents;
+import com.balugaq.jeg.api.objects.events.PatchEvent;
+import com.balugaq.jeg.api.objects.events.RecipeCompleteEvents;
+import com.balugaq.jeg.api.recipe_complete.RecipeCompleteSession;
+import com.balugaq.jeg.api.recipe_complete.source.base.RecipeCompleteProvider;
+import com.balugaq.jeg.api.recipe_complete.source.base.Source;
+import com.balugaq.jeg.core.integrations.ItemPatchListener;
+import com.balugaq.jeg.core.integrations.justenoughguide.ShulkerBoxPlayerInventoryItemSeeker;
+import com.balugaq.jeg.implementation.JustEnoughGuide;
+import com.balugaq.jeg.implementation.items.ItemsSetup;
+import com.balugaq.jeg.implementation.option.RecipeCompleteOpenModeGuideOption;
+import com.balugaq.jeg.utils.GuideUtil;
+import com.balugaq.jeg.utils.KeyUtil;
+import com.balugaq.jeg.utils.Models;
+import com.balugaq.jeg.utils.ReflectionUtil;
+import com.balugaq.jeg.utils.StackUtils;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
+import io.github.thebusybiscuit.slimefun4.core.guide.GuideHistory;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.common.ChatColors;
+import lombok.SneakyThrows;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
+import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ClickAction;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import net.guizhanss.guizhanlib.minecraft.helper.inventory.ItemStackHelper;
 import org.bukkit.Keyed;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -344,14 +372,9 @@ public class RecipeCompletableListener implements ItemPatchListener {
                         boolean unordered = isUnordered(sf);
                         var session = RecipeCompleteSession.create(blockMenu, player, clickAction, slots, unordered, 1);
                         if (session == null) return false;
-                        for (SlimefunSource source : RecipeCompleteProvider.getSlimefunSources()) {
-                            // Strategy mode
-                            // Default strategy see {@link DefaultPlayerInventoryRecipeCompleteSlimefunSource}
-                            if (source.handleable(session)) {
-                                source.openGuide(session);
-                                break;
-                            }
-                        }
+                        RecipeCompleteProvider.getSlimefunSources().stream().findFirst().ifPresent(source ->
+                            source.openGuide(session)
+                        );
 
                         return false;
                     }
@@ -371,18 +394,12 @@ public class RecipeCompletableListener implements ItemPatchListener {
         addDispenserListening(p, block.getLocation());
     }
 
-    @SuppressWarnings("RedundantIfStatement")
     public static boolean isApplicable(SlimefunItem slimefunItem) {
         if (slimefunItem instanceof NotApplicable) {
             return false;
         }
 
-        if (NOT_APPLICABLE_ITEMS.contains(slimefunItem)) {
-            return false;
-        }
-
-        // No idea yet.
-        return true;
+        return !NOT_APPLICABLE_ITEMS.contains(slimefunItem);
     }
 
     public static boolean hasIngredientSlots(SlimefunItem slimefunItem) {
@@ -463,15 +480,10 @@ public class RecipeCompletableListener implements ItemPatchListener {
         ClickAction clickAction = new ClickAction(event.isRightClick(), event.isShiftClick());
         var session = RecipeCompleteSession.create(block, inventory, player, clickAction, DISPENSER_SLOTS, false, 1);
         if (session == null) return;
-        for (VanillaSource source : RecipeCompleteProvider.getVanillaSources()) {
-            // Strategy mode
-            // Default strategy see {@link DefaultPlayerInventoryRecipeCompleteVanillaSource}
-            if (source.handleable(session)) {
-                allowSelectingItemStackToRecipeComplete(player);
-                source.openGuide(session);
-                break;
-            }
-        }
+        RecipeCompleteProvider.getVanillaSources().stream().findFirst().ifPresent(source -> {
+            allowSelectingItemStackToRecipeComplete(player);
+            source.openGuide(session);
+        });
 
         event.setCancelled(true);
     }
