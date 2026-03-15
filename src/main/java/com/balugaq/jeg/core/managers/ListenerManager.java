@@ -50,6 +50,7 @@ import com.balugaq.jeg.core.listeners.RecipeCompletableListener;
 import com.balugaq.jeg.core.listeners.SearchReloadListener;
 import com.balugaq.jeg.core.listeners.SlimefunGuideOptionPatchFixListener;
 import com.balugaq.jeg.core.listeners.SlimefunIdPatchListener;
+import com.balugaq.jeg.core.listeners.SlimefunRegistryFinalizeListener;
 import com.balugaq.jeg.core.listeners.SpecialMenuFixListener;
 import com.balugaq.jeg.implementation.JustEnoughGuide;
 import com.balugaq.jeg.implementation.WatchdogHandler;
@@ -98,6 +99,7 @@ public class ListenerManager extends AbstractManager {
             listeners.add(new BundleListener());
         }
         listeners.add(new SlimefunGuideOptionPatchFixListener());
+        listeners.add(new SlimefunRegistryFinalizeListener());
     }
 
     public void registerListener(Listener listener) {

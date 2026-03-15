@@ -98,9 +98,9 @@ public class LogitechItemPatchListener implements ItemPatchListener {
             return;
         }
 
-        boolean isMachineStackable = LogitechIntegrationMain.isMachineStackable(sf);
-        boolean isGeneratorStackable = LogitechIntegrationMain.isGeneratorStackable(sf);
-        boolean isMaterialGeneratorStackable = LogitechIntegrationMain.isMaterialGeneratorStackable(sf);
+        boolean isMachineStackable = LogiTechIntegrationMain.isMachineStackable(sf);
+        boolean isGeneratorStackable = LogiTechIntegrationMain.isGeneratorStackable(sf);
+        boolean isMaterialGeneratorStackable = LogiTechIntegrationMain.isMaterialGeneratorStackable(sf);
         if (!isMachineStackable && !isGeneratorStackable && !isMaterialGeneratorStackable) {
             return;
         }

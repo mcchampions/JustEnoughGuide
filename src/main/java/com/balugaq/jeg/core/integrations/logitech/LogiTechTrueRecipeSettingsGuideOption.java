@@ -47,11 +47,11 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
  */
 @SuppressWarnings({"SameReturnValue"})
 @NullMarked
-public class LogitechTrueRecipeSettingsGuideOption extends AbstractItemSettingsGuideOption {
-    public static final LogitechTrueRecipeSettingsGuideOption instance = new LogitechTrueRecipeSettingsGuideOption();
+public class LogiTechTrueRecipeSettingsGuideOption extends AbstractItemSettingsGuideOption {
+    public static final LogiTechTrueRecipeSettingsGuideOption instance = new LogiTechTrueRecipeSettingsGuideOption();
     public static final ItemStack DEFAULT_ITEM = new ItemStack(Material.COBBLESTONE);
 
-    public static LogitechTrueRecipeSettingsGuideOption instance() {
+    public static LogiTechTrueRecipeSettingsGuideOption instance() {
         return instance;
     }
 

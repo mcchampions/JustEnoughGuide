@@ -48,10 +48,10 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
  */
 @SuppressWarnings({"SameReturnValue"})
 @NullMarked
-public class LogitechFalseRecipeSettingsGuideOption extends AbstractItemSettingsGuideOption {
-    public static final LogitechFalseRecipeSettingsGuideOption instance = new LogitechFalseRecipeSettingsGuideOption();
+public class LogiTechFalseRecipeSettingsGuideOption extends AbstractItemSettingsGuideOption {
+    public static final LogiTechFalseRecipeSettingsGuideOption instance = new LogiTechFalseRecipeSettingsGuideOption();
 
-    public static LogitechFalseRecipeSettingsGuideOption instance() {
+    public static LogiTechFalseRecipeSettingsGuideOption instance() {
         return instance;
     }
 

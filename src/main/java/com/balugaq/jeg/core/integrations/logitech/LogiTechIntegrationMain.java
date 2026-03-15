@@ -49,6 +49,13 @@ import com.balugaq.jeg.utils.ItemStackUtil;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.core.attributes.EnergyNetProvider;
 import io.github.thebusybiscuit.slimefun4.core.guide.options.SlimefunGuideSettings;
+import org.bukkit.inventory.RecipeChoice;
+import org.jspecify.annotations.NullMarked;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author balugaq
@@ -56,7 +63,7 @@ import io.github.thebusybiscuit.slimefun4.core.guide.options.SlimefunGuideSettin
  */
 @SuppressWarnings("DataFlowIssue")
 @NullMarked
-public class LogitechIntegrationMain implements Integration {
+public class LogiTechIntegrationMain implements Integration {
     // @formatter:off
     public static final int[] MANUAL_CRAFTER_INPUT_SLOTS = new int[] {
             0,  1,  2,  3,  4,  5,  6,  7,  8,
@@ -139,7 +146,7 @@ public class LogitechIntegrationMain implements Integration {
 
     @Override
     public String getHookPlugin() {
-        return "Logitech";
+        return "LogiTech";
     }
 
     @Override
@@ -269,9 +276,9 @@ public class LogitechIntegrationMain implements Integration {
 
             return switch (s.getId()) {
                 case "LOGITECH_TRUE_" ->
-                        AbstractItemSettingsGuideOption.generateChoices(LogitechTrueRecipeSettingsGuideOption.getItem(p), 1, 1, 1, 1);
+                        AbstractItemSettingsGuideOption.generateChoices(LogiTechTrueRecipeSettingsGuideOption.getItem(p), 1, 1, 1, 1);
                 case "LOGITECH_FALSE_" ->
-                        AbstractItemSettingsGuideOption.generateChoices(LogitechFalseRecipeSettingsGuideOption.getItems(p), 1, 1, 1, 1);
+                        AbstractItemSettingsGuideOption.generateChoices(LogiTechFalseRecipeSettingsGuideOption.getItems(p), 1, 1, 1, 1);
                 case "LOGITECH_LOGIC" -> LOGIC_ITEMS;
                 case "LOGITECH_NOLOGIC" -> NOLOGIC_ITEMS;
                 case "LOGITECH_UNIQUE" -> UNIQUE_ITEMS;
@@ -279,8 +286,8 @@ public class LogitechIntegrationMain implements Integration {
                 default -> null;
             };
         });
-        SlimefunGuideSettings.addOption(LogitechTrueRecipeSettingsGuideOption.instance());
-        SlimefunGuideSettings.addOption(LogitechFalseRecipeSettingsGuideOption.instance());
+        SlimefunGuideSettings.addOption(LogiTechTrueRecipeSettingsGuideOption.instance());
+        SlimefunGuideSettings.addOption(LogiTechFalseRecipeSettingsGuideOption.instance());
     }
 
     public static void rrc(SlimefunItem slimefunItem, int[] slots) {
