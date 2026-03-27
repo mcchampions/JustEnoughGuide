@@ -56,7 +56,6 @@ import org.jspecify.annotations.NullMarked;
 import com.balugaq.jeg.api.interfaces.JEGSlimefunGuideImplementation;
 import com.balugaq.jeg.api.interfaces.NotDisplayInCheatMode;
 import com.balugaq.jeg.api.interfaces.NotDisplayInSurvivalMode;
-import com.balugaq.jeg.api.objects.Timer;
 import com.balugaq.jeg.api.objects.enums.FilterType;
 import com.balugaq.jeg.api.objects.enums.PatchScope;
 import com.balugaq.jeg.api.objects.events.GuideEvents;
@@ -67,7 +66,6 @@ import com.balugaq.jeg.utils.EventUtil;
 import com.balugaq.jeg.utils.GuideUtil;
 import com.balugaq.jeg.utils.ItemStackUtil;
 import com.balugaq.jeg.utils.ReflectionUtil;
-import com.balugaq.jeg.utils.SpecialMenuProvider;
 import com.balugaq.jeg.utils.clickhandler.OnClick;
 import com.balugaq.jeg.utils.clickhandler.OnDisplay;
 import com.balugaq.jeg.utils.formatter.Formats;
@@ -77,7 +75,6 @@ import com.github.houbb.pinyin.util.PinyinHelper;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
-import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.core.guide.GuideHistory;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuide;
 import io.github.thebusybiscuit.slimefun4.core.guide.SlimefunGuideImplementation;
@@ -271,8 +268,6 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
         }
 
         LOADED = true;
-        Debug.debug("Initializing Search Group...");
-        Timer.start();
         JustEnoughGuide.runLaterAsync(() -> {
             // Initialize asynchronously
             int i = 0;
@@ -825,19 +820,7 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                 }
             }
 
-            Debug.debug("Cache initialized.");
 
-            Timer.log();
-            Debug.debug("Search Group initialized.");
-            Debug.debug("Enabled items: " + ENABLED_ITEMS.size());
-            Debug.debug("Available items: " + AVAILABLE_ITEMS.size());
-            Debug.debug("Machine blocks cache: " + SPECIAL_CACHE.size());
-            Debug.debug("Shared cache: "
-                                + JustEnoughGuide.getConfigManager()
-                    .getSharedChars()
-                    .size());
-            Debug.debug("Cache 1 (Keywords): " + CACHE.size());
-            Debug.debug("Cache 2 (Display Recipes): " + CACHE2.size());
         }, 1L);
     }
     // @formatter:on
@@ -1208,19 +1191,15 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
             if (allMatched2 != null) {
                 machineMatched.addAll(allMatched2);
             }
-            Debug.debug("Name matched: " + nameMatched.size());
-            Debug.debug("Machine matched: " + machineMatched.size());
             merge.addAll(nameMatched);
             merge.addAll(machineMatched);
             if (this.re_search_when_cache_failed) {
                 if (nameMatched.isEmpty()) {
-                    Debug.debug("Re-searching item name by filters (Normal search)");
                     Set<SlimefunItem> clone = new HashSet<>(items);
                     Set<SlimefunItem> result = filterItems(FilterType.BY_ITEM_NAME, actualSearchTerm, pinyin, clone);
                     merge.addAll(result);
                 }
                 if (machineMatched.isEmpty()) {
-                    Debug.debug("Re-searching display item name by filters (Normal search)");
                     Set<SlimefunItem> clone = new HashSet<>(items);
                     Set<SlimefunItem> result =
                             filterItems(FilterType.BY_DISPLAY_ITEM_NAME, actualSearchTerm, pinyin, clone);

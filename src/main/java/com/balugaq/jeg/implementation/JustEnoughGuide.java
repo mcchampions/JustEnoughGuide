@@ -284,7 +284,6 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
      *         the debug message to log
      */
     public void debug(String message) {
-        Debug.debug(message);
     }
 
     public String getVersion() {

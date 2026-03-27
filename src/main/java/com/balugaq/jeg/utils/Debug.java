@@ -206,30 +206,15 @@ public class Debug {
         }
     }
 
-    public static void debug(Object... objects) {
-        debug(Arrays.toString(objects));
-    }
+    public static void debug(Object... objects) {}
 
-    public static void debug(String message) {
-        if (JustEnoughGuide.getConfigManager().isDebug()) {
-            log(debugPrefix + message);
-        }
-    }
+    public static void debug(String message) {}
 
-    public static void debug(Throwable e) {
-        debug(e.getMessage());
-        trace(e);
-    }
+    public static void debug(Throwable e) {}
 
-    public static void debug(@Nullable Object object) {
-        debug(object == null ? "null" : object.toString());
-    }
+    public static void debug(@Nullable Object object) {}
 
-    public static void debug(String... messages) {
-        for (String message : messages) {
-            debug(message);
-        }
-    }
+    public static void debug(String... messages) {}
 
     public static void sendMessage(Player player, Object... objects) {
         sendMessage(player, Arrays.toString(objects));

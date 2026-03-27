@@ -53,7 +53,6 @@ import com.balugaq.jeg.core.listeners.SlimefunIdPatchListener;
 import com.balugaq.jeg.core.listeners.SlimefunRegistryFinalizeListener;
 import com.balugaq.jeg.core.listeners.SpecialMenuFixListener;
 import com.balugaq.jeg.implementation.JustEnoughGuide;
-import com.balugaq.jeg.implementation.WatchdogHandler;
 import com.balugaq.jeg.utils.MinecraftVersion;
 
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
@@ -90,9 +89,6 @@ public class ListenerManager extends AbstractManager {
         }
         if (JustEnoughGuide.getConfigManager().isRecipeComplete()) {
             listeners.add(new RecipeCompletableListener());
-        }
-        if (JustEnoughGuide.getConfigManager().isDebug()) {
-            listeners.add(new WatchdogHandler());
         }
         if (JustEnoughGuide.getConfigManager().isDisabledBundleInteraction()
                 && MinecraftVersion.current().isAtLeast(MinecraftVersion.V1_17)) {

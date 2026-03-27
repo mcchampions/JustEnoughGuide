@@ -128,7 +128,6 @@ public class RTSSearchGroup extends FlexItemGroup {
                     // Get top inventory using ReflectionUtil to avoid casting InventoryView
                     openingInventory = (Inventory) ReflectionUtil.invokeMethod(view, "getTopInventory");
                 } catch (Exception e) {
-                    Debug.debug("Failed to get top inventory: " + e.getMessage());
                     return;
                 }
                 if (openingInventory instanceof AnvilInventory anvilInventory
@@ -160,9 +159,7 @@ public class RTSSearchGroup extends FlexItemGroup {
                                         "getRenameText"
                                 );
                             } catch (Exception e) {
-                                Debug.debug("Both AnvilView and AnvilInventory getRenameText() " +
-                                                    "methods are unavailable");
-                                return;
+                               return;
                             }
                         }
 

@@ -243,32 +243,7 @@ public class SpecialMenuProvider {
             }
         } catch (ClassNotFoundException ignored) {
         }
-
-        Debug.debug("SpecialMenuProvider initialized");
-        Debug.debug("ENABLED_FinalTECH: " + ENABLED_FinalTECH);
-        Debug.debug("ENABLED_Nexcavate: " + ENABLED_Nexcavate);
-        Debug.debug("ENABLED_InfinityExpansion: " + ENABLED_InfinityExpansion);
-        Debug.debug("ENABLED_ObsidianExpansion: " + ENABLED_ObsidianExpansion);
-        Debug.debug("-------------FinalTECH | FinalTECH-Changed-------------");
-        Debug.debug("methodRecipeItemGroup_getBySlimefunItem: " + (methodRecipeItemGroup_getBySlimefunItem != null));
-        Debug.debug("-------------Nexcavate------------");
-        Debug.debug("methodPlayerProgress_get: " + (methodPlayerProgress_get != null));
-        Debug.debug("methodNEGUI_openRecipe: " + (methodNEGUI_openRecipe != null));
-        Debug.debug("methodNEGUI_openResearchScreen: " + (methodNEGUI_openResearchScreen != null));
-        Debug.debug("methodNexcavateRegistry_getResearchMap: " + (methodNexcavateRegistry_getResearchMap != null));
-        Debug.debug("objectNexcavate_registry: " + (objectNexcavate_registry != null));
-        Debug.debug("-------------InfinityExpansion----------");
-        Debug.debug("methodInfinityGroup_openInfinityRecipe: " + (methodInfinityGroup_openInfinityRecipe != null));
-        Debug.debug("objectInfinityExpansion_INFINITY: " + (objectInfinityExpansion_INFINITY != null));
-        Debug.debug("constructorInfinityExpansion_BackEntry: " + (constructorInfinityExpansion_BackEntry != null));
-        Debug.debug("classInfinityExpansion_Singularity: " + (classInfinityExpansion_Singularity != null));
-        Debug.debug("-------------ObsidianExpansion----------");
-        Debug.debug("methodObsidianExpansion_openFORGERecipe: " + (methodObsidianExpansion_openFORGERecipe != null));
-        Debug.debug("constructorObsidianExpansion_BackEntry: " + (constructorObsidianExpansion_BackEntry != null));
-        Debug.debug("-------------Galactifun----------");
-        Debug.debug("objectGalactifun_ASSEMBLY_CATEGORY: " + (objectGalactifun_ASSEMBLY_CATEGORY != null));
-        Debug.debug("methodGalactifun_displayItem: " + (methodGalactifun_displayItem != null));
-    }
+}
 
     public static boolean isSpecialItem(SlimefunItem slimefunItem) {
         return isFinalTECHItem(slimefunItem)
@@ -359,24 +334,19 @@ public class SpecialMenuProvider {
                     getFinalTECHRecipeItemGroup(player, playerProfile, slimefunGuideMode, slimefunItem);
             if (flexItemGroup != null) {
                 flexItemGroup.open(player, playerProfile, slimefunGuideMode);
-                Debug.debug("Opened FinalTECH special menu");
                 return true;
             }
         } else if (isNexcavateItem(slimefunItem)) {
             openNexcavateGuide(player, slimefunItem);
-            Debug.debug("Opened Nexcavate special menu");
             return true;
         } else if (isInfinityItem(slimefunItem)) {
             openInfinityMenu(player, playerProfile, slimefunItem, slimefunGuideMode);
-            Debug.debug("Opened InfinityExpansion special menu");
             return true;
         } else if (isObsidianForgeItem(slimefunItem)) {
             openObsidianForgeMenu(player, playerProfile, slimefunItem, slimefunGuideMode);
-            Debug.debug("Opened ObsidianExpansion special menu");
             return true;
         } else if (isGalactifunItem(slimefunItem)) {
             openGalactifunMenu(player, playerProfile, slimefunItem, slimefunGuideMode);
-            Debug.debug("Opened Galactifun special menu");
             return true;
         }
         return false;

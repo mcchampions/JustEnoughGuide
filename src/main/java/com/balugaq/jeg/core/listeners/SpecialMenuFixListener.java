@@ -86,8 +86,7 @@ public class SpecialMenuFixListener implements Listener {
                         return;
                     }
                 } while (!queue.isEmpty());
-            } catch (Exception e) {
-                Debug.debug(e);
+            } catch (Exception ignored) {
             }
         }
     }

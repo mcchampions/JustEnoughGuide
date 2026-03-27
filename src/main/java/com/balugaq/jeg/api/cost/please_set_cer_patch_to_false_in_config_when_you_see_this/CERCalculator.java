@@ -102,14 +102,6 @@ public class CERCalculator {
                 machines.put(sf, wrapper);
             }
         }
-
-        if (JustEnoughGuide.getConfigManager().isDebug()) {
-            Debug.debug("[CER]");
-            Debug.debug("[CER] size: " + machines.size());
-            for (var entry : machines.entrySet()) {
-                Debug.debug("[CER]" + entry.getKey());
-            }
-        }
     }
 
     public static boolean cerable(SlimefunItem sf) {

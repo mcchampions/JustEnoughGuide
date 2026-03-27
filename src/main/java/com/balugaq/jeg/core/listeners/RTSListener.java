@@ -125,7 +125,6 @@ public class RTSListener implements Listener {
     @EventHandler
     public void onOpenRTS(RTSEvents.OpenRTSEvent event) {
         Player player = event.getPlayer();
-        Debug.debug("[RTS] Opening for " + player.getName());
         synchronized (openingPlayers) {
             openingPlayers.put(player, event.getGuideMode());
         }
@@ -169,7 +168,6 @@ public class RTSListener implements Listener {
     @EventHandler
     public void onRTS(RTSEvents.SearchTermChangeEvent event) {
         Player player = event.getPlayer();
-        Debug.debug("[RTS] Searching for " + player.getName());
         SlimefunGuideImplementation implementation = GuideUtil.getSlimefunGuide(event.getGuideMode());
         SearchGroup searchGroup = new SearchGroup(
                 implementation,
@@ -328,7 +326,6 @@ public class RTSListener implements Listener {
     @EventHandler
     public void onRTSPageChange(RTSEvents.PageChangeEvent event) {
         Player player = event.getPlayer();
-        Debug.debug("[RTS] Changing page for " + player.getName());
         int page = event.getNewPage();
         SearchGroup searchGroup = RTSSearchGroup.RTS_SEARCH_GROUPS.get(player);
         if (searchGroup != null) {

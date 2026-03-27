@@ -87,7 +87,6 @@ public abstract class MachineData {
     public static MachineData get(SlimefunItem sf) {
         String className = sf.getClass().getName();
         if (sf instanceof AContainer ac) {
-            Debug.debug(ItemStackHelper.getDisplayName(sf.getItem()) + " - " + className);
             if (className.equals("org.lins.mmmjjkx.rykenslimefuncustomizer.objects.customs.machine" +
                                          ".CustomRecipeMachine")) {
                 // RykenSlimefunCustomizer - CustomRecipeMachine

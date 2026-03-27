@@ -115,7 +115,6 @@ public class ReplacementCardAdapter {
                     .collect(Collectors.toList());
             adaptItem(sf, newRecipe);
         }
-        Debug.debug("Added " + (replacementMaps.size() - 1) + " adaptional recipes for " + ItemStackHelper.getDisplayName(sf.getItem()));
     }
 
     private static void adaptItem(SlimefunItem sf, List<ItemStack> resultList) {
