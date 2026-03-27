@@ -111,7 +111,7 @@ public class ListenerManager extends AbstractManager {
     public void load() {
         registerListeners();
         for (RegisteredListener rl : PlayerRightClickEvent.getHandlerList().getRegisteredListeners()) {
-            if (rl.getListener().getClass().getName().equals("io.github.thebusybiscuit.slimefun4.implementation.listeners.SlimefunGuideListener")) {
+            if ("io.github.thebusybiscuit.slimefun4.implementation.listeners.SlimefunGuideListener".equals(rl.getListener().getClass().getName())) {
                 slimefunGuideListener = rl;
                 PlayerRightClickEvent.getHandlerList().unregister(rl);
                 PlayerRightClickEvent.getHandlerList().bake();

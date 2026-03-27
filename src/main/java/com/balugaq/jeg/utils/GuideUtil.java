@@ -365,7 +365,7 @@ public final class GuideUtil {
             for (int s : b != null ? b.getBookMark(implementation, p) : format.getChars('C')) {
                 menu.addItem(
                         s,
-                        PatchScope.BookMark.patch(p, getBookMarkMenuButton()),
+                        PatchScope.BookMark.patch(p, BOOK_MARK_MENU_BUTTON),
                         (pl, slot, itemstack, action) -> EventUtil.callEvent(new GuideEvents.BookMarkButtonClickEvent(
                                         pl, itemstack, slot, action, menu, implementation))
                                 .ifSuccess(() -> {
@@ -398,7 +398,7 @@ public final class GuideUtil {
             for (int ss : b != null ? b.getItemMark(implementation, p) : format.getChars('c')) {
                 menu.addItem(
                         ss,
-                        PatchScope.ItemMark.patch(p, getItemMarkMenuButton()),
+                        PatchScope.ItemMark.patch(p, ITEM_MARK_MENU_BUTTON),
                         (pl, slot, itemstack, action) -> EventUtil.callEvent(new GuideEvents.ItemMarkButtonClickEvent(
                                         pl, itemstack, slot, action, menu, implementation))
                                 .ifSuccess(() -> {
@@ -422,7 +422,7 @@ public final class GuideUtil {
                 || clazz == LockedItemGroup.class
                 || clazz == SeasonalItemGroup.class
                 || itemGroup instanceof BookmarkRelocation
-                || clazz.getName().equalsIgnoreCase("me.voper.slimeframe.implementation.groups.ChildGroup")
+                || "me.voper.slimeframe.implementation.groups.ChildGroup".equalsIgnoreCase(clazz.getName())
                 || clazz.getName().endsWith("DummyItemGroup")
                 || clazz.getName().endsWith("SubGroup"));
     }
@@ -431,7 +431,7 @@ public final class GuideUtil {
         return ITEM_MARK_MENU_BUTTON;
     }
 
-    @SuppressWarnings({"deprecation"})
+    @SuppressWarnings("deprecation")
     @CallTimeSensitive(CallTimeSensitive.AfterIntegrationsLoaded)
     public static void addCerButton(ChestMenu menu, Player p, PlayerProfile profile, SlimefunItem machine,
                                     SlimefunGuideImplementation implementation, Format format) {
@@ -439,7 +439,7 @@ public final class GuideUtil {
             if (JustEnoughGuide.getConfigManager().isCerPatch()) {
                 if (CERCalculator.cerable(machine)) {
                     menu.addItem(
-                            ss, PatchScope.Cer.patch(p, getCerMenuButton()),
+                            ss, PatchScope.Cer.patch(p, CER_MENU_BUTTON),
                             (pl, slot, itemstack, action) -> EventUtil.callEvent(new GuideEvents.CerButtonClickEvent(pl, itemstack, slot, action, menu, implementation)).ifSuccess(() -> new CERRecipeGroup(implementation, pl, machine, MachineData.get(machine).wrap()).open(pl, profile, implementation.getMode()))
                     );
                 }
@@ -559,14 +559,14 @@ public final class GuideUtil {
                         if ("AdvancementsItemGroup".equals(sm)) {
                             continue;
                         }
-                        if (!(group instanceof SubItemGroup) && !sm.equals("DummyItemGroup")) {
+                        if (!(group instanceof SubItemGroup) && !"DummyItemGroup".equals(sm)) {
                             String key = group.getKey().getKey();
-                            if (sm.equals("SubGroup")) {
-                                if (!key.equals("infinity_cheat") && !key.equals("omc_forge_cheat")) {
+                            if ("SubGroup".equals(sm)) {
+                                if (!"infinity_cheat".equals(key) && !"omc_forge_cheat".equals(key)) {
                                     continue;
                                 }
                             }
-                            if (key.equals("momotech_final_")) {
+                            if ("momotech_final_".equals(key)) {
                                 continue;
                             }
                             specialGroups.add(group);

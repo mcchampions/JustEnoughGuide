@@ -62,12 +62,10 @@
     </pluginRepositories>
 
     <properties>
-        <SlimeAE-systemPath>C:\Users\11877\Documents\GitHub\JustEnoughGuide\lib\SlimeAE.jar</SlimeAE-systemPath>
-        <EMCTech-systemPath>C:\Users\11877\Documents\GitHub\JustEnoughGuide\lib\EMCTech.jar</EMCTech-systemPath>
-        <SlimeHUD-systemPath>C:\Users\11877\Documents\GitHub\JustEnoughGuide/lib\SlimeHUD-Build 16.jar</SlimeHUD-systemPath>
-        <NetworksExpansion-systemPath>C:\Users\11877\Documents\GitHub\JustEnoughGuide\lib\original-NetworksExpansion.jar</NetworksExpansion-systemPath>
-        <LogiTech-systemPath>C:\Users\11877\Documents\GitHub\JustEnoughGuide\lib\LogiTech.jar</LogiTech-systemPath>
-        <LogiTech1-systemPath>C:\Users\11877\Documents\GitHub\JustEnoughGuide\lib\original-LogiTech v1.0.3.jar</LogiTech1-systemPath>
+        <SlimeAE-systemPath>${basedir}\lib\SlimeAE.jar</SlimeAE-systemPath>
+        <EMCTech-systemPath>${basedir}\lib\EMCTech.jar</EMCTech-systemPath>
+        <SlimeHUD-systemPath>${basedir}\lib\SlimeHUD-Build 16.jar</SlimeHUD-systemPath>
+        <NetworksExpansion-systemPath>${basedir}\lib\original-NetworksExpansion.jar</NetworksExpansion-systemPath>
         <java.version>21</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -133,6 +131,10 @@
                                 <relocation>
                                     <pattern>com.tcoded.folialib</pattern>
                                     <shadedPattern>com.balugaq.jeg.libraries.folialib</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>io.github.bakedlibs.dough</pattern>
+                                    <shadedPattern>com.balugaq.jeg.libraries.dough</shadedPattern>
                                 </relocation>
                             </relocations>
                             <filters>
@@ -222,7 +224,12 @@
             <version>master-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.mcchampions.dough</groupId>
+            <artifactId>dough-api</artifactId>
+            <version>30706aa726</version>
+            <scope>compile</scope>
+        </dependency>
         <!-- Tools etc. -->
         <dependency>
             <groupId>org.bstats</groupId>
@@ -294,25 +301,6 @@
             <version>2.4.0</version>
             <scope>compile</scope>
         </dependency>
-
-        <!-- Special Menu Provider me.matl114.logitech.Utils.UtilClass.MenuClass.CustomMenu -->
-        <dependency>
-            <groupId>me.matl114</groupId>
-            <artifactId>LogiTech1</artifactId>
-            <version>1.0.3</version>
-            <scope>system</scope>
-            <systemPath>${LogiTech1-systemPath}</systemPath>
-        </dependency>
-
-        <!-- Special Menu Provider me.matl114.logitech.utils.UtilClass.MenuClass.CustomMenu -->
-        <dependency>
-            <groupId>me.matl114</groupId>
-            <artifactId>LogiTech</artifactId>
-            <version>1.0.4</version>
-            <scope>system</scope>
-            <systemPath>${LogiTech-systemPath}</systemPath>
-        </dependency>
-        
         
         <!-- Recipe Completable compatible -->
         <dependency>

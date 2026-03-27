@@ -64,38 +64,8 @@ public @interface NotDisplayInCheatMode {
             String className = group.getClass().getName();
 
             // @formatter:off
-            return className.equals("io.github.sefiraat.networks.slimefun.groups.DummyItemGroup")
-                    || className.startsWith("com.balugaq.netex.api.groups")
-                    || className.startsWith("io.github.ytdd9527.mobengineering.implementation.slimefun.groups")
-                    || className.startsWith("io.taraxacum.finaltech.core.group")
-                    || className.equals("me.matl114.logitech.utils.UtilClass.MenuClass.DummyItemGroup")
-                    || className.equals("me.matl114.logitech.Utils.UtilClass.MenuClass.DummyItemGroup")
-                    || className.equals("me.lucasgithuber.obsidianexpansion.utils.ObsidianForgeGroup")
-                    || className.equals("me.char321.nexcavate.slimefun.NEItemGroup")
-                    || className.equals("io.github.mooy1.infinityexpansion.categories.InfinityGroup")
-                    || className.equals("io.github.mooy1.infinityexpansion.infinitylib.groups.SubGroup")
-                    || className.equals("me.lucasgithuber.obsidianexpansion.infinitylib.groups.SubGroup")
-                    || className.equals("io.github.slimefunguguproject.bump.implementation.groups.AppraiseInfoGroup")
-                    || className.equals("dev.sefiraat.netheopoiesis.implementation.groups.DummyItemGroup")
-                    || className.equals("io.github.addoncommunity.galactifun.infinitylib.groups.SubGroup")
-                    || className.equals("io.github.sefiraat.crystamaehistoria.slimefun.itemgroups.DummyItemGroup")
-                    || className.equals(
-                            "io.github.slimefunguguproject.bump.libs.sefilib.slimefun.itemgroup.DummyItemGroup")
-                    || className.equals("me.voper.slimeframe.implementation.groups.ChildGroup")
-                    || className.equals("me.voper.slimeframe.implementation.groups.MasterGroup")
-                    || className.equals("io.github.sefiraat.emctech.slimefun.groups.DummyItemGroup")
-                    || className.equals("dev.sefiraat.sefilib.slimefun.itemgroup.DummyItemGroup")
-                    || (namespace.equals("logitech")
-                            && (key.equals("info") || key.equals("tools") || key.equals("tools-functional")))
-                    || (namespace.equals("nexcavate") && key.equals("dummy"))
-                    || (namespace.equals("slimefun") && key.equals("rick"))
-                    || (group instanceof SubItemGroup
-                                    && (namespace.equals("networks") && key.startsWith("ntw_expansion_"))
-                            || (namespace.equals("mobengineering")
-                                    && (key.startsWith("mod_engineering_") || key.startsWith("mob_engineering_")))
-                            || (namespace.equals("finaltech-changed") && (key.startsWith("_finaltech_")))
-                            || (namespace.equals("finaltech") && (key.startsWith("finaltech_")))
-                            || namespace.equals("danktech2"));
+            return "io.github.sefiraat.networks.slimefun.groups.DummyItemGroup".equals(className)||className.startsWith("com.balugaq.netex.api.groups")||className.startsWith("io.github.ytdd9527.mobengineering.implementation.slimefun.groups")||className.startsWith("io.taraxacum.finaltech.core.group")||"me.lucasgithuber.obsidianexpansion.utils.ObsidianForgeGroup".equals(className)||"me.char321.nexcavate.slimefun.NEItemGroup".equals(className)||"io.github.mooy1.infinityexpansion.categories.InfinityGroup".equals(className)||"io.github.mooy1.infinityexpansion.infinitylib.groups.SubGroup".equals(className)||"me.lucasgithuber.obsidianexpansion.infinitylib.groups.SubGroup".equals(className)||"io.github.slimefunguguproject.bump.implementation.groups.AppraiseInfoGroup".equals(className)||"dev.sefiraat.netheopoiesis.implementation.groups.DummyItemGroup".equals(className)||"io.github.addoncommunity.galactifun.infinitylib.groups.SubGroup".equals(className)||"io.github.sefiraat.crystamaehistoria.slimefun.itemgroups.DummyItemGroup".equals(className)||"io.github.slimefunguguproject.bump.libs.sefilib.slimefun.itemgroup.DummyItemGroup".equals(
+                            className)||"me.voper.slimeframe.implementation.groups.ChildGroup".equals(className)||"me.voper.slimeframe.implementation.groups.MasterGroup".equals(className)||"io.github.sefiraat.emctech.slimefun.groups.DummyItemGroup".equals(className)||"dev.sefiraat.sefilib.slimefun.itemgroup.DummyItemGroup".equals(className)||"nexcavate".equals(namespace)&&"dummy".equals(key)||"slimefun".equals(namespace)&&"rick".equals(key)||group instanceof SubItemGroup&&"networks".equals(namespace)&&key.startsWith("ntw_expansion_")||"mobengineering".equals(namespace)&&(key.startsWith("mod_engineering_")||key.startsWith("mob_engineering_"))||"finaltech-changed".equals(namespace)&&key.startsWith("_finaltech_")||"finaltech".equals(namespace)&&key.startsWith("finaltech_")||"danktech2".equals(namespace);
             // @formatter:on
         }
     }

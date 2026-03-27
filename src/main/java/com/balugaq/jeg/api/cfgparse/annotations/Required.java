@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
  * @since 1.9
  */
 @SuppressWarnings("unused")
-@Target({ElementType.FIELD})
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Required {
 }

@@ -56,7 +56,6 @@ import com.balugaq.jeg.core.integrations.infinitycompress.InfinityCompressIntegr
 import com.balugaq.jeg.core.integrations.infinityexpansion.InfinityExpansionIntegrationMain;
 import com.balugaq.jeg.core.integrations.infinityexpansion2.InfinityExpansion2IntegrationMain;
 import com.balugaq.jeg.core.integrations.justenoughguide.JustEnoughGuideIntegrationMain;
-import com.balugaq.jeg.core.integrations.logitech.LogiTechIntegrationMain;
 import com.balugaq.jeg.core.integrations.magicexpansion.MagicExpansionIntegrationMain;
 import com.balugaq.jeg.core.integrations.momotech.MomotechIntegrationMain;
 import com.balugaq.jeg.core.integrations.networks.NetworksIntegrationMain;
@@ -94,7 +93,7 @@ public class IntegrationManager extends AbstractManager {
     private final JavaPlugin plugin;
 
     @Deprecated
-    private final boolean hasRecipeCompletableWithGuide = false;
+    private static final boolean hasRecipeCompletableWithGuide = false;
 
     private boolean enabledAlchimiaVitae;
     private boolean enabledBedrockTechnology;
@@ -117,9 +116,6 @@ public class IntegrationManager extends AbstractManager {
     private boolean enabledInfinityExpansion;
     private boolean enabledInfinityExpansion2;
     private boolean enabledInfinityExpansion_Changed;
-    private boolean enabledLogiTech;
-    private boolean enabledLogiTech_1_0_3;
-    private boolean enabledLogiTech_1_0_4;
     private boolean enabledMagicExpansion;
     private boolean enabledMomotech;
     private boolean enabledNetworks;
@@ -168,9 +164,6 @@ public class IntegrationManager extends AbstractManager {
             this.enabledInfinityExpansion =
                     enabledInfinityExpansion_Changed || pm.isPluginEnabled("InfinityExpansion");
             this.enabledInfinityExpansion2 = pm.isPluginEnabled("InfinityExpansion2");
-            this.enabledLogiTech = pm.isPluginEnabled("LogiTech");
-            this.enabledLogiTech_1_0_3 = this.enabledLogiTech && classExists("me.matl114.logitech.SlimefunItem.AddSlimefunItems");
-            this.enabledLogiTech_1_0_4 = this.enabledLogiTech && classExists("me.matl114.logitech.core.AddSlimefunItems");
             this.enabledMagicExpansion = pm.isPluginEnabled("magicexpansion");
             this.enabledMomotech = pm.isPluginEnabled("Momotech") || pm.isPluginEnabled("Momotech-Changed");
             this.enabledNetworksExpansion = classExists("com.ytdd9527.networksexpansion.implementation.ExpansionItems");
@@ -209,7 +202,6 @@ public class IntegrationManager extends AbstractManager {
             addIntegration(enabledInfinityCompress, InfinityCompressIntegrationMain::new);
             addIntegration(enabledInfinityExpansion, InfinityExpansionIntegrationMain::new);
             addIntegration(enabledInfinityExpansion2, InfinityExpansion2IntegrationMain::new);
-            addIntegration(enabledLogiTech, LogiTechIntegrationMain::new);
             addIntegration(enabledMagicExpansion, MagicExpansionIntegrationMain::new);
             addIntegration(enabledMomotech, MomotechIntegrationMain::new);
             addIntegration(enabledNexcavate, NexcavateIntegrationMain::new);

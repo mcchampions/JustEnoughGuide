@@ -99,7 +99,7 @@ import net.md_5.bungee.api.chat.hover.content.Text;
  * @author balugaq
  * @since 2.0
  */
-@SuppressWarnings({"deprecation"})
+@SuppressWarnings("deprecation")
 @NullMarked
 public interface OnClick {
     // @formatter:off

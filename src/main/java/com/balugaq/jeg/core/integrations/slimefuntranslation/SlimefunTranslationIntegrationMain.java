@@ -46,9 +46,9 @@ import net.guizhanss.slimefuntranslation.api.SlimefunTranslationAPI;
  * @author balugaq
  * @since 1.9
  */
+@Getter
 @NullMarked
 public class SlimefunTranslationIntegrationMain implements Integration {
-    @Getter
     @Nullable
     private Boolean interceptSearch;
 

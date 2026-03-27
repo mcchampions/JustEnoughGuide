@@ -111,7 +111,7 @@ public class RecipeCompleteSession {
             session.player.sendMessage(ChatColors.color("&c[配方补全] 此次配方补全被取消，原因：" + (reason == null ? "未知" : reason)));
             return null;
         }
-        SESSIONS.put(session.getPlayer(), session);
+        SESSIONS.put(session.player, session);
         return event.getSession();
     }
 
@@ -192,9 +192,9 @@ public class RecipeCompleteSession {
     public void setExpired(boolean expired) {
         this.expired = expired;
         if (expired) {
-            SESSIONS.remove(getPlayer());
+            SESSIONS.remove(player);
         } else {
-            SESSIONS.put(getPlayer(), this);
+            SESSIONS.put(player, this);
         }
     }
 

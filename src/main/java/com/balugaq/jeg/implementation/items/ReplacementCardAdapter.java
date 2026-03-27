@@ -31,7 +31,6 @@ import com.balugaq.jeg.api.objects.annotations.CallTimeSensitive;
 import com.balugaq.jeg.core.managers.IntegrationManager;
 import com.balugaq.jeg.implementation.JustEnoughGuide;
 import com.balugaq.jeg.utils.Debug;
-import com.balugaq.jeg.utils.ReflectionUtil;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
@@ -42,7 +41,6 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -58,9 +56,6 @@ import java.util.stream.Collectors;
 @NullMarked
 public class ReplacementCardAdapter {
     private static final Map<String, List<ItemStack>> REPLACEMENT_CARDS = new HashMap<>();
-    private static @Nullable Object replaceCard;
-    private static @Nullable Method methodLogiTech_getReplaceCard_va;
-    private static @Nullable Method methodLogiTech_getReplaceCard_sf;
 
     public static void load() {
         IntegrationManager.scheduleRunPostRegistryFinalized(ReplacementCardAdapter::loadInternal);
@@ -75,40 +70,6 @@ public class ReplacementCardAdapter {
         addCard("LAVA_BUCKET", "_FINALTECH_LAVA_CARD");
         addCard("MILK_BUCKET", "_FINALTECH_MILK_CARD");
         addCard("FLINT_AND_STEEL", "_FINALTECH_FLINT_AND_STEEL_CARD");
-
-        try {
-            replaceCard = ReflectionUtil.getStaticValue(Class.forName("me.matl114.logitech.SlimefunItem.AddSlimefunItems"), "REPLACE_CARD");
-        } catch (ClassNotFoundException ignored) {
-            try {
-                replaceCard = ReflectionUtil.getStaticValue(Class.forName("me.matl114.logitech.core.AddSlimefunItems"), "REPLACE_CARD");
-            } catch (ClassNotFoundException ignored2) {
-            }
-        }
-
-        if (replaceCard != null) {
-            methodLogiTech_getReplaceCard_va = ReflectionUtil.getMethod(replaceCard.getClass(), "getReplaceCard", Material.class);
-            if (methodLogiTech_getReplaceCard_va != null) {
-                for (Material material : Material.values()) {
-                    if (!material.isItem() || material.getMaxStackSize() != 1) {
-                        continue;
-                    }
-
-                    addLogiTechCard(material);
-                }
-            }
-
-            methodLogiTech_getReplaceCard_sf = ReflectionUtil.getMethod(replaceCard.getClass(), "getReplaceCard", SlimefunItem.class);
-            if (methodLogiTech_getReplaceCard_sf != null) {
-                for (SlimefunItem sf : new ArrayList<>(Slimefun.getRegistry().getEnabledSlimefunItems())) {
-                    ItemStack item = sf.getItem();
-                    if (item == null || !item.getType().isItem() || item.getType().getMaxStackSize() != 1) {
-                        continue;
-                    }
-
-                    addLogiTechCard(sf);
-                }
-            }
-        }
 
         if (JustEnoughGuide.getConfigManager().isAdaptReplacementCards()) {
             for (SlimefunItem sf : new ArrayList<>(Slimefun.getRegistry().getEnabledSlimefunItems())) {
@@ -168,7 +129,7 @@ public class ReplacementCardAdapter {
             try {
                 newSf.load();
             } catch (IllegalStateException ex) {
-                if (ex.getMessage().equals("Asynchronous Recipe Add!")) {
+                if ("Asynchronous Recipe Add!".equals(ex.getMessage())) {
                     JustEnoughGuide.runNextTick(newSf::load);
                 }
             } catch (Exception ignored) {
@@ -176,32 +137,6 @@ public class ReplacementCardAdapter {
             newSf.setHidden(true);
             JustEnoughGuide.setAutomaticallyLoadItems(before);
             return;
-        }
-    }
-    
-    @Nullable
-    public static ItemStack getLogiTechReplacementCard(Material material) {
-        if (methodLogiTech_getReplaceCard_va == null) return null;
-        return (ItemStack) ReflectionUtil.invokeMethod(methodLogiTech_getReplaceCard_va, replaceCard, material);
-    }
-
-    @Nullable
-    public static ItemStack getLogiTechReplacementCard(SlimefunItem sf) {
-        if (methodLogiTech_getReplaceCard_sf == null) return null;
-        return (ItemStack) ReflectionUtil.invokeMethod(methodLogiTech_getReplaceCard_sf, replaceCard, sf);
-    }
-
-    private static void addLogiTechCard(Material material) {
-        ItemStack item = getLogiTechReplacementCard(material);
-        if (item != null) {
-            addCard(material.name(), item);
-        }
-    }
-
-    private static void addLogiTechCard(SlimefunItem sf) {
-        ItemStack item = ReplacementCardAdapter.getLogiTechReplacementCard(sf);
-        if (item != null) {
-            addCard(sf.getId(), item);
         }
     }
 
@@ -218,11 +153,6 @@ public class ReplacementCardAdapter {
     }
 
     @Nullable
-    public static List<ItemStack> getReplacementCards(Material material) {
-        return getReplacementCards(material.name());
-    }
-
-    @Nullable
     public static List<ItemStack> getReplacementCards(@Nullable ItemStack itemStack) {
         if (itemStack == null) {
             return null;
@@ -234,11 +164,6 @@ public class ReplacementCardAdapter {
         }
 
         return getReplacementCards(itemStack.getType().name());
-    }
-
-    @Nullable
-    public static List<ItemStack> getReplacementCards(SlimefunItem sf) {
-        return getReplacementCards(sf.getId());
     }
 
     @Nullable

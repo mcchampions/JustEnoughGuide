@@ -672,15 +672,6 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                             displayRecipes = mb.getDisplayRecipes();
                         } catch (Exception ignored) {
                         }
-                    } else if (SpecialMenuProvider.ENABLED_LogiTech
-                            && SpecialMenuProvider.classLogiTech_CustomSlimefunItem != null
-                            && SpecialMenuProvider.classLogiTech_CustomSlimefunItem.isInstance(
-                            slimefunItem)
-                            && slimefunItem instanceof RecipeDisplayItem rdi) {
-                        try {
-                            displayRecipes = rdi.getDisplayRecipes();
-                        } catch (Exception ignored) {
-                        }
                     }
                     if (displayRecipes != null) {
                         for (ItemStack itemStack : displayRecipes) {
@@ -1133,7 +1124,7 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
     public List<SlimefunItem> filterItems(Player player, String searchTerm, boolean pinyin) {
         StringBuilder actualSearchTermBuilder = new StringBuilder();
         String[] split = searchTerm.split(" ");
-        Map<FilterType, String> filters = new HashMap<>();
+        Map<FilterType, String> filters = new EnumMap<>(FilterType.class);
         for (String s : split) {
             boolean isFilter = false;
             for (FilterType filterType : FilterType.lengthSortedValues()) {
@@ -1166,7 +1157,7 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                 actualSearchTerm = actualSearchTerm.replaceAll(Pattern.quote(symbol), Matcher.quoteReplacement(symbol));
             }
         }
-        Set<SlimefunItem> merge = new HashSet<>(36 * 4);
+        Set<SlimefunItem> merge = new HashSet<>(36 << 2);
         // The unfiltered items
         Set<SlimefunItem> items = new HashSet<>(AVAILABLE_ITEMS.stream()
                                                         .filter(item -> item.getItemGroup().isAccessible(player))

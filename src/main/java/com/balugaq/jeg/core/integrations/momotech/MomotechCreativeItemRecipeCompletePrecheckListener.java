@@ -55,7 +55,7 @@ public class MomotechCreativeItemRecipeCompletePrecheckListener implements Liste
         BlockMenu menu = session.getMenu();
         if (menu == null) return;
         String machineId = menu.getPreset().getID();
-        if (!machineId.equals("MOMOTECH_CREATIVE_ITEM_GENERATOR") && !machineId.equals("MOMOTECH_NONE_GENERATOR")) {
+        if (!"MOMOTECH_CREATIVE_ITEM_GENERATOR".equals(machineId) && !"MOMOTECH_NONE_GENERATOR".equals(machineId)) {
             return;
         }
 
@@ -63,7 +63,7 @@ public class MomotechCreativeItemRecipeCompletePrecheckListener implements Liste
         SlimefunItem sf = SlimefunItem.getByItem(target);
         if (sf == null) return;
         String id = sf.getId();
-        if (!id.equals("MOMOTECH_CREATIVE") && !id.equals("MOMOTECH_CREATIVE_1") && !id.equals("MOMOTECH_NONE")) {
+        if (!"MOMOTECH_CREATIVE".equals(id) && !"MOMOTECH_CREATIVE_1".equals(id) && !"MOMOTECH_NONE".equals(id)) {
             return;
         }
 

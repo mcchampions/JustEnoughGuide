@@ -68,14 +68,14 @@ public class WatchdogHandler implements Listener {
         }
 
         String msg = event.getMessage();
-        if (msg.equals("dw 0")) {
+        if ("dw 0".equals(msg)) {
             disableWatchdog();
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendMessage("Disabled WatchdogThread by " + player.getName());
             }
         }
 
-        if (msg.equals("dw 1")) {
+        if ("dw 1".equals(msg)) {
             enableWatchdog();
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendMessage("Enabled WatchdogThread by " + player.getName());

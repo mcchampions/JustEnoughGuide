@@ -39,7 +39,7 @@ import org.jspecify.annotations.NullMarked;
  * @since 1.9
  */
 @SuppressWarnings("unused")
-@Target({ElementType.FIELD})
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @NullMarked
 public @interface Key {

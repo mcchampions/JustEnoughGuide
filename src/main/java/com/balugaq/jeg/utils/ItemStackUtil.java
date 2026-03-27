@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -76,6 +77,7 @@ public final class ItemStackUtil {
             "SCUTE", "TURTLE_SCUTE",
             "TURTLE_SCUTE", "SCUTE"
     );
+    private static final Pattern PATTERN = Pattern.compile("^[0-9A-Fa-f]{64}+$");
 
     public static ItemStack air() {
         return AIR;
@@ -126,7 +128,7 @@ public final class ItemStackUtil {
         }
 
         String type = section.getString("material_type", "mc");
-        if (!type.equalsIgnoreCase("none") && !section.contains("material")) {
+        if (!"none".equalsIgnoreCase(type) && !section.contains("material")) {
             Debug.severe("Icon 定义 " + c + " 缺少 material 字段");
             return null;
         }
@@ -192,7 +194,7 @@ public final class ItemStackUtil {
             type = "skull";
         } else if (material.startsWith("http") || material.startsWith("https")) {
             type = "skull_url";
-        } else if (material.matches("^[0-9A-Fa-f]{64}+$")) {
+        } else if (PATTERN.matcher(material).matches()) {
             type = "skull_hash";
         }
 

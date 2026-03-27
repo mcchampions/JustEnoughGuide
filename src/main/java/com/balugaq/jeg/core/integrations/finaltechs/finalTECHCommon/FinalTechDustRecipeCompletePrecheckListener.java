@@ -57,7 +57,7 @@ public class FinalTechDustRecipeCompletePrecheckListener implements Listener {
         BlockMenu menu = session.getMenu();
         if (menu == null) return;
         String machineId = menu.getPreset().getID();
-        if (!machineId.equals("FINALTECH_ORDERED_DUST_FACTORY_STONE") && !machineId.equals("_FINALTECH_ORDERED_DUST_FACTORY_STONE")) {
+        if (!"FINALTECH_ORDERED_DUST_FACTORY_STONE".equals(machineId) && !"_FINALTECH_ORDERED_DUST_FACTORY_STONE".equals(machineId)) {
             return;
         }
 
@@ -65,7 +65,7 @@ public class FinalTechDustRecipeCompletePrecheckListener implements Listener {
         SlimefunItem sf = SlimefunItem.getByItem(target);
         if (sf == null) return;
         String id = sf.getId();
-        if (!id.equals("FINALTECH_ORDERED_DUST") && !id.equals("FINALTECH_UNORDERED_DUST") && !id.equals("_FINALTECH_ORDERED_DUST") && !id.equals("_FINALTECH_UNORDERED_DUST")) {
+        if (!"FINALTECH_ORDERED_DUST".equals(id) && !"FINALTECH_UNORDERED_DUST".equals(id) && !"_FINALTECH_ORDERED_DUST".equals(id) && !"_FINALTECH_UNORDERED_DUST".equals(id)) {
             return;
         }
 

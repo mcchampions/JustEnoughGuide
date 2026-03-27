@@ -157,7 +157,7 @@ public class JEGContributorsMenu {
         for (Map.Entry<String, Integer> entry : contributor.getContributions()) {
             String info = entry.getKey();
 
-            if (!info.startsWith("&")) {
+            if (!(!info.isEmpty() && info.charAt(0) == '&')) {
                 String[] segments = CommonPatterns.COMMA.split(info);
                 info = Slimefun.getLocalization().getMessage(p, "guide.credits.roles." + segments[0]);
 

@@ -55,7 +55,6 @@ import com.balugaq.jeg.api.objects.collection.data.infinityexpansion.StrainerBas
 import com.balugaq.jeg.api.objects.collection.data.infinityexpansion.VoidHarvesterData;
 import com.balugaq.jeg.api.objects.collection.data.infinitylib.MachineBlockData;
 import com.balugaq.jeg.api.objects.collection.data.infinitylib.MachineBlockRecipe;
-import com.balugaq.jeg.api.objects.collection.data.logitech.AbstractMachineData;
 import com.balugaq.jeg.api.objects.collection.data.rsc.RSCCustomLinkedRecipeMachineData;
 import com.balugaq.jeg.api.objects.collection.data.rsc.RSCCustomMachineRecipe;
 import com.balugaq.jeg.api.objects.collection.data.rsc.RSCCustomMaterialGeneratorData;
@@ -246,7 +245,7 @@ public class CERCalculator {
             List<RSCMachineTemplate> templates = rctmd.getTemplates();
             for (var template /* record MachineTemplate */: templates) {
                 ItemStack t = template.template();
-                int mavg = t.getMaxStackSize() * 2;
+                int mavg = t.getMaxStackSize() << 1;
                 List<RSCCustomMachineRecipe> recipes = template.recipes();
                 for (var recipe : recipes) {
                     if (recipe.isForDisplay()) continue;
@@ -573,24 +572,6 @@ public class CERCalculator {
                             cost + ValueTable.getValue(chamber), entry.getValue() * entry.getKey().getAmount(),
                             interval, energy * interval
                     );
-                }
-            }
-        }
-
-        // Logitech - AbstractMachine
-        // vals:
-        // List<MachineRecipe> machineRecipes
-        // int energyConsumption
-        //
-        if (data instanceof AbstractMachineData amd) {
-            for (var recipe : amd.getMachineRecipes()) {
-                for (var output : recipe.getOutput()) {
-                    if (predicate.test(output)) {
-                        return calc(
-                                cost + ValueTable.getValue(recipe.getInput()), output.getAmount(),
-                                recipe.getTicks(), recipe.getTicks() * amd.getEnergyConsumption()
-                        );
-                    }
                 }
             }
         }

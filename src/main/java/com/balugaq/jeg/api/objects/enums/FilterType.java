@@ -42,13 +42,10 @@ import org.jetbrains.annotations.Unmodifiable;
 
 import com.balugaq.jeg.api.groups.SearchGroup;
 import com.balugaq.jeg.api.objects.collection.Pair;
-import com.balugaq.jeg.utils.Debug;
 import com.balugaq.jeg.utils.LocalHelper;
-import com.balugaq.jeg.utils.SpecialMenuProvider;
 
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.core.attributes.RecipeDisplayItem;
 import io.github.thebusybiscuit.slimefun4.core.multiblocks.MultiBlockMachine;
 import lombok.Getter;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
@@ -105,18 +102,6 @@ public enum FilterType {
                     try {
                         display = mb.getDisplayRecipes();
                     } catch (Exception ignored) {
-                    }
-                } else {
-                    try {
-                        if (SpecialMenuProvider.ENABLED_LogiTech
-                                && SpecialMenuProvider.classLogiTech_CustomSlimefunItem != null
-                                && SpecialMenuProvider.classLogiTech_CustomSlimefunItem.isInstance(item)
-                                && item instanceof RecipeDisplayItem rdi) {
-                            display = rdi.getDisplayRecipes();
-                        }
-                    } catch (Exception e) {
-                        Debug.trace(e, "searching");
-                        return false;
                     }
                 }
                 if (display != null) {
@@ -184,7 +169,7 @@ public enum FilterType {
         lengthSortedValues = Arrays.stream(values())
                 .map(type -> {
                     List<Pair<String, FilterType>> list = new ArrayList<>();
-                    for (var symbol : type.getSymbols()) {
+                    for (var symbol : type.symbols) {
                         list.add(new Pair<>(symbol, type));
                     }
                     return list;
@@ -232,7 +217,7 @@ public enum FilterType {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public String getFirstSymbol() {
-        return getSymbols().stream().findFirst().get();
+        return symbols.stream().findFirst().get();
     }
 
     public interface DiFunction<A, B, C, D, R> {

@@ -33,6 +33,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.jspecify.annotations.NullMarked;
 
@@ -43,6 +44,10 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 public class Calculator {
     private static final Map<String, Integer> PRIORITY = new HashMap<>();
+    private static final Pattern PATTERN = Pattern.compile("[Qq]");
+    private static final Pattern REGEX = Pattern.compile("[\\]\\}）】》]");
+    private static final Pattern REGEXP = Pattern.compile("_");
+    private static final Pattern PATTERN1 = Pattern.compile("\\s+");
 
     static {
         PRIORITY.put("~", 4);
@@ -71,8 +76,8 @@ public class Calculator {
         String expr = replaceBrackets(expression);
         expr = replaceUnits(expr);
 
-        expr = expr.replaceAll("\\s+", "");
-        expr = expr.replaceAll("_", "");
+        expr = PATTERN1.matcher(expr).replaceAll("");
+        expr = REGEXP.matcher(expr).replaceAll("");
 
         expr = completeParentheses(expr);
 
@@ -112,7 +117,7 @@ public class Calculator {
                 i = j;
             }
             else if (c == '(') {
-                opStack.push(String.valueOf(c));
+                opStack.push("(");
                 i++;
             }
             else if (c == ')') {
@@ -121,7 +126,7 @@ public class Calculator {
                     throw new NumberFormatException("Brackets doesn't match: " + expression);
                 }
                 
-                while (!pk.equals("(")) {
+                while (!"(".equals(pk)) {
                     calculateTop(numStack, opStack);
                 }
                 opStack.pop();
@@ -219,20 +224,18 @@ public class Calculator {
 
     @SuppressWarnings("RegExpRedundantEscape")
     private static String replaceBrackets(String expr) {
-        return expr
-            .replaceAll("[\\[\\{（【《]", "(")
-            .replaceAll("[\\]\\}）】》]", ")");
+        return REGEX.matcher(expr
+                .replaceAll("[\\[\\{（【《]", "(")).replaceAll(")");
     }
 
     private static String replaceUnits(String expr) {
-        return expr
-            .replaceAll("[Hh]", "*100")
-            .replaceAll("[Kk]", "*1000")
-            .replaceAll("[Ww]", "*10000")
-            .replaceAll("[Mm]", "*1_000_000")
-            .replaceAll("[Bb]", "*1_000_000_000")
-            .replaceAll("[Tt]", "*1_000_000_000_000")
-            .replaceAll("[Qq]", "*1_000_000_000_000_000");
+        return PATTERN.matcher(expr
+                .replaceAll("[Hh]", "*100")
+                .replaceAll("[Kk]", "*1000")
+                .replaceAll("[Ww]", "*10000")
+                .replaceAll("[Mm]", "*1_000_000")
+                .replaceAll("[Bb]", "*1_000_000_000")
+                .replaceAll("[Tt]", "*1_000_000_000_000")).replaceAll("*1_000_000_000_000_000");
     }
 
     private static String completeParentheses(String expr) {
@@ -261,10 +264,10 @@ public class Calculator {
 
     private static BigDecimal parseNumber(String numStr) throws NumberFormatException {
         try {
-            if (numStr.endsWith(".")) {
+            if (!numStr.isEmpty() && numStr.charAt(numStr.length() - 1) == '.') {
                 numStr += "0";
             }
-            if (numStr.startsWith(".") && numStr.length() > 1) {
+            if (!numStr.isEmpty() && numStr.charAt(0) == '.' && numStr.length() > 1) {
                 numStr = "0" + numStr;
             }
             return new BigDecimal(numStr);
@@ -276,7 +279,7 @@ public class Calculator {
     private static void calculateTop(Deque<BigDecimal> numStack, Deque<String> opStack) throws NumberFormatException, ArithmeticException {
         String op = opStack.pop();
 
-        if (op.equals("~") || op.equals("!")) {
+        if ("~".equals(op) || "!".equals(op)) {
             if (numStack.isEmpty()) {
                 throw new NumberFormatException("Invalid expression");
             }
@@ -360,7 +363,7 @@ public class Calculator {
         Deque<Character> stack = new ArrayDeque<>();
         for (char c : expr.toCharArray()) {
             if (c == '(') {
-                stack.push(c);
+                stack.push('(');
             } else if (c == ')') {
                 if (stack.isEmpty() || stack.pop() != '(') {
                     return false;

@@ -19,7 +19,6 @@ improvements:
   item-shareable: true
   cer-patch: false
   allow-action-redirect: true
-  logitech-machine-stackable-display: true
   slimefun-id-display: true
 
 # 是否禁止在粘液容器中交互收纳袋
@@ -381,10 +380,6 @@ local-translate:
   ThermalFun: "灼岩科技"
   FastMachines: "快捷机器"
   MomoTech: "乱码科技"
-  LogicTech: "逻辑工艺" # Same as LogicTECH, a SlimefunCustomizer configuration
-  LogiTech: "逻辑工艺" # Same as LogiTECH, a Slimefun addon
-  LogicTECH: "逻辑工艺" # Same as LogicTech
-  LogiTECH: "逻辑工艺" # Same as LogiTech
   SlimeAEPlugin: "能源与应用2"
   SlimeChem: "粘液化学"
   WilderNether: "迷狱生机"

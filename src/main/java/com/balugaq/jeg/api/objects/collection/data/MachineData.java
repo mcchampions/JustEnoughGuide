@@ -33,11 +33,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 
 import com.balugaq.jeg.api.groups.CERRecipeGroup;
@@ -54,7 +52,6 @@ import com.balugaq.jeg.api.objects.collection.data.infinityexpansion.StrainerBas
 import com.balugaq.jeg.api.objects.collection.data.infinityexpansion.VoidHarvesterData;
 import com.balugaq.jeg.api.objects.collection.data.infinitylib.MachineBlockData;
 import com.balugaq.jeg.api.objects.collection.data.infinitylib.MachineBlockRecipe;
-import com.balugaq.jeg.api.objects.collection.data.logitech.AbstractMachineData;
 import com.balugaq.jeg.api.objects.collection.data.rsc.RSCCustomLinkedMachineRecipe;
 import com.balugaq.jeg.api.objects.collection.data.rsc.RSCCustomMachineRecipe;
 import com.balugaq.jeg.api.objects.collection.data.rsc.RSCCustomMaterialGeneratorData;
@@ -119,7 +116,7 @@ public abstract class MachineData {
                     ));
                 }
                 return new RSCCustomRecipeMachineData(r, ac.getEnergyConsumption(), ac.getSpeed());
-            } else if (className.equals("org.lins.mmmjjkx.rykenslimefuncustomizer.objects.customs.machine.CustomLinkedRecipeMachine")) {
+            } else if ("org.lins.mmmjjkx.rykenslimefuncustomizer.objects.customs.machine.CustomLinkedRecipeMachine".equals(className)) {
                 // RykenSlimefunCustomizer - CustomLinkedRecipeMachine
                 // vals:
                 // List<CustomLinkedMachineRecipe> recipes;
@@ -218,20 +215,20 @@ public abstract class MachineData {
             return new RSCCustomMaterialGeneratorData(tickRate, per, generation, chances, chooseOne);
         }
 
-        if (className.equals("io.ncbpfluffybear.slimecustomizer.objects.CustomMaterialGenerator")) {
+        if ("io.ncbpfluffybear.slimecustomizer.objects.CustomMaterialGenerator".equals(className)) {
             int tickRate = ReflectionUtil.getValue(sf, "tickRate", int.class);
             ItemStack output = ReflectionUtil.getValue(sf, "output", ItemStack.class);
             return new SCCustomMaterialGeneratorData(tickRate, output);
         }
 
-        if (className.equals("io.github.mooy1.infinityexpansion.items.blocks.StrainerBase")) {
+        if ("io.github.mooy1.infinityexpansion.items.blocks.StrainerBase".equals(className)) {
             return new StrainerBaseData(
                     ReflectionUtil.getStaticValue(sf.getClass(), "POTATO", ItemStack.class),
                     ReflectionUtil.getStaticValue(sf.getClass(), "OUTPUTS", ItemStack[].class)
             );
         }
 
-        if (className.equals("io.github.mooy1.infinityexpansion.items.quarries.Quarry")) {
+        if ("io.github.mooy1.infinityexpansion.items.quarries.Quarry".equals(className)) {
             int INTERVAL = ReflectionUtil.getStaticValue(sf.getClass(), "INTERVAL", int.class);
             Material[] outputs = ReflectionUtil.getValue(sf, "OUTPUTS", Material[].class);
             int speed = ReflectionUtil.getValue(sf, "speed", int.class);
@@ -239,10 +236,10 @@ public abstract class MachineData {
             return new QuarryData(INTERVAL, outputs, speed, energyPerTick);
         }
 
-        if (className.equals("io.github.mooy1.infinityexpansion.items.machines.SingularityConstructor")) {
+        if ("io.github.mooy1.infinityexpansion.items.machines.SingularityConstructor".equals(className)) {
             List/*<Recipe>*/ RECIPE_LIST = ReflectionUtil.getStaticValue(sf.getClass(), "RECIPE_LIST", List.class);
             int energyPerTick = ReflectionUtil.getValue(sf, "energyPerTick", int.class);
-            int speed = sf.getId().equals("SINGULARITY_CONSTRUCTOR") ? 1 : sf.getId().equals("INFINITY_CONSTRUCTOR")
+            int speed = "SINGULARITY_CONSTRUCTOR".equals(sf.getId()) ? 1 : "INFINITY_CONSTRUCTOR".equals(sf.getId())
                     ? 64 : 1;
             List<SingularityConstructorData.Recipe> recipes = new ArrayList<>();
             for (var recipe : RECIPE_LIST) {
@@ -255,14 +252,14 @@ public abstract class MachineData {
             return new SingularityConstructorData(recipes, energyPerTick, speed);
         }
 
-        if (className.equals("io.github.mooy1.infinityexpansion.items.machines.MaterialGenerator")) {
+        if ("io.github.mooy1.infinityexpansion.items.machines.MaterialGenerator".equals(className)) {
             Material material = ReflectionUtil.getValue(sf, "material", Material.class);
             int speed = ReflectionUtil.getValue(sf, "speed", int.class);
             int energyPerTick = ReflectionUtil.getValue(sf, "energyPerTick", int.class);
             return new MaterialGeneratorData(material, speed, energyPerTick);
         }
 
-        if (className.equals("io.github.mooy1.infinityexpansion.items.machines.ResourceSynthesizer")) {
+        if ("io.github.mooy1.infinityexpansion.items.machines.ResourceSynthesizer".equals(className)) {
             SlimefunItemStack[] recipes = ReflectionUtil.getValue(sf, "recipes", SlimefunItemStack[].class);
             int energyPerTick = ReflectionUtil.getValue(sf, "energyPerTick", int.class);
             List<ResourceSynthesizerData.Recipe> rs = new ArrayList<>();
@@ -276,7 +273,7 @@ public abstract class MachineData {
             return new ResourceSynthesizerData(rs, energyPerTick);
         }
 
-        if (className.equals("io.github.mooy1.infinityexpansion.items.machines.GrowingMachine")) {
+        if ("io.github.mooy1.infinityexpansion.items.machines.GrowingMachine".equals(className)) {
             EnumMap/*<Material, ItemStack[]>*/<Material, ItemStack[]> recipes = ReflectionUtil.getValue(
                     sf, "recipes"
                     , EnumMap.class
@@ -314,7 +311,7 @@ public abstract class MachineData {
             return new AbstractElectricMachineData(recipes, energyConsumedPerTick, processingSpeed);
         }
 
-        if (className.equals("io.github.mooy1.infinityexpansion.items.machines.StoneworksFactory")) {
+        if ("io.github.mooy1.infinityexpansion.items.machines.StoneworksFactory".equals(className)) {
             int energyPerTick = ReflectionUtil.getValue(sf, "energyPerTick", int.class);
             Set<Material> materials = new HashSet<>();
             materials.add(Material.COBBLESTONE);
@@ -336,12 +333,12 @@ public abstract class MachineData {
             return new StoneworksFactoryData(materials, energyPerTick);
         }
 
-        if (className.equals("io.github.mooy1.infinityexpansion.items.machines.VoidHarvester")) {
+        if ("io.github.mooy1.infinityexpansion.items.machines.VoidHarvester".equals(className)) {
             int TIME = ReflectionUtil.getStaticValue(sf.getClass(), "TIME", int.class);
             int speed = ReflectionUtil.getValue(sf, "speed", int.class);
             int energyPerTick = ReflectionUtil.getValue(sf, "energyPerTick", int.class);
             ItemStack output;
-            if (sf.getAddon().getName().equals("InfinityExpansion-Changed")) {
+            if ("InfinityExpansion-Changed".equals(sf.getAddon().getName())) {
                 output = SlimefunItem.getById("VOID_DUST").getItem();
             } else {
                 output = SlimefunItem.getById("VOID_BIT").getItem();
@@ -350,32 +347,12 @@ public abstract class MachineData {
             return new VoidHarvesterData(TIME, speed, energyPerTick, output);
         }
 
-        if (className.equals("io.github.mooy1.infinityexpansion.items.mobdata.MobDataCard")) {
+        if ("io.github.mooy1.infinityexpansion.items.mobdata.MobDataCard".equals(className)) {
             RandomizedSet<ItemStack> drops = ReflectionUtil.getValue(sf, "drops", RandomizedSet.class);
             SlimefunItem chamber = SlimefunItem.getById("MOB_SIMULATION_CHAMBER");
             int energy = ReflectionUtil.getValue(chamber, "energy", int.class);
             int interval = ReflectionUtil.getValue(chamber, "interval", int.class);
             return new MobDataCardData(chamber, energy, interval, drops.toMap());
-        }
-
-        if (sf.getAddon().getName().equals("LogiTech") && ItemStackUtil.isInstanceSimple(sf, "AbstractMachine")) {
-            List<MachineRecipe> machineRecipes = ReflectionUtil.getValue(sf, "machineRecipes", List.class);
-            Supplier<@Nullable List<MachineRecipe>> machineRecipeSupplier = ReflectionUtil.getValue(
-                    sf,
-                    "machineRecipeSupplier", Supplier.class
-            );
-            List<MachineRecipe> clone = new ArrayList<>();
-            if (machineRecipes != null) {
-                clone.addAll(machineRecipes);
-            }
-            if (machineRecipeSupplier != null) {
-                List<MachineRecipe> get = machineRecipeSupplier.get();
-                if (get != null) {
-                    clone.addAll(get);
-                }
-            }
-            int energyConsumption = ReflectionUtil.getValue(sf, "energyConsumption", int.class);
-            return new AbstractMachineData(clone.stream().distinct().toList(), energyConsumption);
         }
 
         return null;

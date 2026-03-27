@@ -46,7 +46,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
  * @author balugaq
  * @since 2.0
  */
-@SuppressWarnings({"SameReturnValue"})
+@SuppressWarnings("SameReturnValue")
 @NullMarked
 public class MomotechNoneRecipeSettingsGuideOption extends AbstractItemSettingsGuideOption {
     public static final MomotechNoneRecipeSettingsGuideOption instance = new MomotechNoneRecipeSettingsGuideOption();

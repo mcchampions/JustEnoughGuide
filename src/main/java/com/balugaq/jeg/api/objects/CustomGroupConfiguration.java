@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -194,6 +195,10 @@ public class CustomGroupConfiguration implements IParsable {
     @Data
     @NullMarked
     public static class Display implements IParsable {
+        private static final Pattern PATTERN = Pattern.compile("^https?://(?:[-\\w]+\\.)?[-\\w]+(?:\\.[a-zA-Z]{2,5}|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})" +
+                                                               "(?::\\d{1,5})?(/[-\\w./]*)*(\\?[-\\w.&=]*)?(#[-\\w]*)?$");
+        private static final Pattern REGEX = Pattern.compile("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
+        private static final Pattern REGEXP = Pattern.compile("^[a-fA-F0-9]{32,}$");
         @Required
         @Key("material")
         String material;
@@ -272,18 +277,16 @@ public class CustomGroupConfiguration implements IParsable {
         }
 
         public boolean isHashcodeLike(String value) {
-            return value.matches("^[a-fA-F0-9]{32,}$");
+            return REGEXP.matcher(value).matches();
         }
 
         public boolean isBase64Like(String value) {
             return value.length() > 32
-                    && value.matches("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
+                   && REGEX.matcher(value).matches();
         }
 
         public boolean isURLLike(String value) {
-            return value.matches(
-                    "^https?://(?:[-\\w]+\\.)?[-\\w]+(?:\\.[a-zA-Z]{2,5}|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})" +
-                            "(?::\\d{1,5})?(/[-\\w./]*)*(\\?[-\\w.&=]*)?(#[-\\w]*)?$");
+            return PATTERN.matcher(value).matches();
         }
     }
 }

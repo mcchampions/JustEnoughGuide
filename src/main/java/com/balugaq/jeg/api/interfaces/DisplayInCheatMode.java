@@ -70,10 +70,10 @@ public @interface DisplayInCheatMode {
             String key = group.getKey().getKey();
             // @formatter:off
             return isSpecial(group)
-                    || (namespace.equals("danktech2") && key.equals("main"))
-                    || (namespace.equals("slimeframe") && key.equals("wf_main"))
-                    || (namespace.equals("finaltech-changed") && (key.equals("_finaltech_category_main")))
-                    || (namespace.equals("finaltech") && (key.equals("finaltech_category_main")));
+                    || ("danktech2".equals(namespace) && "main".equals(key))
+                    || ("slimeframe".equals(namespace) && "wf_main".equals(key))
+                    || ("finaltech-changed".equals(namespace) && ("_finaltech_category_main".equals(key)))
+                    || ("finaltech".equals(namespace) && ("finaltech_category_main".equals(key)));
             // @formatter:on
         }
 
@@ -91,12 +91,12 @@ public @interface DisplayInCheatMode {
             String className = group.getClass().getName();
 
             // @formatter:off
-            return (className.equals("io.github.mooy1.infinityexpansion.infinitylib.groups.SubGroup")
-                            && ((namespace.equals("infinityexpansion") || namespace.equals("infinityexpansion-changed"))
-                                    && key.equals("infinity_cheat")))
-                    || (className.equals("me.lucasgithuber.obsidianexpansion.infinitylib.groups.SubGroup")
-                            && (namespace.equals("obsidianexpansion") && key.equals("omc_forge_cheat")))
-                    || className.equals("io.github.sefiraat.networks.slimefun.NetworksItemGroups$HiddenItemGroup");
+            return ("io.github.mooy1.infinityexpansion.infinitylib.groups.SubGroup".equals(className)
+                            && (("infinityexpansion".equals(namespace) || "infinityexpansion-changed".equals(namespace))
+                                    && "infinity_cheat".equals(key)))
+                    || ("me.lucasgithuber.obsidianexpansion.infinitylib.groups.SubGroup".equals(className)
+                            && ("obsidianexpansion".equals(namespace) && "omc_forge_cheat".equals(key)))
+                    || "io.github.sefiraat.networks.slimefun.NetworksItemGroups$HiddenItemGroup".equals(className);
             // @formatter:on
         }
     }

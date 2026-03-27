@@ -43,7 +43,7 @@ import com.balugaq.jeg.utils.compatibility.Converter;
  * @author balugaq
  * @since 2.0
  */
-@SuppressWarnings({"SameReturnValue"})
+@SuppressWarnings("SameReturnValue")
 @NullMarked
 public class MomotechCreativeItemRecipeSettingsGuideOption extends AbstractItemSettingsGuideOption {
     public static final MomotechCreativeItemRecipeSettingsGuideOption instance = new MomotechCreativeItemRecipeSettingsGuideOption();

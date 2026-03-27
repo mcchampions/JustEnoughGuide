@@ -164,7 +164,7 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
     }
 
     public static BookmarkManager getBookmarkManager() {
-        return getInstance().bookmarkManager;
+        return instance.bookmarkManager;
     }
 
     public static JustEnoughGuide getInstance() {
@@ -172,19 +172,19 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
     }
 
     public static CommandManager getCommandManager() {
-        return getInstance().commandManager;
+        return instance.commandManager;
     }
 
     public static ListenerManager getListenerManager() {
-        return getInstance().listenerManager;
+        return instance.listenerManager;
     }
 
     public static IntegrationManager getIntegrationManager() {
-        return getInstance().integrationManager;
+        return instance.integrationManager;
     }
 
     public static MinecraftVersion getMinecraftVersion() {
-        return getInstance().minecraftVersion;
+        return instance.minecraftVersion;
     }
 
     public static void postServerStartup(Runnable runnable) {
@@ -196,7 +196,7 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
     }
 
     public static TaskScheduler getScheduler() {
-        return getInstance().scheduler;
+        return instance.scheduler;
     }
 
     public static void postServerStartupAsynchronously(Runnable runnable) {
@@ -489,7 +489,6 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
 
         SpecialMenuProvider.loadConfiguration();
         ReplacementCardAdapter.load();
-        ThirdPartyWarnings.check();
 
         getLogger().info("成功启用此附属");
     }
@@ -504,7 +503,7 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
     }
 
     public static ConfigManager getConfigManager() {
-        return getInstance().configManager;
+        return instance.configManager;
     }
 
     /**

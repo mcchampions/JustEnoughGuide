@@ -47,7 +47,7 @@ import io.github.thebusybiscuit.slimefun4.core.guide.options.SlimefunGuideOption
  * @author balugaq
  * @since 2.0
  */
-@SuppressWarnings({"SameReturnValue"})
+@SuppressWarnings("SameReturnValue")
 @NullMarked
 public class KeybindsSettingsGuideOption implements SlimefunGuideOption<Boolean> {
     private static final KeybindsSettingsGuideOption instance = new KeybindsSettingsGuideOption();
