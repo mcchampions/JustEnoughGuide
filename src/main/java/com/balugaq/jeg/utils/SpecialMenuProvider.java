@@ -366,7 +366,6 @@ public class SpecialMenuProvider {
         if (methodRecipeItemGroup_getBySlimefunItem == null) {
             return null;
         }
-        methodRecipeItemGroup_getBySlimefunItem.setAccessible(true);
         return (FlexItemGroup) methodRecipeItemGroup_getBySlimefunItem.invoke(
                 null, player, playerProfile, slimefunGuideMode, slimefunItem, 1);
     }
@@ -512,7 +511,6 @@ public class SpecialMenuProvider {
         if (methodPlayerProgress_get == null) {
             return false;
         }
-        methodPlayerProgress_get.setAccessible(true);
         Object playerProgress = methodPlayerProgress_get.invoke(null, player);
         if (playerProgress == null) {
             return false;
