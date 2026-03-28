@@ -73,8 +73,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 @SuppressWarnings({"deprecation", "ConstantValue"})
 @NullMarked
 public class JEGPlayerWAILA extends PlayerWAILA {
-    public static final boolean IS_1_20_1 =
-            MinecraftVersion.current().isAtLeast(MinecraftVersion.V1_20_1);
     public static final long TICK_RATE = SlimeHUD.getInstance().getConfig().getLong("waila.tick-rate");
     public final Supplier<BossBar> kyoriBossBarSupplier;
     public boolean visible;
@@ -86,17 +84,13 @@ public class JEGPlayerWAILA extends PlayerWAILA {
         getWAILABar().removePlayer(player);
         kyoriBossBarSupplier = () -> {
             if (kyoriBossBar == null) {
-                if (PlatformUtil.isPaper() && IS_1_20_1) {
-                    String bossbarColor =
-                            SlimeHUD.getInstance().getConfig().getString("waila.bossbar-color").trim().toLowerCase();
-                    kyoriBossBar = BossBar.bossBar(
-                            Component.text(""), 1.0f, toBossBarColor(bossbarColor),
-                            BossBar.Overlay.PROGRESS, new HashSet<>()
-                    );
-                    return (BossBar) kyoriBossBar;
-                } else {
-                    return null;
-                }
+                String bossbarColor =
+                        SlimeHUD.getInstance().getConfig().getString("waila.bossbar-color").trim().toLowerCase();
+                kyoriBossBar = BossBar.bossBar(
+                        Component.text(""), 1.0f, toBossBarColor(bossbarColor),
+                        BossBar.Overlay.PROGRESS, new HashSet<>()
+                );
+                return (BossBar) kyoriBossBar;
             } else {
                 return (BossBar) kyoriBossBar;
             }
@@ -118,7 +112,7 @@ public class JEGPlayerWAILA extends PlayerWAILA {
             default -> {
                 SlimeHUD.log(
                         Level.WARNING, "[SlimeHUD] Invalid bossbar color: " + color, "[SlimeHUD] Setting color " +
-                                "to white..."
+                                                                                     "to white..."
                 );
                 yield BossBar.Color.WHITE;
             }
@@ -297,7 +291,7 @@ public class JEGPlayerWAILA extends PlayerWAILA {
         } else {
             setVisible(true);
             setTitle(keepTextColors0() ? LegacyComponentSerializer.legacySection().deserialize(facing) :
-                             Component.text(ChatColor.stripColor(facing)));
+                    Component.text(ChatColor.stripColor(facing)));
             if (useAutoBossBarColor0()) {
                 setColor(Util.pickBarColorFromName(facing));
             }
