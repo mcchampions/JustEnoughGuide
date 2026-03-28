@@ -36,6 +36,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import me.qscbm.jeg.utils.PinyinUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -170,7 +171,7 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
     }
 
     public static String getPinyin(String string) {
-        return getPinyin(string, PinyinStyleEnum.FIRST_LETTER);
+        return PinyinUtils.getPinyin(string);
     }
 
     public static String getPinyin(String string, PinyinStyleEnum style) {
@@ -919,14 +920,7 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
 
     public static List<SlimefunItem> sortByPinyinContinuity(
             Set<SlimefunItem> origin, String searchTerm) {
-        return origin.stream()
-                .sorted(Comparator.comparingInt(item ->
-                                                        /* Intentionally negative */
-                                                        -nameFit(
-                                                                getPinyin(ChatColor.stripColor(item.getItemName())),
-                                                                searchTerm
-                                                        )))
-                .toList();
+        return origin.stream().toList();
     }
 
     @Override
@@ -1205,12 +1199,7 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
 
             merge.addAll(items);
         }
-
-        if (pinyin && onlyAscii(searchTerm)) {
-            return sortByPinyinContinuity(merge, actualSearchTerm);
-        } else {
-            return sortByNameFit(merge, actualSearchTerm);
-        }
+        return sortByNameFit(merge, actualSearchTerm);
     }
 
     public List<SlimefunItem> filterItems(

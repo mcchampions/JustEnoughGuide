@@ -40,6 +40,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
+import me.qscbm.jeg.utils.PinyinUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -489,6 +490,7 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
         SpecialMenuProvider.loadConfiguration();
         ReplacementCardAdapter.load();
 
+        PinyinUtils.load();
         getLogger().info("成功启用此附属");
     }
 
