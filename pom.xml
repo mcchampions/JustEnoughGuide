@@ -73,7 +73,7 @@
     </properties>
 
     <build>
-        <finalName>[sf]${project.name} v${project.version}</finalName>
+        <finalName>${project.name} v${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
