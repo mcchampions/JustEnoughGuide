@@ -47,7 +47,6 @@ import org.jspecify.annotations.NullMarked;
 
 import com.balugaq.jeg.api.objects.enums.HUDLocation;
 import com.balugaq.jeg.implementation.JustEnoughGuide;
-import com.balugaq.jeg.utils.MinecraftVersion;
 import com.balugaq.jeg.utils.ReflectionUtil;
 import com.balugaq.jeg.utils.platform.PlatformUtil;
 import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
@@ -90,10 +89,8 @@ public class JEGPlayerWAILA extends PlayerWAILA {
                         Component.text(""), 1.0f, toBossBarColor(bossbarColor),
                         BossBar.Overlay.PROGRESS, new HashSet<>()
                 );
-                return (BossBar) kyoriBossBar;
-            } else {
-                return (BossBar) kyoriBossBar;
             }
+            return (BossBar) kyoriBossBar;
         };
 
         if (waila != null) {

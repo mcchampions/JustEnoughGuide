@@ -48,6 +48,13 @@ public class Calculator {
     private static final Pattern REGEX = Pattern.compile("[\\]\\}）】》]");
     private static final Pattern REGEXP = Pattern.compile("_");
     private static final Pattern PATTERN1 = Pattern.compile("\\s+");
+    private static final Pattern PATTERN2 = Pattern.compile("[\\[\\{（【《]");
+    private static final Pattern PATTERN3 = Pattern.compile("[Tt]");
+    private static final Pattern PATTERN4 = Pattern.compile("[Bb]");
+    private static final Pattern PATTERN5 = Pattern.compile("[Mm]");
+    private static final Pattern PATTERN6 = Pattern.compile("[Ww]");
+    private static final Pattern PATTERN7 = Pattern.compile("[Kk]");
+    private static final Pattern PATTERN8 = Pattern.compile("[Hh]");
 
     static {
         PRIORITY.put("~", 4);
@@ -115,37 +122,32 @@ public class Calculator {
 
                 numStack.push(num);
                 i = j;
-            }
-            else if (c == '(') {
+            } else if (c == '(') {
                 opStack.push("(");
                 i++;
-            }
-            else if (c == ')') {
+            } else if (c == ')') {
                 String pk = opStack.peek();
                 if (pk == null) {
                     throw new NumberFormatException("Brackets doesn't match: " + expression);
                 }
-                
+
                 while (!"(".equals(pk)) {
                     calculateTop(numStack, opStack);
                 }
                 opStack.pop();
                 i++;
-            }
-            else if ((c == '<' || c == '>') && i + 1 < n && expr.charAt(i + 1) == c) {
+            } else if ((c == '<' || c == '>') && i + 1 < n && expr.charAt(i + 1) == c) {
                 String op = expr.substring(i, i + 2);
                 while (!opStack.isEmpty() && getPriority(opStack.peek()) >= getPriority(op)) {
                     calculateTop(numStack, opStack);
                 }
                 opStack.push(op);
                 i += 2;
-            }
-            else if (c == '~' || c == '!') {
+            } else if (c == '~' || c == '!') {
                 String op = String.valueOf(c);
                 opStack.push(op);
                 i++;
-            }
-            else if (isOperator(String.valueOf(c))) {
+            } else if (isOperator(String.valueOf(c))) {
                 if (c == '+' && (i == 0 || expr.charAt(i - 1) == '(' || isOperator(String.valueOf(expr.charAt(i - 1))))) {
                     if (i + 1 >= n || (!Character.isDigit(expr.charAt(i + 1)) && expr.charAt(i + 1) != '.')) {
                         throw new NumberFormatException("Invalid positive signature: " + expression);
@@ -171,8 +173,7 @@ public class Calculator {
 
                     numStack.push(num);
                     i = j;
-                }
-                else if (c == '-' && (i == 0 || expr.charAt(i - 1) == '(' || isOperator(String.valueOf(expr.charAt(i - 1))))) {
+                } else if (c == '-' && (i == 0 || expr.charAt(i - 1) == '(' || isOperator(String.valueOf(expr.charAt(i - 1))))) {
                     if (i + 1 >= n || (!Character.isDigit(expr.charAt(i + 1)) && expr.charAt(i + 1) != '.')) {
                         throw new NumberFormatException("Invalid negative signature: " + expression);
                     }
@@ -205,8 +206,7 @@ public class Calculator {
                     opStack.push(op);
                     i++;
                 }
-            }
-            else {
+            } else {
                 throw new NumberFormatException("Invalid character: " + c);
             }
         }
@@ -224,18 +224,11 @@ public class Calculator {
 
     @SuppressWarnings("RegExpRedundantEscape")
     private static String replaceBrackets(String expr) {
-        return REGEX.matcher(expr
-                .replaceAll("[\\[\\{（【《]", "(")).replaceAll(")");
+        return REGEX.matcher(PATTERN2.matcher(expr).replaceAll("(")).replaceAll(")");
     }
 
     private static String replaceUnits(String expr) {
-        return PATTERN.matcher(expr
-                .replaceAll("[Hh]", "*100")
-                .replaceAll("[Kk]", "*1000")
-                .replaceAll("[Ww]", "*10000")
-                .replaceAll("[Mm]", "*1_000_000")
-                .replaceAll("[Bb]", "*1_000_000_000")
-                .replaceAll("[Tt]", "*1_000_000_000_000")).replaceAll("*1_000_000_000_000_000");
+        return PATTERN.matcher(PATTERN3.matcher(PATTERN4.matcher(PATTERN5.matcher(PATTERN6.matcher(PATTERN7.matcher(PATTERN8.matcher(expr).replaceAll("*100")).replaceAll("*1000")).replaceAll("*10000")).replaceAll("*1_000_000")).replaceAll("*1_000_000_000")).replaceAll("*1_000_000_000_000")).replaceAll("*1_000_000_000_000_000");
     }
 
     private static String completeParentheses(String expr) {
@@ -254,8 +247,7 @@ public class Calculator {
 
         if (diff > 0) {
             expr = expr + ")".repeat(diff);
-        }
-        else if (diff < 0) {
+        } else if (diff < 0) {
             expr = "(".repeat(Math.max(0, -diff)) + expr;
         }
 
@@ -287,8 +279,8 @@ public class Calculator {
             BigDecimal a = numStack.pop();
             long aLong = a.longValue();
             long resultLong = switch (op) {
-                case "~" ->                    ~aLong;
-                case "!" ->                    (aLong == 0) ? 1 : 0;
+                case "~" -> ~aLong;
+                case "!" -> (aLong == 0) ? 1 : 0;
                 default -> throw new NumberFormatException("Invalid symbol: " + op);
             };
 

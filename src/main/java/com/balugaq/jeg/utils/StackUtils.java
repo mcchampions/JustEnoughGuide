@@ -369,7 +369,7 @@ public class StackUtils {
             if (!Objects.equals(instanceOne.getTitle(), instanceTwo.getTitle())) {
                 return true;
             }
-            if (!Objects.equals(instanceOne.getGeneration(), instanceTwo.getGeneration())) {
+            if (instanceOne.getGeneration() != instanceTwo.getGeneration()) {
                 return true;
             }
         }
@@ -508,13 +508,13 @@ public class StackUtils {
             if (instanceOne.hasVariant() != instanceTwo.hasVariant()) {
                 return true;
             }
-            if (!instanceOne.getPattern().equals(instanceTwo.getPattern())) {
+            if (instanceOne.getPattern() != instanceTwo.getPattern()) {
                 return true;
             }
-            if (!instanceOne.getBodyColor().equals(instanceTwo.getBodyColor())) {
+            if (instanceOne.getBodyColor() != instanceTwo.getBodyColor()) {
                 return true;
             }
-            if (!instanceOne.getPatternColor().equals(instanceTwo.getPatternColor())) {
+            if (instanceOne.getPatternColor() != instanceTwo.getPatternColor()) {
                 return true;
             }
         }

@@ -45,7 +45,7 @@ import com.balugaq.jeg.utils.StackUtils;
 @NullMarked
 public class SimpleRecipeChoice implements RecipeChoice {
     private List<ItemStack> choices;
-    private Predicate<ItemStack> predicate = null;
+    private Predicate<ItemStack> predicate;
 
     public SimpleRecipeChoice(ItemStack stack) {
         this(List.of(stack));
@@ -64,7 +64,7 @@ public class SimpleRecipeChoice implements RecipeChoice {
             since = "1.13.1"
     )
     public ItemStack getItemStack() {
-        return this.choices.get(0).clone();
+        return this.choices.getFirst().clone();
     }
 
     public List<ItemStack> getChoices() {

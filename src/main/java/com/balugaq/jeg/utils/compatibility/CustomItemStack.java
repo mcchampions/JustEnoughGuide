@@ -254,7 +254,7 @@ public class CustomItemStack implements Cloneable {
      *         the list of name and lore
      */
     public CustomItemStack(ItemStack itemStack, List<String> list) {
-        this(itemStack, list.get(0), new ArrayList<>(list.subList(1, list.size())).toArray(new String[0]));
+        this(itemStack, list.getFirst(), new ArrayList<>(list.subList(1, list.size())).toArray(new String[0]));
     }
 
     /**

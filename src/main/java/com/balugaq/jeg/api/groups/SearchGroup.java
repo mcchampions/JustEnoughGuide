@@ -30,17 +30,7 @@ package com.balugaq.jeg.api.groups;
 import java.lang.ref.Reference;
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +51,6 @@ import com.balugaq.jeg.api.objects.enums.PatchScope;
 import com.balugaq.jeg.api.objects.events.GuideEvents;
 import com.balugaq.jeg.core.integrations.slimefuntranslation.SlimefunTranslationIntegrationMain;
 import com.balugaq.jeg.implementation.JustEnoughGuide;
-import com.balugaq.jeg.utils.Debug;
 import com.balugaq.jeg.utils.EventUtil;
 import com.balugaq.jeg.utils.GuideUtil;
 import com.balugaq.jeg.utils.ItemStackUtil;
@@ -548,7 +537,7 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
             }
 
             // InfinityExpansion StoneworksFactory
-            Set<Material> materials = new HashSet<>();
+            Set<Material> materials = EnumSet.noneOf(Material.class);
             materials.add(Material.COBBLESTONE);
             materials.add(Material.STONE);
             materials.add(Material.SAND);

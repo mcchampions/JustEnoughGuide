@@ -741,7 +741,7 @@ public class CheatGuideImplementation extends CheatSheetSlimefunGuide implements
 
         List<Integer> recipeSlots = Formats.recipe_vanilla.getChars('r');
         if (choices.length == 1 && choices[0] instanceof MaterialChoice materialChoice) {
-            recipeItems[4] = new ItemStack(materialChoice.getChoices().get(0));
+            recipeItems[4] = new ItemStack(materialChoice.getChoices().getFirst());
 
             if (materialChoice.getChoices().size() > 1) {
                 task.add(recipeSlots.get(4), materialChoice);
@@ -749,7 +749,7 @@ public class CheatGuideImplementation extends CheatSheetSlimefunGuide implements
         } else {
             for (int i = 0; i < choices.length; i++) {
                 if (choices[i] instanceof MaterialChoice materialChoice) {
-                    recipeItems[i] = new ItemStack(materialChoice.getChoices().get(0));
+                    recipeItems[i] = new ItemStack(materialChoice.getChoices().getFirst());
 
                     if (materialChoice.getChoices().size() > 1) {
                         task.add(recipeSlots.get(i), materialChoice);

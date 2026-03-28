@@ -44,7 +44,6 @@ import io.github.sefiraat.networks.slimefun.network.NetworkQuantumStorage;
 import io.github.sefiraat.networks.utils.Keys;
 import io.github.sefiraat.networks.utils.datatypes.DataTypeMethods;
 import io.github.sefiraat.networks.utils.datatypes.PersistentQuantumStorageType;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 
 /**
  * @author balugaq

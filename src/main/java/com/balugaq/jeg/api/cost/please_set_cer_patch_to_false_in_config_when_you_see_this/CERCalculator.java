@@ -65,8 +65,6 @@ import com.balugaq.jeg.api.objects.collection.data.sc.SCCustomMaterialGeneratorD
 import com.balugaq.jeg.api.objects.collection.data.sf.AContainerData;
 import com.balugaq.jeg.api.objects.collection.data.sf.AbstractEnergyProviderData;
 import com.balugaq.jeg.core.managers.IntegrationManager;
-import com.balugaq.jeg.implementation.JustEnoughGuide;
-import com.balugaq.jeg.utils.Debug;
 import com.balugaq.jeg.utils.compatibility.Converter;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;

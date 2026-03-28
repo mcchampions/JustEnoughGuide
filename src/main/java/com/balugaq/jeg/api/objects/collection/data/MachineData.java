@@ -27,12 +27,7 @@
 
 package com.balugaq.jeg.api.objects.collection.data;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -62,7 +57,6 @@ import com.balugaq.jeg.api.objects.collection.data.rsc.RSCMachineTemplate;
 import com.balugaq.jeg.api.objects.collection.data.sc.SCCustomMaterialGeneratorData;
 import com.balugaq.jeg.api.objects.collection.data.sf.AContainerData;
 import com.balugaq.jeg.api.objects.collection.data.sf.AbstractEnergyProviderData;
-import com.balugaq.jeg.utils.Debug;
 import com.balugaq.jeg.utils.ItemStackUtil;
 import com.balugaq.jeg.utils.ReflectionUtil;
 
@@ -73,7 +67,6 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.collections.Randomized
 import it.unimi.dsi.fastutil.ints.IntList;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.MachineRecipe;
-import net.guizhanss.guizhanlib.minecraft.helper.inventory.ItemStackHelper;
 
 /**
  * @author balugaq
@@ -312,7 +305,7 @@ public abstract class MachineData {
 
         if ("io.github.mooy1.infinityexpansion.items.machines.StoneworksFactory".equals(className)) {
             int energyPerTick = ReflectionUtil.getValue(sf, "energyPerTick", int.class);
-            Set<Material> materials = new HashSet<>();
+            Set<Material> materials = EnumSet.noneOf(Material.class);
             materials.add(Material.COBBLESTONE);
             materials.add(Material.STONE);
             materials.add(Material.SAND);

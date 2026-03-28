@@ -200,7 +200,7 @@ public interface OnDisplay {
                                 ? ChatColors.color("&8\u21E8 &f" + LocalHelper.getAddonName(itemGroup.getAddon()))
                                 : ChatColors.color("&8\u21E8 &f" + LocalHelper.getAddonName(
                                 itemGroup.getAddon(),
-                                itemGroup.getItems().get(0).getId()
+                                itemGroup.getItems().getFirst().getId()
                         )),
                         ChatColors.color("&e右键以取消收藏物品组")
                 );

@@ -67,14 +67,14 @@ public class RecipeCompleteProvider {
 
     public static void addSource(SlimefunSource source) {
         if (JustEnoughGuide.getConfigManager().isRecipeComplete()) {
-            slimefunSources.add(0, source);
+            slimefunSources.addFirst(source);
             slimefunSources.sort(Comparator.comparingInt(Source::handleLevel));
         }
     }
 
     public static void addSource(VanillaSource source) {
         if (JustEnoughGuide.getConfigManager().isRecipeComplete()) {
-            vanillaSources.add(0, source);
+            vanillaSources.addFirst(source);
         }
     }
 

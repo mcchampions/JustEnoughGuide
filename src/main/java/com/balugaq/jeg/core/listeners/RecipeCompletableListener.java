@@ -526,10 +526,10 @@ public class RecipeCompletableListener implements ItemPatchListener {
                 if (lore.size() >= 7 && applied) {
                     // Remove last two lines
                     if (lore.size() >= 7) {
-                        lore.remove(lore.size() - 1);
+                        lore.removeLast();
                     }
                     if (lore.size() >= 6) {
-                        lore.remove(lore.size() - 1);
+                        lore.removeLast();
                     }
                 }
 
@@ -574,10 +574,10 @@ public class RecipeCompletableListener implements ItemPatchListener {
                 if (lore.size() >= 7 && applied) {
                     // Remove last two lines
                     if (lore.size() >= 7) {
-                        lore.remove(lore.size() - 1);
+                        lore.removeLast();
                     }
                     if (lore.size() >= 6) {
-                        lore.remove(lore.size() - 1);
+                        lore.removeLast();
                     }
                 }
 
