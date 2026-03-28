@@ -1,10 +1,10 @@
 #file: noinspection GrazieInspection
 # Auto update from Guizhan Build is enabled by default.
-auto-update: true
+auto-update: false
 
 guide:
   survival-improvements: true
-  cheat-improvements: true
+  cheat-improvements: false
   survival-guide-title: "&2&lSlimefun 指南 (生存模式)         &e&l爱来自 JustEnoughGuide"
   cheat-guide-title: "&c&lSlimefun 指南 (作弊模式)         &e&l爱来自 JustEnoughGuide"
 
@@ -13,9 +13,9 @@ improvements:
   bookmark: true
   rts-search: true
   beginner-option: true
-  emc-display-option: true
-  finaltech-emc-display-option: true
-  finalTECH-emc-display-option: true
+  emc-display-option: false
+  finaltech-emc-display-option: false
+  finalTECH-emc-display-option: false
   item-shareable: true
   cer-patch: false
   allow-action-redirect: true

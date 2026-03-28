@@ -411,9 +411,6 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
         this.listenerManager = new ListenerManager(this);
         this.listenerManager.load();
 
-        getLogger().info("尝试自动更新...");
-        tryUpdate();
-
         getLogger().info("正在注册指令");
         this.commandManager = new CommandManager(this);
         this.commandManager.load();
@@ -546,13 +543,6 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
      * Attempts to update the plugin if auto-update is enabled.
      */
     public void tryUpdate() {
-        try {
-            if (configManager.isAutoUpdate() && getDescription().getVersion().startsWith("Build")) {
-                GuizhanUpdater.start(this, getFile(), username, repo, branch);
-            }
-        } catch (NoClassDefFoundError | NullPointerException | UnsupportedClassVersionError e) {
-            getLogger().info("自动更新失败: " + e.getMessage());
-            Debug.trace(e);
-        }
+
     }
 }
