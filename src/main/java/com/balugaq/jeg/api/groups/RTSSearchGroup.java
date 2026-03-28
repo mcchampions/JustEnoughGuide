@@ -41,6 +41,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
@@ -122,14 +123,8 @@ public class RTSSearchGroup extends FlexItemGroup {
                     return;
                 }
                 // Use reflection to avoid InventoryView compatibility issues
-                Object view = player.getOpenInventory();
-                Inventory openingInventory;
-                try {
-                    // Get top inventory using ReflectionUtil to avoid casting InventoryView
-                    openingInventory = (Inventory) ReflectionUtil.invokeMethod(view, "getTopInventory");
-                } catch (Exception e) {
-                    return;
-                }
+                InventoryView view = player.getOpenInventory();
+                Inventory openingInventory = view.getTopInventory();
                 if (openingInventory instanceof AnvilInventory anvilInventory
                         && openingInventory.equals(inventory)) {
                     String oldSearchTerm = searchTermCopy.get(player);
