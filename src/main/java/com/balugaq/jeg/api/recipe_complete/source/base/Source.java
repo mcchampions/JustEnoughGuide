@@ -127,7 +127,7 @@ public interface Source {
 
     @SuppressWarnings("ConstantValue")
     default @Nullable List<@Nullable RecipeChoice> getRecipe(Player player, @Nullable SlimefunItem origin, ItemStack itemStack) {
-        SlimefunItem sf = origin == null ? SlimefunItem.getByItem(itemStack) : origin;
+        SlimefunItem sf = origin == null ? QsItemUtils.getByItem(itemStack) : origin;
         var r = getSpecialRecipe(player, itemStack, sf);
         if (r != null) return r;
         if (sf != null) {

@@ -50,7 +50,6 @@ import com.balugaq.jeg.utils.GuideUtil;
 import com.balugaq.jeg.utils.clickhandler.OnClick;
 import com.balugaq.jeg.utils.clickhandler.OnDisplay;
 import com.balugaq.jeg.utils.formatter.Formats;
-import com.google.common.base.Preconditions;
 
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
@@ -107,11 +106,6 @@ public class VanillaItemsGroup extends BaseGroup<VanillaItemsGroup> {
     }
 
     private static VanillaItem createSlimefunItem(Material material) {
-        Preconditions.checkArgument(material != null, "The material cannot be null.");
-        Preconditions.checkArgument(!material.isAir(), "The material cannot be air.");
-        Preconditions.checkArgument(material.isItem(), "The material must be an item.");
-        Preconditions.checkArgument(!material.isLegacy(), "The material cannot be legacy.");
-
         VanillaItem vi = VanillaItem.create(material);
         vi.register(JustEnoughGuide.getInstance());
         return vi;

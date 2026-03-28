@@ -93,7 +93,7 @@ public class SlimefunIdPatchListener implements ItemPatchListener {
             return;
         }
 
-        SlimefunItem sf = SlimefunItem.getByItem(itemStack);
+        SlimefunItem sf = QsItemUtils.getByItem(itemStack);
         if (sf == null) {
             return;
         }

@@ -68,7 +68,7 @@ public class CerPatchListener implements ItemPatchListener {
             return;
         }
 
-        SlimefunItem sf = SlimefunItem.getByItem(is);
+        SlimefunItem sf = QsItemUtils.getByItem(is);
         if (sf == null) {
             return;
         }

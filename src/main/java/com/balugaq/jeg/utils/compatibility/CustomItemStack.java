@@ -43,8 +43,6 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Range;
 import org.jspecify.annotations.NullMarked;
 
-import com.google.common.base.Preconditions;
-
 import io.github.thebusybiscuit.slimefun4.libraries.dough.common.ChatColors;
 
 /**
@@ -99,7 +97,6 @@ public class CustomItemStack implements Cloneable {
      */
     public CustomItemStack(ItemStack itemStack, Consumer<ItemMeta> itemMetaConsumer) {
         this.delegate = itemStack.clone();
-        Preconditions.checkNotNull(itemMetaConsumer, "ItemMeta consumer cannot be null");
         editItemMeta(itemMetaConsumer);
     }
 
@@ -112,8 +109,6 @@ public class CustomItemStack implements Cloneable {
      * @return the CustomItemStack with the edited metadata
      */
     public CustomItemStack editItemMeta(Consumer<ItemMeta> itemMetaConsumer) {
-        Preconditions.checkNotNull(itemMetaConsumer, "ItemMeta consumer cannot be null");
-
         ItemMeta meta = delegate.getItemMeta();
         if (meta != null) {
             itemMetaConsumer.accept(meta);
@@ -172,7 +167,7 @@ public class CustomItemStack implements Cloneable {
      * @return the translated string
      */
     public static String color(String raw) {
-        return ChatColors.color(Preconditions.checkNotNull(raw, "raw cannot be null"));
+        return ChatColors.color(raw);
     }
 
     /**
@@ -365,8 +360,6 @@ public class CustomItemStack implements Cloneable {
      * @return the CustomItemStack with the added flags
      */
     public CustomItemStack addFlags(ItemFlag... flags) {
-        Preconditions.checkNotNull(flags, "flags cannot be null");
-        Preconditions.checkArgument(flags.length > 0, "flags cannot be empty");
         return editItemMeta(meta -> meta.addItemFlags(flags));
     }
 
@@ -388,8 +381,6 @@ public class CustomItemStack implements Cloneable {
      * @return the CustomItemStack with the edited stack
      */
     public CustomItemStack editItemStack(Consumer<ItemStack> itemStackConsumer) {
-        Preconditions.checkNotNull(itemStackConsumer, "ItemStack consumer cannot be null");
-
         itemStackConsumer.accept(delegate);
         return this;
     }

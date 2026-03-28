@@ -60,7 +60,7 @@ public class MomotechCreativeItemRecipeCompletePrecheckListener implements Liste
         }
 
         ItemStack target = ItemPatchListener.untag(session.getEvent().getClickedItem());
-        SlimefunItem sf = SlimefunItem.getByItem(target);
+        SlimefunItem sf = QsItemUtils.getByItem(target);
         if (sf == null) return;
         String id = sf.getId();
         if (!"MOMOTECH_CREATIVE".equals(id) && !"MOMOTECH_CREATIVE_1".equals(id) && !"MOMOTECH_NONE".equals(id)) {

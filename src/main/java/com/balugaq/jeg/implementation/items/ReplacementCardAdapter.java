@@ -157,7 +157,7 @@ public class ReplacementCardAdapter {
             return null;
         }
 
-        SlimefunItem sf = SlimefunItem.getByItem(itemStack);
+        SlimefunItem sf = QsItemUtils.getByItem(itemStack);
         if (sf != null) {
             return getReplacementCards(sf.getId());
         }

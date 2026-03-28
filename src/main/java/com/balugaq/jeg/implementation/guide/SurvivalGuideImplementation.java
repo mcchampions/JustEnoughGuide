@@ -358,7 +358,7 @@ public class SurvivalGuideImplementation extends SurvivalSlimefunGuide implement
             return;
         }
 
-        SlimefunItem sfItem = SlimefunItem.getByItem(item);
+        SlimefunItem sfItem = QsItemUtils.getByItem(item);
 
         if (sfItem != null && !(sfItem instanceof VanillaItemShade)) {
             displayItem(profile, sfItem, addToHistory);

@@ -32,6 +32,7 @@ import java.util.function.Consumer;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import me.qscbm.jeg.utils.QsItemUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -81,7 +82,7 @@ public interface JEGSlimefunGuideImplementation extends SlimefunGuideImplementat
     @Deprecated(forRemoval = true)
     static ItemStack getDisplayItem(Player p, boolean isSlimefunRecipe, ItemStack item) {
         if (isSlimefunRecipe) {
-            SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
+            SlimefunItem slimefunItem = QsItemUtils.getByItem(item);
 
             if (slimefunItem == null) {
                 return item;

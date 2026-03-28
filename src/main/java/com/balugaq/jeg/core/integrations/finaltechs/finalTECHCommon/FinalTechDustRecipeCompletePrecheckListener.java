@@ -62,7 +62,7 @@ public class FinalTechDustRecipeCompletePrecheckListener implements Listener {
         }
 
         ItemStack target = ItemPatchListener.untag(session.getEvent().getClickedItem());
-        SlimefunItem sf = SlimefunItem.getByItem(target);
+        SlimefunItem sf = QsItemUtils.getByItem(target);
         if (sf == null) return;
         String id = sf.getId();
         if (!"FINALTECH_ORDERED_DUST".equals(id) && !"FINALTECH_UNORDERED_DUST".equals(id) && !"_FINALTECH_ORDERED_DUST".equals(id) && !"_FINALTECH_UNORDERED_DUST".equals(id)) {

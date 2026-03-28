@@ -199,7 +199,7 @@ public abstract class AbstractItemSettingsGuideOption implements SlimefunGuideOp
     }
 
     private void setItemStack(Player p, NamespacedKey k, int index, ItemStack item) {
-        SlimefunItem sf = SlimefunItem.getByItem(item);
+        SlimefunItem sf = QsItemUtils.getByItem(item);
         if (sf == null) {
             Material material = item.getType();
             setItemStack(p, k, index, "mc:" + material.name().toLowerCase());

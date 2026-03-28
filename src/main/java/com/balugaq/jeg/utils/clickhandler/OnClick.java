@@ -1057,7 +1057,7 @@ public interface OnClick {
             return withItem(sf, (event, player, slot, s, action) -> EventUtil.callEvent(new GuideEvents.ItemButtonClickEvent(player, event.getCurrentItem(), slot, action, menu, guide)).ifSuccess(() -> {
                 ItemStack item = event.getCurrentItem();
                 if (item == null) return false;
-                SlimefunItem slimefunItem = sf == null ? SlimefunItem.getByItem(item) : sf;
+                SlimefunItem slimefunItem = sf == null ? QsItemUtils.getByItem(item) : sf;
                 ClickType clickType = event.getClick();
                 if (clickType == ClickType.DOUBLE_CLICK) return false;
                 // F键
@@ -1218,7 +1218,7 @@ public interface OnClick {
                                                                                action, menu, page) -> {
                                 PlayerProfile playerProfile = PlayerProfile.find(player).orElse(null);
                                 if (playerProfile == null) return;
-                                if (slimefunItem == null) slimefunItem = SlimefunItem.getByItem(item);
+                                if (slimefunItem == null) slimefunItem = QsItemUtils.getByItem(item);
                                 if (slimefunItem == null) return;
 
                                 GuideUtil.removeLastEntry(playerProfile.getGuideHistory());
@@ -1281,7 +1281,7 @@ public interface OnClick {
                     Action.of(
                             "left-click", "物品标记", Material.WRITABLE_BOOK, (guide, player, slot, slimefunItem, item,
                                                                                action, menu, page) -> {
-                                if (slimefunItem == null) slimefunItem = SlimefunItem.getByItem(item);
+                                if (slimefunItem == null) slimefunItem = QsItemUtils.getByItem(item);
                                 if (slimefunItem == null) return;
                                 SlimefunItem finalSlimefunItem = slimefunItem;
                                 EventUtil.callEvent(new GuideEvents.CollectItemEvent(
@@ -1445,7 +1445,7 @@ public interface OnClick {
                             "shift-left-click", "打开物品所在物品组/OP: 取下物品", Material.CAULDRON, (guide, player, slot, slimefunItem,
                                                                                           item, clickAction, menu,
                                                                                           p2) -> {
-                                if (slimefunItem == null) slimefunItem = SlimefunItem.getByItem(item);
+                                if (slimefunItem == null) slimefunItem = QsItemUtils.getByItem(item);
                                 if (slimefunItem == null) return;
 
                                 if (player.isOp() || player.hasPermission("slimefun.cheat.items")) {

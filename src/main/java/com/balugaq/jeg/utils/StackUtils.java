@@ -74,16 +74,6 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 @NullMarked
 public class StackUtils {
-    public static final boolean IS_1_17_1 =
-            MinecraftVersion.current().isAtLeast(MinecraftVersion.V1_17_1);
-    public static final boolean IS_1_19_4 =
-            MinecraftVersion.current().isAtLeast(MinecraftVersion.V1_19_4);
-    public static final boolean IS_1_20 =
-            MinecraftVersion.current().isAtLeast(MinecraftVersion.V1_20);
-    public static final boolean IS_1_20_5 =
-            MinecraftVersion.current().isAtLeast(MinecraftVersion.V1_20_5);
-    public static final boolean IS_1_21 =
-            MinecraftVersion.current().isAtLeast(MinecraftVersion.V1_21);
 
     public static ItemStack getAsQuantity(@Nullable ItemStack itemStack, int amount) {
         if (itemStack == null) {
@@ -97,11 +87,8 @@ public class StackUtils {
     /**
      * Checks if items match each other, checks go in order from lightest to heaviest
      *
-     * @param itemStack0
-     *         The {@link ItemStack} to compare against
-     * @param itemStack
-     *         The {@link ItemStack} being evaluated
-     *
+     * @param itemStack0 The {@link ItemStack} to compare against
+     * @param itemStack  The {@link ItemStack} being evaluated
      * @return True if items match
      */
     public static boolean itemsMatch(@Nullable ItemStack itemStack0, @Nullable ItemStack itemStack) {
@@ -111,19 +98,12 @@ public class StackUtils {
     /**
      * Checks if items match each other, checks go in order from lightest to heaviest
      *
-     * @param itemStack0
-     *         The {@link ItemStack} to compare against
-     * @param itemStack
-     *         The {@link ItemStack} being evaluated
-     * @param checkLore
-     *         If lore should be checked
-     * @param checkAmount
-     *         If amount should be checked
-     * @param checkCustomModelId
-     *         If custom model id should be checked
-     * @param checkPersistentDataContainer
-     *         If persistent data container should be checked
-     *
+     * @param itemStack0                   The {@link ItemStack} to compare against
+     * @param itemStack                    The {@link ItemStack} being evaluated
+     * @param checkLore                    If lore should be checked
+     * @param checkAmount                  If amount should be checked
+     * @param checkCustomModelId           If custom model id should be checked
+     * @param checkPersistentDataContainer If persistent data container should be checked
      * @return True if items match
      */
     @SuppressWarnings({"UnstableApiUsage", "OptionalIsPresent"})
@@ -200,7 +180,7 @@ public class StackUtils {
 
         // PDCs don't match
         if (checkPersistentDataContainer
-                && !itemMeta.getPersistentDataContainer().equals(cachedMeta.getPersistentDataContainer())) {
+            && !itemMeta.getPersistentDataContainer().equals(cachedMeta.getPersistentDataContainer())) {
             return false;
         }
 
@@ -219,57 +199,56 @@ public class StackUtils {
         final boolean hasAttributeTwo = cachedMeta.hasAttributeModifiers();
         if (hasAttributeOne) {
             if (!hasAttributeTwo
-                    || !Objects.equals(itemMeta.getAttributeModifiers(), cachedMeta.getAttributeModifiers())) {
+                || !Objects.equals(itemMeta.getAttributeModifiers(), cachedMeta.getAttributeModifiers())) {
                 return false;
             }
         } else if (hasAttributeTwo) {
             return false;
         }
 
-        if (IS_1_20_5) {
-            // Check if fire-resistant
-            if (itemMeta.isFireResistant() != cachedMeta.isFireResistant()) {
-                return false;
-            }
+        // Check if fire-resistant
+        if (itemMeta.isFireResistant() != cachedMeta.isFireResistant()) {
+            return false;
+        }
 
-            // Check if unbreakable
-            if (itemMeta.isUnbreakable() != cachedMeta.isUnbreakable()) {
-                return false;
-            }
+        // Check if unbreakable
+        if (itemMeta.isUnbreakable() != cachedMeta.isUnbreakable()) {
+            return false;
+        }
 
-            // Check if hide tooltip
-            if (itemMeta.isHideTooltip() != cachedMeta.isHideTooltip()) {
-                return false;
-            }
+        // Check if hide tooltip
+        if (itemMeta.isHideTooltip() != cachedMeta.isHideTooltip()) {
+            return false;
+        }
 
-            // Check rarity
-            final boolean hasRarityOne = itemMeta.hasRarity();
-            final boolean hasRarityTwo = cachedMeta.hasRarity();
-            if (hasRarityOne) {
-                if (!hasRarityTwo || itemMeta.getRarity() != cachedMeta.getRarity()) {
-                    return false;
-                }
-            } else if (hasRarityTwo) {
+        // Check rarity
+        final boolean hasRarityOne = itemMeta.hasRarity();
+        final boolean hasRarityTwo = cachedMeta.hasRarity();
+        if (hasRarityOne) {
+            if (!hasRarityTwo || itemMeta.getRarity() != cachedMeta.getRarity()) {
                 return false;
             }
+        } else if (hasRarityTwo) {
+            return false;
+        }
 
-            // Check food components
-            if (itemMeta.hasFood() && cachedMeta.hasFood()) {
-                if (!Objects.equals(itemMeta.getFood(), cachedMeta.getFood())) {
-                    return false;
-                }
-            } else if (itemMeta.hasFood() != cachedMeta.hasFood()) {
+        // Check food components
+        if (itemMeta.hasFood() && cachedMeta.hasFood()) {
+            if (!Objects.equals(itemMeta.getFood(), cachedMeta.getFood())) {
                 return false;
             }
+        } else if (itemMeta.hasFood() != cachedMeta.hasFood()) {
+            return false;
+        }
 
-            // Check tool components
-            if (itemMeta.hasTool() && cachedMeta.hasTool()) {
-                if (!Objects.equals(itemMeta.getTool(), cachedMeta.getTool())) {
-                    return false;
-                }
-            } else if (itemMeta.hasTool() != cachedMeta.hasTool()) {
+        // Check tool components
+        if (itemMeta.hasTool() && cachedMeta.hasTool()) {
+            if (!Objects.equals(itemMeta.getTool(), cachedMeta.getTool())) {
                 return false;
             }
+        } else if (itemMeta.hasTool() != cachedMeta.hasTool()) {
+            return false;
+        }
 
             /*
              * Bad 1.21, pom.xml couldn't use Paper 1.21+, otherwise the builds will boom.
@@ -285,7 +264,7 @@ public class StackUtils {
                 }
             }
              */
-        }
+
 
         // Check the lore
         if (checkLore) {
@@ -334,22 +313,21 @@ public class StackUtils {
             }
         }
 
-        if (IS_1_17_1) {
-            // Axolotl
-            if (metaOne instanceof AxolotlBucketMeta instanceOne && metaTwo instanceof AxolotlBucketMeta instanceTwo) {
-                if (instanceOne.hasVariant() != instanceTwo.hasVariant()) {
-                    return true;
-                }
+        // Axolotl
+        if (metaOne instanceof AxolotlBucketMeta instanceOne && metaTwo instanceof AxolotlBucketMeta instanceTwo) {
+            if (instanceOne.hasVariant() != instanceTwo.hasVariant()) {
+                return true;
+            }
 
-                if (!instanceOne.hasVariant() || !instanceTwo.hasVariant()) {
-                    return true;
-                }
+            if (!instanceOne.hasVariant() || !instanceTwo.hasVariant()) {
+                return true;
+            }
 
-                if (instanceOne.getVariant() != instanceTwo.getVariant()) {
-                    return true;
-                }
+            if (instanceOne.getVariant() != instanceTwo.getVariant()) {
+                return true;
             }
         }
+
 
         // Banner
         if (metaOne instanceof BannerMeta instanceOne && metaTwo instanceof BannerMeta instanceTwo) {
@@ -428,7 +406,7 @@ public class StackUtils {
 
         // Enchantment Storage
         if (metaOne instanceof EnchantmentStorageMeta instanceOne
-                && metaTwo instanceof EnchantmentStorageMeta instanceTwo) {
+            && metaTwo instanceof EnchantmentStorageMeta instanceTwo) {
             if (instanceOne.hasStoredEnchants() != instanceTwo.hasStoredEnchants()) {
                 return true;
             }
@@ -485,14 +463,9 @@ public class StackUtils {
 
         // Potion
         if (metaOne instanceof PotionMeta instanceOne && metaTwo instanceof PotionMeta instanceTwo) {
-            if (IS_1_20_5) {
-                if (instanceOne.getBasePotionType() != instanceTwo.getBasePotionType()) {
-                    return true;
-                }
-            } else {
-                if (!Objects.equals(instanceOne.getBasePotionData(), instanceTwo.getBasePotionData())) {
-                    return true;
-                }
+
+            if (instanceOne.getBasePotionType() != instanceTwo.getBasePotionType()) {
+                return true;
             }
             if (instanceOne.hasCustomEffects() != instanceTwo.hasCustomEffects()) {
                 return true;
@@ -531,7 +504,7 @@ public class StackUtils {
 
         // Fish Bucket
         if (metaOne instanceof TropicalFishBucketMeta instanceOne
-                && metaTwo instanceof TropicalFishBucketMeta instanceTwo) {
+            && metaTwo instanceof TropicalFishBucketMeta instanceTwo) {
             if (instanceOne.hasVariant() != instanceTwo.hasVariant()) {
                 return true;
             }
@@ -557,45 +530,41 @@ public class StackUtils {
             }
         }
 
-        if (IS_1_19_4) {
-            // Music Instrument
-            if (metaOne instanceof MusicInstrumentMeta instanceOne && metaTwo instanceof MusicInstrumentMeta instanceTwo) {
-                if (!Objects.equals(instanceOne.getInstrument(), instanceTwo.getInstrument())) {
-                    return true;
-                }
+        // Music Instrument
+        if (metaOne instanceof MusicInstrumentMeta instanceOne && metaTwo instanceof MusicInstrumentMeta instanceTwo) {
+            if (!Objects.equals(instanceOne.getInstrument(), instanceTwo.getInstrument())) {
+                return true;
             }
         }
 
+
         // Armor
-        if (IS_1_20) {
-            if (metaOne instanceof ArmorMeta instanceOne && metaTwo instanceof ArmorMeta instanceTwo) {
-                if (!Objects.equals(instanceOne.getTrim(), instanceTwo.getTrim())) {
-                    return true;
-                }
+        if (metaOne instanceof ArmorMeta instanceOne && metaTwo instanceof ArmorMeta instanceTwo) {
+            if (!Objects.equals(instanceOne.getTrim(), instanceTwo.getTrim())) {
+                return true;
+            }
+        }
+
+        // Writable Book
+        if (metaOne instanceof WritableBookMeta instanceOne && metaTwo instanceof WritableBookMeta instanceTwo) {
+            if (instanceOne.getPageCount() != instanceTwo.getPageCount()) {
+                return true;
+            }
+            if (!Objects.equals(instanceOne.getPages(), instanceTwo.getPages())) {
+                return true;
+            }
+        }
+        // Ominous Bottle
+        if (metaOne instanceof OminousBottleMeta instanceOne
+            && metaTwo instanceof OminousBottleMeta instanceTwo) {
+            if (instanceOne.hasAmplifier() != instanceTwo.hasAmplifier()) {
+                return true;
             }
 
-            if (IS_1_20_5) {
-                // Writable Book
-                if (metaOne instanceof WritableBookMeta instanceOne && metaTwo instanceof WritableBookMeta instanceTwo) {
-                    if (instanceOne.getPageCount() != instanceTwo.getPageCount()) {
-                        return true;
-                    }
-                    if (!Objects.equals(instanceOne.getPages(), instanceTwo.getPages())) {
-                        return true;
-                    }
-                }
-                if (IS_1_21) {
-                    // Ominous Bottle
-                    if (metaOne instanceof OminousBottleMeta instanceOne
-                            && metaTwo instanceof OminousBottleMeta instanceTwo) {
-                        if (instanceOne.hasAmplifier() != instanceTwo.hasAmplifier()) {
-                            return true;
-                        }
-
-                        if (instanceOne.getAmplifier() != instanceTwo.getAmplifier()) {
-                            return true;
-                        }
-                    }
+            if (instanceOne.getAmplifier() != instanceTwo.getAmplifier()) {
+                return true;
+            }
+        }
                     /*
                      * Bad 1.21, pom.xml couldn't use Paper 1.21+, otherwise the builds will boom.
                      *
@@ -605,9 +574,7 @@ public class StackUtils {
                          return Objects.equals(instanceOne.getBaseColor(), instanceTwo.getBaseColor());
                      }
                      */
-                }
-            }
-        }
+
 
         // Cannot escape via any meta extension check
         return false;
@@ -616,13 +583,9 @@ public class StackUtils {
     /**
      * Checks if items match each other, checks go in order from lightest to heaviest
      *
-     * @param itemStack0
-     *         The {@link ItemStack} to compare against
-     * @param itemStack
-     *         The {@link ItemStack} being evaluated
-     * @param checkLore
-     *         If lore should be checked
-     *
+     * @param itemStack0 The {@link ItemStack} to compare against
+     * @param itemStack  The {@link ItemStack} being evaluated
+     * @param checkLore  If lore should be checked
      * @return True if items match
      */
     public static boolean itemsMatch(@Nullable ItemStack itemStack0, @Nullable ItemStack itemStack, boolean checkLore) {
@@ -632,15 +595,10 @@ public class StackUtils {
     /**
      * Checks if items match each other, checks go in order from lightest to heaviest
      *
-     * @param itemStack0
-     *         The {@link ItemStack} to compare against
-     * @param itemStack
-     *         The {@link ItemStack} being evaluated
-     * @param checkLore
-     *         If lore should be checked
-     * @param checkAmount
-     *         If amount should be checked
-     *
+     * @param itemStack0  The {@link ItemStack} to compare against
+     * @param itemStack   The {@link ItemStack} being evaluated
+     * @param checkLore   If lore should be checked
+     * @param checkAmount If amount should be checked
      * @return True if items match
      */
     public static boolean itemsMatch(
@@ -651,17 +609,11 @@ public class StackUtils {
     /**
      * Checks if items match each other, checks go in order from lightest to heaviest
      *
-     * @param itemStack0
-     *         The {@link ItemStack} to compare against
-     * @param itemStack
-     *         The {@link ItemStack} being evaluated
-     * @param checkLore
-     *         If lore should be checked
-     * @param checkAmount
-     *         If amount should be checked
-     * @param checkCustomModelId
-     *         If custom model id should be checked
-     *
+     * @param itemStack0         The {@link ItemStack} to compare against
+     * @param itemStack          The {@link ItemStack} being evaluated
+     * @param checkLore          If lore should be checked
+     * @param checkAmount        If amount should be checked
+     * @param checkCustomModelId If custom model id should be checked
      * @return True if items match
      */
     public static boolean itemsMatch(

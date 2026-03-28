@@ -53,7 +53,7 @@ public interface ItemPatchListener extends Listener, Keyed {
         if (dirty == null || dirty.getType() == Material.AIR) {
             return null;
         }
-        SlimefunItem sfi = SlimefunItem.getByItem(dirty);
+        SlimefunItem sfi = QsItemUtils.getByItem(dirty);
         return sfi == null ? new ItemStack(dirty.getType()) : sfi.getItem();
     }
 

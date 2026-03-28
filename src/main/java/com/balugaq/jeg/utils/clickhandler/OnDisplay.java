@@ -444,7 +444,7 @@ public interface OnDisplay {
 
         static Item display(Player player, ItemStack itemStack, DisplayType type,
                             JEGSlimefunGuideImplementation guide) {
-            SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+            SlimefunItem slimefunItem = QsItemUtils.getByItem(itemStack);
             if (slimefunItem == null) {
                 slimefunItem = Vanilla.findSlimefunItem(itemStack);
             }

@@ -53,7 +53,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 public class QuantumStoragePlayerInventoryItemSeeker implements RecipeCompletableListener.PlayerInventoryItemSeeker {
     @Override
     public @NonNegative int getItemStack(final RecipeCompleteSession session, final ItemStack target, final ItemStack item, int amount) {
-        if (!(SlimefunItem.getByItem(item) instanceof NetworkQuantumStorage nqs)) {
+        if (!(QsItemUtils.getByItem(item) instanceof NetworkQuantumStorage nqs)) {
             return 0;
         }
 

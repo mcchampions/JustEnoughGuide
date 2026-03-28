@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.qscbm.jeg.utils.QsItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.CookingRecipe;
@@ -95,7 +96,7 @@ public class ValueTable {
             return valueMap.get(hash) * amount;
         }
 
-        SlimefunItem sf = SlimefunItem.getByItem(itemStack);
+        SlimefunItem sf = QsItemUtils.getByItem(itemStack);
         double v;
         if (sf != null) {
             v = getItemValueSlimefun(sf, 0);
@@ -559,7 +560,7 @@ public class ValueTable {
 
         for (ItemStack itemStack : recipe) {
             if (itemStack != null) {
-                SlimefunItem slimefunItem = SlimefunItem.getByItem(itemStack);
+                SlimefunItem slimefunItem = QsItemUtils.getByItem(itemStack);
                 double itemValue;
                 if (slimefunItem != null) {
                     itemValue = getItemValueSlimefun(slimefunItem, depth) * itemStack.getAmount();

@@ -166,7 +166,7 @@ public class CheatGuideImplementation extends CheatSheetSlimefunGuide implements
 
     public static ItemStack getDisplayItem(Player p, boolean isSlimefunRecipe, ItemStack item) {
         if (isSlimefunRecipe) {
-            SlimefunItem slimefunItem = SlimefunItem.getByItem(item);
+            SlimefunItem slimefunItem = QsItemUtils.getByItem(item);
 
             if (slimefunItem == null) {
                 return item;
@@ -432,7 +432,7 @@ public class CheatGuideImplementation extends CheatSheetSlimefunGuide implements
             return;
         }
 
-        SlimefunItem sfItem = SlimefunItem.getByItem(item);
+        SlimefunItem sfItem = QsItemUtils.getByItem(item);
 
         if (sfItem != null && !(sfItem instanceof VanillaItemShade)) {
             displayItem(profile, sfItem, addToHistory);
