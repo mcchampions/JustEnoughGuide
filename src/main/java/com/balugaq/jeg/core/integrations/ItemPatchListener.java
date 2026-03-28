@@ -27,6 +27,7 @@
 
 package com.balugaq.jeg.core.integrations;
 
+import me.qscbm.jeg.utils.QsItemUtils;
 import org.bukkit.Keyed;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

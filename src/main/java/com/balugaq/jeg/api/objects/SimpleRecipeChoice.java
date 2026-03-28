@@ -27,10 +27,12 @@
 
 package com.balugaq.jeg.api.objects;
 
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
+import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 
 import com.balugaq.jeg.utils.StackUtils;
@@ -41,17 +43,86 @@ import com.balugaq.jeg.utils.StackUtils;
  */
 @SuppressWarnings("unused")
 @NullMarked
-public class SimpleRecipeChoice extends RecipeChoice.ExactChoice implements RecipeChoice {
-    public SimpleRecipeChoice(ItemStack choice) {
-        super(choice);
+public class SimpleRecipeChoice implements RecipeChoice {
+    private List<ItemStack> choices;
+    private Predicate<ItemStack> predicate = null;
+
+    public SimpleRecipeChoice(ItemStack stack) {
+        this(List.of(stack));
     }
 
-    public SimpleRecipeChoice(ItemStack... choices) {
-        super(choices);
+    public SimpleRecipeChoice(ItemStack... stacks) {
+        this(Arrays.asList(stacks));
     }
 
     public SimpleRecipeChoice(List<ItemStack> choices) {
-        super(choices);
+        this.choices = new ArrayList<>(choices);
+    }
+
+    /** @deprecated */
+    @Deprecated(
+            since = "1.13.1"
+    )
+    public ItemStack getItemStack() {
+        return this.choices.get(0).clone();
+    }
+
+    public List<ItemStack> getChoices() {
+        return Collections.unmodifiableList(this.choices);
+    }
+
+    public SimpleRecipeChoice clone() {
+        try {
+            SimpleRecipeChoice clone = (SimpleRecipeChoice)super.clone();
+            clone.choices = new ArrayList<>(this.choices.size());
+
+            for (ItemStack choice : this.choices) {
+                clone.choices.add(choice.clone());
+            }
+
+            return clone;
+        } catch (CloneNotSupportedException var4) {
+            throw new AssertionError(var4);
+        }
+    }
+
+    public @Nullable Predicate<ItemStack> getPredicate() {
+        return this.predicate;
+    }
+
+    public void setPredicate(@Nullable Predicate<ItemStack> predicate) {
+        this.predicate = predicate;
+    }
+
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.choices);
+        return hash;
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        } else if (obj == null) {
+            return false;
+        } else if (this.getClass() != obj.getClass()) {
+            return false;
+        } else {
+            SimpleRecipeChoice other = (SimpleRecipeChoice)obj;
+            return Objects.equals(this.choices, other.choices);
+        }
+    }
+
+    public String toString() {
+        return "SimpleRecipeChoice{choices=" + this.choices + "}";
+    }
+
+    public RecipeChoice validate(boolean allowEmptyRecipes) {
+        if (this.choices.stream().anyMatch((s) -> s.getType().isAir())) {
+            throw new IllegalArgumentException("SimpleRecipeChoice cannot contain air");
+        } else {
+            return this;
+        }
     }
 
     public boolean test(ItemStack other) {

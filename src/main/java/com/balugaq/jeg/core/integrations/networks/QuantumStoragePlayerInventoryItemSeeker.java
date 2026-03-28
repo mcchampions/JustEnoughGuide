@@ -27,6 +27,7 @@
 
 package com.balugaq.jeg.core.integrations.networks;
 
+import me.qscbm.jeg.utils.QsItemUtils;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;

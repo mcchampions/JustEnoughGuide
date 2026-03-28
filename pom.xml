@@ -185,6 +185,10 @@
 
     <repositories>
         <repository>
+            <id>aliyun</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
@@ -208,20 +212,25 @@
             <id>jeffMediaPublic</id>
             <url>https://repo.jeff-media.com/public</url>
         </repository>
+        <repository>
+            <id>leafmc</id>
+            <url>https://maven.leafmc.one/snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <!-- Core -->
         <dependency>
-            <groupId>io.papermc.paper</groupId>
-            <artifactId>paper-api</artifactId>
-            <version>1.21.10-R0.1-SNAPSHOT</version>
+            <groupId>cn.dreeam.leaf</groupId>
+            <artifactId>leaf-api</artifactId>
+            <version>1.21.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>com.github.SlimefunGuguProject</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>master-SNAPSHOT</version>
+            <version>da10b80ef0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

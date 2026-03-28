@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import me.qscbm.jeg.utils.QsItemUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -398,6 +399,28 @@ public interface Source {
                     List<ItemStack> itemStacks =
                             materialChoice.getChoices().stream().map(ItemStack::new).toList();
                     for (ItemStack itemStack : itemStacks) {
+                        // Issue #64
+                        if (!itemFitter.fits(itemStack, i)) {
+                            continue;
+                        }
+                        ItemStack received = RecipeCompleteProvider.getItemStack(session, itemStack);
+                        if (received != null && received.getType() != Material.AIR) {
+                            session.setPushed(session.getPushed() + received.getAmount());
+                            itemPusher.push(received, i);
+                        } else {
+                            if (!session.isExpired()) {
+                                session.setRecipeDepth(recipeDepth + 1);
+                                completeRecipeWithGuide(
+                                        session,
+                                        itemGetter, itemFitter, itemPusher
+                                );
+                            } else {
+                                sendMissingMaterial(player, itemStack);
+                            }
+                        }
+                    }
+                } else if (choice instanceof SimpleRecipeChoice exactChoice) {
+                    for (ItemStack itemStack : exactChoice.getChoices()) {
                         // Issue #64
                         if (!itemFitter.fits(itemStack, i)) {
                             continue;

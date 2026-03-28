@@ -30,6 +30,7 @@ package com.balugaq.jeg.core.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.qscbm.jeg.utils.QsItemUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;

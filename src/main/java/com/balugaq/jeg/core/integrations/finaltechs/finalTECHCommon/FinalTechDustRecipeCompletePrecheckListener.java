@@ -27,6 +27,7 @@
 
 package com.balugaq.jeg.core.integrations.finaltechs.finalTECHCommon;
 
+import me.qscbm.jeg.utils.QsItemUtils;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

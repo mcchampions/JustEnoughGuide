@@ -27,6 +27,7 @@
 
 package com.balugaq.jeg.core.integrations.momotech;
 
+import me.qscbm.jeg.utils.QsItemUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
