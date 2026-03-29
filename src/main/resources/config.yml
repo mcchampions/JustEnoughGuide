@@ -5,11 +5,10 @@ auto-update: false
 guide:
   survival-improvements: true
   cheat-improvements: false
-  survival-guide-title: "&2&lSlimefun 指南 (生存模式)         &e&l爱来自 JustEnoughGuide"
-  cheat-guide-title: "&c&lSlimefun 指南 (作弊模式)         &e&l爱来自 JustEnoughGuide"
+  survival-guide-title: "&2&lSlimefun 指南 (生存模式)"
+  cheat-guide-title: "&c&lSlimefun 指南 (作弊模式)"
 
 improvements:
-  pinyin-search: true
   bookmark: true
   rts-search: true
   beginner-option: true

@@ -68,7 +68,6 @@ public class ConfigManager extends AbstractManager {
     private final boolean SURVIVAL_IMPROVEMENTS;
     private final boolean CHEAT_IMPROVEMENTS;
     private final boolean RECIPE_COMPLETE;
-    private final boolean PINYIN_SEARCH;
     private final boolean BOOKMARK;
     private final boolean RTS_SEARCH;
     private final boolean BEGINNER_OPTION;
@@ -113,7 +112,6 @@ public class ConfigManager extends AbstractManager {
         this.SURVIVAL_IMPROVEMENTS = cfg.getBoolean("guide.survival-improvements", true);
         this.CHEAT_IMPROVEMENTS = cfg.getBoolean("guide.cheat-improvements", true);
         this.RECIPE_COMPLETE = cfg.getBoolean("guide.recipe-complete", true);
-        this.PINYIN_SEARCH = cfg.getBoolean("improvements.pinyin-search", true);
         this.BOOKMARK = cfg.getBoolean("improvements.bookmark", true);
         this.SURVIVAL_GUIDE_TITLE = cfg
                 .getString("guide.survival-guide-title", "&2&lSlimefun 指南 (生存模式)         &e&l爱来自 JustEnoughGuide");
@@ -403,7 +401,7 @@ public class ConfigManager extends AbstractManager {
     }
 
     public boolean isPinyinSearch() {
-        return PINYIN_SEARCH;
+        return false;
     }
 
     public boolean isBookmark() {

@@ -95,22 +95,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
         }
 
         final AtomicInteger index = new AtomicInteger(0);
-        doIf(
-                JustEnoughGuide.getConfigManager().isPinyinSearch(),
-                () -> addGuide(
-                        GUIDE_SLOTS[index.getAndIncrement()],
-                        Converter.getItem(Material.CLOCK, "&b功能: 拼音搜索", "&b介绍: 你可以通过拼音搜索指南来快速找到你想要的物品。", "&b点击尝试功能。"),
-                        (p, s, i, a) -> {
-                            try {
-                                p.performCommand("sf search ding");
-                            } catch (Exception e) {
-                                p.sendMessage("§c无法执行操作，请检查粘液科技是否正确安装。");
-                                Debug.trace(e);
-                            }
-                            return false;
-                        }
-                )
-        );
 
         addGuide(
                 GUIDE_SLOTS[index.getAndIncrement()],

@@ -623,7 +623,7 @@ public class CheatGuideImplementation extends CheatSheetSlimefunGuide implements
         String searchTerm = ChatColor.stripColor(input.toLowerCase(Locale.ROOT));
         SearchGroup.searchTerms.put(p.getUniqueId(), searchTerm);
         SearchGroup group = new SearchGroup(
-                this, p, searchTerm, JustEnoughGuide.getConfigManager().isPinyinSearch(), true);
+                this, p, searchTerm, true);
         group.open(p, profile, getMode());
     }
 

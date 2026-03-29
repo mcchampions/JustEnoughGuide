@@ -62,14 +62,14 @@ public enum FilterType {
             SearchGroup::isFullNameApplicable
     ),
     BY_RECIPE_ITEM_NAME(
-            Set.of("#", "能做"), (player, item, lowerFilterValue, pinyin) -> {
+            Set.of("#", "能做"), (player, item, lowerFilterValue) -> {
         ItemStack[] recipe = item.getRecipe();
         if (recipe == null) {
             return false;
         }
 
         for (ItemStack itemStack : recipe) {
-            if (SearchGroup.isSearchFilterApplicable(itemStack, lowerFilterValue, false)) {
+            if (SearchGroup.isSearchFilterApplicable(itemStack, lowerFilterValue)) {
                 return true;
             }
         }
@@ -78,18 +78,18 @@ public enum FilterType {
     }
     ),
     BY_RECIPE_TYPE_NAME(
-            "$", (player, item, lowerFilterValue, pinyin) -> {
+            "$", (player, item, lowerFilterValue) -> {
         ItemStack recipeTypeIcon = item.getRecipeType().getItem(player);
         if (recipeTypeIcon == null) {
             return false;
         }
 
-        return SearchGroup.isSearchFilterApplicable(recipeTypeIcon, lowerFilterValue, false);
+        return SearchGroup.isSearchFilterApplicable(recipeTypeIcon, lowerFilterValue);
     }
     ),
     BY_DISPLAY_ITEM_NAME(
             Set.of("%", "产"),
-            (player, item, lowerFilterValue, pinyin) -> {
+            (player, item, lowerFilterValue) -> {
                 List<ItemStack> display = null;
                 if (item instanceof AContainer ac) {
                     // Fix: Cannot search item when SlimeCustomizer crashed
@@ -107,7 +107,7 @@ public enum FilterType {
                 if (display != null) {
                     try {
                         for (ItemStack itemStack : display) {
-                            if (SearchGroup.isSearchFilterApplicable(itemStack, lowerFilterValue, false)) {
+                            if (SearchGroup.isSearchFilterApplicable(itemStack, lowerFilterValue)) {
                                 return true;
                             }
                         }
@@ -122,7 +122,7 @@ public enum FilterType {
                     Set<String> cache = ref.get();
                     if (cache != null) {
                         for (String s : cache) {
-                            if (SearchGroup.isSearchFilterApplicable(s, lowerFilterValue, false)) {
+                            if (SearchGroup.isSearchFilterApplicable(s, lowerFilterValue)) {
                                 return true;
                             }
                         }
@@ -133,7 +133,7 @@ public enum FilterType {
             }
     ),
     BY_ADDON_NAME(
-            "@", (player, item, lowerFilterValue, pinyin) -> {
+            "@", (player, item, lowerFilterValue) -> {
         SlimefunAddon addon = item.getAddon();
         String localAddonName = LocalHelper.getAddonName(addon, item.getId()).toLowerCase();
         String originModName = (addon == null ? "Slimefun" : addon.getName()).toLowerCase();
@@ -144,13 +144,13 @@ public enum FilterType {
             "!", SearchGroup::isSearchFilterApplicable
     ),
     BY_ITEM_LORE(
-            "^", (player, item, lowerFilterValue, pinyin) -> {
+            "^", (player, item, lowerFilterValue) -> {
         ItemMeta meta = item.getItem().getItemMeta();
         if (meta == null) return false;
         List<String> s = meta.getLore();
         if (s == null) return false;
         for (String lore : s) {
-            if (SearchGroup.isSearchFilterApplicable(lore, lowerFilterValue, pinyin)) {
+            if (SearchGroup.isSearchFilterApplicable(lore, lowerFilterValue)) {
                 return true;
             }
         }
@@ -159,7 +159,7 @@ public enum FilterType {
     ),
     BY_MATERIAL_NAME(
             "~",
-            (player, item, lowerFilterValue, pinyin) -> item.getItem().getType().name().toLowerCase().contains(lowerFilterValue)
+            (player, item, lowerFilterValue) -> item.getItem().getType().name().toLowerCase().contains(lowerFilterValue)
     );
 
     @Unmodifiable
@@ -181,21 +181,19 @@ public enum FilterType {
     }
 
     private final Set<String> symbols;
-    private final DiFunction<Player, SlimefunItem, String, Boolean, Boolean> filter;
+    private final DiFunction<Player, SlimefunItem, String, Boolean> filter;
 
-    FilterType(String symbol, DiFunction<Player, SlimefunItem, String, Boolean, Boolean> filter) {
+    FilterType(String symbol, DiFunction<Player, SlimefunItem, String, Boolean> filter) {
         this(Set.of(symbol), filter);
     }
 
     /**
      * Constructs a new FilterType instance with the specified flag and filter function.
      *
-     * @param symbols
-     *         The string symbols that represent the filter type.
-     * @param filter
-     *         The filter function to determine whether an item matches the filter.
+     * @param symbols The string symbols that represent the filter type.
+     * @param filter  The filter function to determine whether an item matches the filter.
      */
-    FilterType(Set<String> symbols, DiFunction<Player, SlimefunItem, String, Boolean, Boolean> filter) {
+    FilterType(Set<String> symbols, DiFunction<Player, SlimefunItem, String, Boolean> filter) {
         this.symbols = symbols;
         this.filter = filter;
     }
@@ -220,7 +218,7 @@ public enum FilterType {
         return symbols.stream().findFirst().get();
     }
 
-    public interface DiFunction<A, B, C, D, R> {
-        R apply(A a, B b, C c, D d);
+    public interface DiFunction<A, B, C, R> {
+        R apply(A a, B b, C c);
     }
 }
