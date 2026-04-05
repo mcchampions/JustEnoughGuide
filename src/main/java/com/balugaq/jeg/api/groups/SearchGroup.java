@@ -1149,7 +1149,9 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
         }
         return sortByNameFit(merge, actualSearchTerm);
     }
-
+    public List<SlimefunItem> filterItems(Player player, String searchTerm,boolean v) {
+        return filterItems(player,searchTerm);
+    }
     public List<SlimefunItem> filterItems(
             FilterType filterType,
             String filterValue,
