@@ -944,7 +944,6 @@ public class CheatGuideImplementation extends CheatSheetSlimefunGuide implements
             );
         }
 
-        // Search feature!
         for (int s : format.getChars('S')) {
             menu.addItem(s, PatchScope.Search.patch(p, ChestMenuUtils.getSearchButton(p)));
             menu.addMenuClickHandler(
@@ -996,7 +995,6 @@ public class CheatGuideImplementation extends CheatSheetSlimefunGuide implements
             );
         }
 
-        // Search feature!
         for (int s : Formats.main.getChars('S')) {
             menu.addItem(s, PatchScope.Search.patch(p, ChestMenuUtils.getSearchButton(p)));
             menu.addMenuClickHandler(
