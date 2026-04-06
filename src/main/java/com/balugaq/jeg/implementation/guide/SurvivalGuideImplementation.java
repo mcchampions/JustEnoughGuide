@@ -270,7 +270,11 @@ public class SurvivalGuideImplementation extends SurvivalSlimefunGuide implement
         }
 
         if (itemGroup instanceof FlexItemGroup flexItemGroup) {
-            flexItemGroup.open(p, profile, getMode());
+            try {
+                flexItemGroup.open(p, profile, getMode());
+            } catch (Exception ignored) {
+                printErrorMessage0(p, null);
+            }
             return;
         }
 
@@ -866,7 +870,6 @@ public class SurvivalGuideImplementation extends SurvivalSlimefunGuide implement
             );
         }
 
-        // Search feature!
         for (int s : format.getChars('S')) {
             menu.addItem(s, PatchScope.Search.patch(profile, ChestMenuUtils.getSearchButton(p)));
             menu.addMenuClickHandler(
@@ -923,7 +926,6 @@ public class SurvivalGuideImplementation extends SurvivalSlimefunGuide implement
             );
         }
 
-        // Search feature!
         for (int s : Formats.main.getChars('S')) {
             menu.addItem(s, PatchScope.Search.patch(profile, ChestMenuUtils.getSearchButton(p)));
             menu.addMenuClickHandler(

@@ -32,6 +32,7 @@ import com.balugaq.jeg.core.managers.IntegrationManager;
 import com.balugaq.jeg.implementation.JustEnoughGuide;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
+import io.github.thebusybiscuit.slimefun4.api.items.groups.FlexItemGroup;
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
 import lombok.experimental.UtilityClass;
 import me.qscbm.jeg.utils.QsItemUtils;
@@ -73,7 +74,11 @@ public class ReplacementCardAdapter {
         if (JustEnoughGuide.getConfigManager().isAdaptReplacementCards()) {
             for (SlimefunItem sf : new ArrayList<>(Slimefun.getRegistry().getEnabledSlimefunItems())) {
                 for (ItemStack item : sf.getRecipe()) {
-                    if (item != null && item.getType() != Material.AIR && item.getMaxStackSize() == 1 && getReplacementCards(item) != null) {
+                    if (item != null
+                            && item.getType() != Material.AIR
+                            && item.getMaxStackSize() == 1
+                            && !sf.getRecipeType().getKey().getNamespace().equals("logitech")
+                            && getReplacementCards(item) != null) {
                         adaptItem(sf);
                         break;
                     }
@@ -121,7 +126,7 @@ public class ReplacementCardAdapter {
             String newId = "JEG_" + sf.getId() + "_" + retry;
             if (SlimefunItem.getById(newId) != null) continue;
 
-            var newSf = new SlimefunItem(GroupSetup.jegItemsGroup, new SlimefunItemStack(newId, sf.getItem()), sf.getRecipeType(), resultList.toArray(new ItemStack[0]), sf.getRecipeOutput());
+            var newSf = new SlimefunItem(GroupSetup.replacementCardsGroup, new SlimefunItemStack(newId, sf.getItem()), sf.getRecipeType(), resultList.toArray(new ItemStack[0]), sf.getRecipeOutput());
             boolean before = JustEnoughGuide.disableAutomaticallyLoadItems();
             newSf.register(JustEnoughGuide.getInstance());
             try {
@@ -132,7 +137,9 @@ public class ReplacementCardAdapter {
                 }
             } catch (Exception ignored) {
             }
-            newSf.setHidden(true);
+            if (!(newSf.getItemGroup() instanceof FlexItemGroup)) {
+                newSf.setHidden(true);
+            }
             JustEnoughGuide.setAutomaticallyLoadItems(before);
             return;
         }

@@ -50,6 +50,7 @@ import com.balugaq.jeg.api.groups.ActionSelectGroup;
 import com.balugaq.jeg.api.groups.CERRecipeGroup;
 import com.balugaq.jeg.api.groups.KeybindItemsGroup;
 import com.balugaq.jeg.api.groups.KeybindsItemsGroup;
+import com.balugaq.jeg.api.groups.MixedGroup;
 import com.balugaq.jeg.api.groups.RTSSearchGroup;
 import com.balugaq.jeg.api.groups.SearchGroup;
 import com.balugaq.jeg.api.groups.SubKeybindsItemsGroup;
@@ -646,5 +647,13 @@ public final class GuideUtil {
 
     public static void goBack(Player player) {
         PlayerProfile.get(player, GuideUtil::goBack);
+    }
+
+    public static void addItemToGroup(ItemGroup itemGroup, SlimefunItem sf) {
+        if (itemGroup instanceof MixedGroup<?> mixedGroup) {
+            mixedGroup.addItem(sf);
+        } else {
+            itemGroup.add(sf);
+        }
     }
 }

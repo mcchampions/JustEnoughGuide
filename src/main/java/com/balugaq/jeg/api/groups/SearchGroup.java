@@ -43,6 +43,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jspecify.annotations.NullMarked;
 
+import com.balugaq.jeg.api.interfaces.DontShowInSearch;
 import com.balugaq.jeg.api.interfaces.JEGSlimefunGuideImplementation;
 import com.balugaq.jeg.api.interfaces.NotDisplayInCheatMode;
 import com.balugaq.jeg.api.interfaces.NotDisplayInSurvivalMode;
@@ -239,6 +240,10 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                     ENABLED_ITEMS.put(item, i);
                     i += 1;
                     if (item.isHidden() && !SHOW_HIDDEN_ITEM_GROUPS) {
+                        continue;
+                    }
+
+                    if (item.getItemGroup() instanceof DontShowInSearch) {
                         continue;
                     }
 
