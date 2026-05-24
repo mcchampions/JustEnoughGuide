@@ -99,7 +99,7 @@ public enum FilterType {
     ),
     BY_DISPLAY_ITEM_NAME(
             Set.of("%", "产"),
-            (player, item, lowerFilterValue, pinyin) -> {
+            (player, item, lowerFilterValue) -> {
                 // Use the pre-built name cache populated during SearchGroup.init().
                 // This avoids calling getDisplayRecipes() at search time, which would
                 // clone SlimefunItemStacks, construct CraftMetaSkull/CraftPlayerProfile
