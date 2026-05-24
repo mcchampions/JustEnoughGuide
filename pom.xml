@@ -216,6 +216,10 @@
             <id>leafmc</id>
             <url>https://maven.leafmc.one/snapshots/</url>
         </repository>
+        <repository>
+            <id>mvn-wesjd-net</id>
+            <url>https://mvn.wesjd.net/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -228,9 +232,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.SlimefunGuguProject</groupId>
+            <groupId>com.github.mcchampions</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>da10b80ef0</version>
+            <version>4884c60bb4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -365,7 +369,7 @@
         <dependency>
             <groupId>net.wesjd</groupId>
             <artifactId>anvilgui</artifactId>
-            <version>1.10.11-SNAPSHOT</version>
+            <version>1.10.13-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
