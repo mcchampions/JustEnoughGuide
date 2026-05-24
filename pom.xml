@@ -234,7 +234,7 @@
         <dependency>
             <groupId>com.github.mcchampions</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>4884c60bb4</version>
+            <version>0145772ff0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
