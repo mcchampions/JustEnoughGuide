@@ -66,7 +66,7 @@
         <EMCTech-systemPath>${basedir}\lib\EMCTech.jar</EMCTech-systemPath>
         <SlimeHUD-systemPath>${basedir}\lib\SlimeHUD-Build 16.jar</SlimeHUD-systemPath>
         <NetworksExpansion-systemPath>${basedir}\lib\original-NetworksExpansion.jar</NetworksExpansion-systemPath>
-        <java.version>21</java.version>
+        <java.version>24</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
