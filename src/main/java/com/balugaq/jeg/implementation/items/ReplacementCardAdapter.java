@@ -77,7 +77,6 @@ public class ReplacementCardAdapter {
                     if (item != null
                             && item.getType() != Material.AIR
                             && item.getMaxStackSize() == 1
-                            && !sf.getRecipeType().getKey().getNamespace().equals("logitech")
                             && getReplacementCards(item) != null) {
                         adaptItem(sf);
                         break;
