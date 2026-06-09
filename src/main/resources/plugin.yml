@@ -9,6 +9,7 @@ depend:
   - Slimefun
 softdepend:
   - GuizhanLibPlugin # hard dependency
+  - ItemsAdder
 commands:
   justenoughguide:
     aliases:

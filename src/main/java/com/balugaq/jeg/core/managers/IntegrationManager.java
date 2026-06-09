@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import com.balugaq.jeg.core.integrations.ItemsAdderIntegration;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -217,8 +218,8 @@ public class IntegrationManager extends AbstractManager {
             addIntegration(enabledTsingshanTechnology, TsingshanTechnologyIntegrationMain::new);
             addIntegration(enabledWilderNether, WilderNetherIntegrationMain::new);
             addIntegration(true, SlimefunIntegrationMain::new);
+            addIntegration(true, ItemsAdderIntegration::new);
             addIntegration(true, JustEnoughGuideIntegrationMain::new);
-
             startupIntegrations();
         }, 1L);
     }

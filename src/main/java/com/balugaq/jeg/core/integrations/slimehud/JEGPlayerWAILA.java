@@ -33,6 +33,7 @@ import java.util.UUID;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 
+import com.balugaq.jeg.core.integrations.ItemsAdderIntegration;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -241,6 +242,8 @@ public class JEGPlayerWAILA extends PlayerWAILA {
         // JEG Patch end - Player custom HUD location
     }
 
+    public static boolean enableItemsAdder = false;
+
     public void updateFacing0() {
         Block targetBlock = getPlayer().getTargetBlockExact(HUDReachBlockGuideOption.getReachBlock(getPlayer()));
         if (targetBlock == null || targetBlock.getType().isAir()) {
@@ -251,6 +254,19 @@ public class JEGPlayerWAILA extends PlayerWAILA {
         SlimefunItem item = StorageCacheUtils.getSfItem(targetBlock.getLocation());
         if (item == null) {
             if (VanillaBlockHUDDisplayGuideOption.isEnabled(getPlayer())) {
+                if (enableItemsAdder) {
+                    if (ItemsAdderIntegration.isItemsAdder(targetBlock)) {
+                        ReflectionUtil.setValue(this, "facingBlock", ItemsAdderIntegration.getDisplayName(targetBlock));
+                        ReflectionUtil.setValue(this, "facingBlockInfo", "");
+                        ReflectionUtil.setValue(
+                                this, "facing", ChatColor.translateAlternateColorCodes(
+                                        '&',
+                                        getFacingBlock() + (getFacingBlockInfo().isEmpty() ? "" : " &7| " + getFacingBlockInfo())
+                                )
+                        );
+                        return;
+                    }
+                }
                 ReflectionUtil.setValue(this, "facingBlock", SlimeHUDIntegrationMain.getVanillaBlockName(getPlayer(), targetBlock));
                 ReflectionUtil.setValue(this, "facingBlockInfo", "");
                 ReflectionUtil.setValue(
