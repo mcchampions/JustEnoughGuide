@@ -71,7 +71,7 @@ import me.mrCookieSlime.Slimefun.Objects.SlimefunItem.abstractItems.AContainer;
 public class JustEnoughGuideIntegrationMain implements Integration {
     @Override
     public String getHookPlugin() {
-        return "JustEnoughGuide";
+        return JustEnoughGuide.getInstance().getRepo();
     }
 
     @CallTimeSensitive(CallTimeSensitive.AfterSlimefunLoaded)

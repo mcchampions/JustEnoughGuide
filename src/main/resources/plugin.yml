@@ -10,6 +10,8 @@ depend:
 softdepend:
   - GuizhanLibPlugin # hard dependency
   - ItemsAdder
+  - Logitech
+  - PlaceholderAPI
 commands:
   justenoughguide:
     aliases:

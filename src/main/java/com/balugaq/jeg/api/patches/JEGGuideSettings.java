@@ -66,6 +66,21 @@ import io.github.thebusybiscuit.slimefun4.utils.NumberUtils;
 import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import lombok.Getter;
 import me.mrCookieSlime.CSCoreLibPlugin.general.Inventory.ChestMenu;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
+import org.jspecify.annotations.NullMarked;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * @author TheBusyBiscuit
@@ -391,6 +406,10 @@ public class JEGGuideSettings {
     public static List<SlimefunGuideOption<?>> getOptions() {
         return (List<SlimefunGuideOption<?>>)
                 ReflectionUtil.getStaticValue(SlimefunGuideSettings.class, "options", List.class);
+    }
+
+    public static @Nullable SlimefunGuideOption<?> getOption(String key) {
+        return getOptions().stream().filter(o -> o.getKey().getKey().equals(key)).findFirst().orElse(null);
     }
 
     public static void addOption(SlimefunGuideOption<?> option) {

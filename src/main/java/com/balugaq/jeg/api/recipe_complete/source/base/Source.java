@@ -27,13 +27,25 @@
 
 package com.balugaq.jeg.api.recipe_complete.source.base;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import me.qscbm.jeg.utils.QsItemUtils;
+import com.balugaq.jeg.api.objects.menu.VanillaInventoryWrapper;
+import com.balugaq.jeg.api.recipe_complete.RecipeCompletableRegistry;
+import com.balugaq.jeg.api.recipe_complete.RecipeCompleteSession;
+import com.balugaq.jeg.core.listeners.RecipeCompletableListener;
+import com.balugaq.jeg.implementation.option.NoticeMissingMaterialGuideOption;
+import com.balugaq.jeg.implementation.option.RecipeFillingWithNearbyContainerGuideOption;
+import com.balugaq.jeg.implementation.option.RecursiveRecipeFillingGuideOption;
+import com.balugaq.jeg.utils.GuideUtil;
+import com.balugaq.jeg.utils.ReflectionUtil;
+import com.balugaq.jeg.utils.StackUtils;
+import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
+import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
+import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -48,27 +60,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NullMarked;
 
-import com.balugaq.jeg.api.objects.SimpleRecipeChoice;
-import com.balugaq.jeg.api.objects.menu.VanillaInventoryWrapper;
-import com.balugaq.jeg.api.recipe_complete.RecipeCompletableRegistry;
-import com.balugaq.jeg.api.recipe_complete.RecipeCompleteSession;
-import com.balugaq.jeg.core.listeners.RecipeCompletableListener;
-import com.balugaq.jeg.implementation.option.NoticeMissingMaterialGuideOption;
-import com.balugaq.jeg.implementation.option.RecipeFillingWithNearbyContainerGuideOption;
-import com.balugaq.jeg.implementation.option.RecursiveRecipeFillingGuideOption;
-import com.balugaq.jeg.utils.GuideUtil;
-import com.balugaq.jeg.utils.ReflectionUtil;
-import com.balugaq.jeg.utils.StackUtils;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import com.xzavier0722.mc.plugin.slimefun4.storage.util.StorageCacheUtils;
-
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
-import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
-import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import me.mrCookieSlime.Slimefun.api.inventory.BlockMenu;
-import me.mrCookieSlime.Slimefun.api.item_transport.ItemTransportFlow;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author balugaq
@@ -128,13 +124,13 @@ public interface Source {
 
     @SuppressWarnings("ConstantValue")
     default @Nullable List<@Nullable RecipeChoice> getRecipe(Player player, @Nullable SlimefunItem origin, ItemStack itemStack) {
-        SlimefunItem sf = origin == null ? QsItemUtils.getByItem(itemStack) : origin;
+        SlimefunItem sf = origin == null ? SlimefunItem.getByItem(itemStack) : origin;
         var r = getSpecialRecipe(player, itemStack, sf);
         if (r != null) return r;
         if (sf != null) {
             List<@Nullable RecipeChoice> raw = new ArrayList<>(
                     Arrays.stream(sf.getRecipe())
-                            .map(item -> item == null ? null : new SimpleRecipeChoice(item))
+                            .map(item -> item == null ? null : new RecipeChoice.ExactChoice(item))
                             .toList()
             );
             for (int i = raw.size(); i < 9; i++) {
@@ -294,8 +290,8 @@ public interface Source {
                         ItemStack itemStack1 = menu.getItemInSlot(slot);
 
                         if (itemStack1 != null
-                                && itemStack1.getType() != Material.AIR
-                                && StackUtils.itemsMatch(itemStack1, itemStack)) {
+                            && itemStack1.getType() != Material.AIR
+                            && StackUtils.itemsMatch(itemStack1, itemStack)) {
 
                             int existing = itemStack1.getAmount();
 
@@ -399,28 +395,6 @@ public interface Source {
                     List<ItemStack> itemStacks =
                             materialChoice.getChoices().stream().map(ItemStack::new).toList();
                     for (ItemStack itemStack : itemStacks) {
-                        // Issue #64
-                        if (!itemFitter.fits(itemStack, i)) {
-                            continue;
-                        }
-                        ItemStack received = RecipeCompleteProvider.getItemStack(session, itemStack);
-                        if (received != null && received.getType() != Material.AIR) {
-                            session.setPushed(session.getPushed() + received.getAmount());
-                            itemPusher.push(received, i);
-                        } else {
-                            if (!session.isExpired()) {
-                                session.setRecipeDepth(recipeDepth + 1);
-                                completeRecipeWithGuide(
-                                        session,
-                                        itemGetter, itemFitter, itemPusher
-                                );
-                            } else {
-                                sendMissingMaterial(player, itemStack);
-                            }
-                        }
-                    }
-                } else if (choice instanceof SimpleRecipeChoice exactChoice) {
-                    for (ItemStack itemStack : exactChoice.getChoices()) {
                         // Issue #64
                         if (!itemFitter.fits(itemStack, i)) {
                             continue;
