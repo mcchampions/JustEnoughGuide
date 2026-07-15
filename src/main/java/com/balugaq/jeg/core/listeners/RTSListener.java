@@ -89,6 +89,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The RTSListener class is responsible for handling events related to the Real-Time Search (RTS) mode in
@@ -104,8 +105,7 @@ public class RTSListener implements Listener {
     public static final NamespacedKey FAKE_ITEM_KEY = new NamespacedKey(JustEnoughGuide.getInstance(), "fake_item");
     public static final NamespacedKey CHEAT_AMOUNT_KEY =
             new NamespacedKey(JustEnoughGuide.getInstance(), "cheat_amount");
-    // Use openingPlayers must be by keyword "synchronized"
-    public static final Map<Player, SlimefunGuideMode> openingPlayers = new HashMap<>();
+    public static final Map<Player, SlimefunGuideMode> openingPlayers = new ConcurrentHashMap<>();
     public static final Map<Player, List<ItemStack>> cheatItems = new HashMap<>();
     public static final Integer[] FILL_ORDER = {
             9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
@@ -121,15 +121,9 @@ public class RTSListener implements Listener {
     public void onOpenRTS(RTSEvents.OpenRTSEvent event) {
         Player player = event.getPlayer();
         Debug.debug("[RTS] Opening for " + player.getName());
-        synchronized (openingPlayers) {
-            openingPlayers.put(player, event.getGuideMode());
-        }
-        synchronized (RTSSearchGroup.RTS_PLAYERS) {
-            RTSSearchGroup.RTS_PLAYERS.put(player, event.getOpeningInventory());
-        }
-        synchronized (RTSSearchGroup.RTS_PAGES) {
-            RTSSearchGroup.RTS_PAGES.put(player, 1);
-        }
+        openingPlayers.put(player, event.getGuideMode());
+        RTSSearchGroup.RTS_PLAYERS.put(player, event.getOpeningInventory());
+        RTSSearchGroup.RTS_PAGES.put(player, 1);
         JustEnoughGuide.getInstance().getRtsBackpackManager().saveInventoryBackupFor(player);
         JustEnoughGuide.getInstance().getRtsBackpackManager().clearInventoryFor(player);
         ItemStack[] itemStacks = new ItemStack[36];
@@ -140,9 +134,7 @@ public class RTSListener implements Listener {
 
         String presetSearchTerm = event.getPresetSearchTerm();
         if (presetSearchTerm != null) {
-            synchronized (RTSSearchGroup.RTS_SEARCH_TERMS) {
-                RTSSearchGroup.RTS_SEARCH_TERMS.put(player, presetSearchTerm);
-            }
+            RTSSearchGroup.RTS_SEARCH_TERMS.put(player, presetSearchTerm);
             RTSEvents.SearchTermChangeEvent e = new RTSEvents.SearchTermChangeEvent(
                     player,
                     player.getOpenInventory(),
@@ -175,13 +167,8 @@ public class RTSListener implements Listener {
         if (!isRTSPlayer(player)) {
             return;
         }
-        synchronized (RTSSearchGroup.RTS_SEARCH_GROUPS) {
-            RTSSearchGroup.RTS_SEARCH_GROUPS.put(player, searchGroup);
-        }
-
-        synchronized (RTSSearchGroup.RTS_PAGES) {
-            RTSSearchGroup.RTS_PAGES.put(player, 1);
-        }
+        RTSSearchGroup.RTS_SEARCH_GROUPS.put(player, searchGroup);
+        RTSSearchGroup.RTS_PAGES.put(player, 1);
 
         int page = RTSSearchGroup.RTS_PAGES.get(player);
         for (int i = 0; i < FILL_ORDER.length; i++) {
@@ -374,21 +361,11 @@ public class RTSListener implements Listener {
             return;
         }
 
-        synchronized (openingPlayers) {
-            openingPlayers.remove(player);
-        }
-        synchronized (RTSSearchGroup.RTS_PLAYERS) {
-            RTSSearchGroup.RTS_PLAYERS.remove(player);
-        }
-        synchronized (RTSSearchGroup.RTS_SEARCH_TERMS) {
-            RTSSearchGroup.RTS_SEARCH_TERMS.remove(player);
-        }
-        synchronized (RTSSearchGroup.RTS_SEARCH_GROUPS) {
-            RTSSearchGroup.RTS_SEARCH_GROUPS.remove(player);
-        }
-        synchronized (RTSSearchGroup.RTS_PAGES) {
-            RTSSearchGroup.RTS_PAGES.remove(player);
-        }
+        openingPlayers.remove(player);
+        RTSSearchGroup.RTS_PLAYERS.remove(player);
+        RTSSearchGroup.RTS_SEARCH_TERMS.remove(player);
+        RTSSearchGroup.RTS_SEARCH_GROUPS.remove(player);
+        RTSSearchGroup.RTS_PAGES.remove(player);
         JustEnoughGuide.getInstance().getRtsBackpackManager().restoreInventoryFor(player);
         player.getInventory().setContents(trimItems(player.getInventory().getContents()));
         player.updateInventory();

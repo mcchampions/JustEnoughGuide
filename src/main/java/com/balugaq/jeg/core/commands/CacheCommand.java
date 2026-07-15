@@ -37,10 +37,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.jspecify.annotations.NullMarked;
 
-import java.lang.ref.Reference;
+import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -124,7 +124,7 @@ public class CacheCommand implements JEGCommand {
             return;
         }
         String section = args[1];
-        Map<Character, Reference<Set<SlimefunItem>>> cache;
+        Char2ObjectOpenHashMap<Set<SlimefunItem>> cache;
         String command = args[2];
         switch (section) {
             case "1" -> cache = SearchGroup.CACHE;
@@ -145,24 +145,18 @@ public class CacheCommand implements JEGCommand {
             Character key = command.charAt(0);
             sender.sendMessage(ChatColor.GREEN + "Checking cache " + section + " for " + key + "...");
             if (cache.containsKey(key)) {
-                Integer size = null;
-                Reference<Set<SlimefunItem>> ref = cache.get(key);
-                if (ref != null) {
-                    Set<SlimefunItem> set = ref.get();
-                    if (set != null) {
-                        size = set.size();
-                        sender.sendMessage(ChatColor.GREEN + "Items: ");
-                        for (SlimefunItem item : set) {
-                            sender.sendMessage(ChatColor.GREEN + " - " + item.getItemName());
-                        }
+                Set<SlimefunItem> set = cache.get(key);
+                int size = set != null ? set.size() : 0;
+                if (set != null) {
+                    sender.sendMessage(ChatColor.GREEN + "Items: ");
+                    for (SlimefunItem item : set) {
+                        sender.sendMessage(ChatColor.GREEN + " - " + item.getItemName());
                     }
                 }
 
                 sender.sendMessage(ChatColor.GREEN + "Cache for " + key + " is valid.");
                 sender.sendMessage(ChatColor.GREEN + "Cache size: " + cache.size());
-                if (size != null) {
-                    sender.sendMessage(ChatColor.GREEN + "Character set size: " + size);
-                }
+                sender.sendMessage(ChatColor.GREEN + "Character set size: " + size);
             } else {
                 sender.sendMessage(ChatColor.RED + "Cache for " + key + " is invalid.");
             }

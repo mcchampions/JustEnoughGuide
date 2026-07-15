@@ -38,7 +38,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Final_ROOT
@@ -49,6 +51,8 @@ import java.util.Objects;
 @UtilityClass
 @NullMarked
 public class ReflectionUtil {
+
+    private static final Map<Class<?>, Map<String, Field>> FIELD_CACHE = new ConcurrentHashMap<>();
 
     @SuppressWarnings("UnusedReturnValue")
     public static boolean setValue(Object object, String field, @Nullable Object value) {
@@ -67,13 +71,20 @@ public class ReflectionUtil {
     }
 
     public static @Nullable Field getField(Class<?> clazz, String fieldName) {
-        while (clazz != Object.class) {
-            for (Field field : clazz.getDeclaredFields()) {
-                if (field.getName().equals(fieldName)) {
-                    return field;
+        Class<?> current = clazz;
+        while (current != Object.class) {
+            Map<String, Field> classFields = FIELD_CACHE.computeIfAbsent(current, c -> {
+                Map<String, Field> map = new ConcurrentHashMap<>();
+                for (Field field : c.getDeclaredFields()) {
+                    map.put(field.getName(), field);
                 }
+                return map;
+            });
+            Field field = classFields.get(fieldName);
+            if (field != null) {
+                return field;
             }
-            clazz = clazz.getSuperclass();
+            current = current.getSuperclass();
         }
         return null;
     }

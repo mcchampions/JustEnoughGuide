@@ -82,7 +82,6 @@ public class RTSSearchGroup extends FlexItemGroup {
             meta -> meta.getPersistentDataContainer()
                     .set(RTSListener.FAKE_ITEM_KEY, PersistentDataType.STRING, "____JEG_FAKE_ITEM____")
     );
-    // Use RTS_SEARCH_GROUPS, RTS_PAGES, RTS_PLAYERS or RTS_SEARCH_TERMS must be by keyword "synchronized"
     public static final Map<Player, SearchGroup> RTS_SEARCH_GROUPS = new ConcurrentHashMap<>();
     public static final Map<Player, Integer> RTS_PAGES = new ConcurrentHashMap<>();
     public static final Map<Player, AnvilInventory> RTS_PLAYERS = new ConcurrentHashMap<>();
@@ -108,15 +107,12 @@ public class RTSSearchGroup extends FlexItemGroup {
     // @formatter:off
     static {
         JustEnoughGuide.runTimer(() -> {
-            Map<Player, AnvilInventory> copy;
-            synchronized (RTS_PLAYERS) {
-                copy = new HashMap<>(RTS_PLAYERS);
+            if (RTS_PLAYERS.isEmpty()) {
+                return;
             }
 
-            Map<Player, String> searchTermCopy;
-            synchronized (RTS_SEARCH_TERMS) {
-                searchTermCopy = new HashMap<>(RTS_SEARCH_TERMS);
-            }
+            Map<Player, AnvilInventory> copy = new HashMap<>(RTS_PLAYERS);
+            Map<Player, String> searchTermCopy = new HashMap<>(RTS_SEARCH_TERMS);
 
             Map<Player, @Nullable String> writes = new HashMap<>();
             copy.forEach((player, inventory) -> {
@@ -193,9 +189,7 @@ public class RTSSearchGroup extends FlexItemGroup {
 
             writes.forEach((player, searchTerm) -> {
                 if (player != null && searchTerm != null) {
-                    synchronized (RTS_SEARCH_TERMS) {
-                        RTS_SEARCH_TERMS.put(player, searchTerm);
-                    }
+                    RTS_SEARCH_TERMS.put(player, searchTerm);
                 }
             });
         },
@@ -329,9 +323,7 @@ public class RTSSearchGroup extends FlexItemGroup {
                                     player, RTS_PLAYERS.get(player), oldPage, newPage, slimefunGuideMode);
                             Bukkit.getPluginManager().callEvent(event);
                             if (!event.isCancelled()) {
-                                synchronized (RTS_PAGES) {
-                                    RTS_PAGES.put(player, newPage);
-                                }
+                                RTS_PAGES.put(player, newPage);
                             }
                         }
                     } else if (s == AnvilGUI.Slot.OUTPUT) {
@@ -345,9 +337,7 @@ public class RTSSearchGroup extends FlexItemGroup {
                                     player, RTS_PLAYERS.get(player), oldPage, newPage, slimefunGuideMode);
                             Bukkit.getPluginManager().callEvent(event);
                             if (!event.isCancelled()) {
-                                synchronized (RTS_PAGES) {
-                                    RTS_PAGES.put(player, newPage);
-                                }
+                                RTS_PAGES.put(player, newPage);
                             }
                         }
                     }
@@ -355,9 +345,7 @@ public class RTSSearchGroup extends FlexItemGroup {
                 new int[] {AnvilGUI.Slot.INPUT_LEFT, AnvilGUI.Slot.INPUT_RIGHT, AnvilGUI.Slot.OUTPUT},
                 presetSearchTerm
         );
-        synchronized (RTS_PAGES) {
-            RTS_PAGES.put(player, this.page);
-        }
+        RTS_PAGES.put(player, this.page);
         RTSEvents.PageChangeEvent event =
                 new RTSEvents.PageChangeEvent(player, RTS_PLAYERS.get(player), page, page, slimefunGuideMode);
         Bukkit.getPluginManager().callEvent(event);

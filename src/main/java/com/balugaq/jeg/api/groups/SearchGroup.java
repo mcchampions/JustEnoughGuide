@@ -105,9 +105,9 @@ import java.util.stream.Collectors;
 public class SearchGroup extends BaseGroup<SearchGroup> {
     public static final ConcurrentHashMap<UUID, String> searchTerms = new ConcurrentHashMap<>();
 
-    public static final Char2ObjectOpenHashMap<Reference<Set<SlimefunItem>>> CACHE =
+    public static final Char2ObjectOpenHashMap<Set<SlimefunItem>> CACHE =
             new Char2ObjectOpenHashMap<>(); // fast way for by item name
-    public static final Char2ObjectOpenHashMap<Reference<Set<SlimefunItem>>> CACHE2 =
+    public static final Char2ObjectOpenHashMap<Set<SlimefunItem>> CACHE2 =
             new Char2ObjectOpenHashMap<>(); // fast way for by display item name
     public static final Map<String, Reference<Set<String>>> SPECIAL_CACHE = new HashMap<>();
 
@@ -613,15 +613,9 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                     String name = ChatColor.stripColor(slimefunItem.getItemName());
                     for (char c : name.toCharArray()) {
                         char d = Character.toLowerCase(c);
-                        CACHE.putIfAbsent(d, new SoftReference<>(new HashSet<>()));
-                        Reference<Set<SlimefunItem>> ref = CACHE.get(d);
-                        if (ref != null) {
-                            Set<SlimefunItem> set = ref.get();
-                            if (set != null) {
-                                if (!inBanlist(slimefunItem)) {
-                                    set.add(slimefunItem);
-                                }
-                            }
+                        Set<SlimefunItem> set = CACHE.computeIfAbsent(d, k -> new HashSet<>());
+                        if (!inBanlist(slimefunItem)) {
+                            set.add(slimefunItem);
                         }
                     }
 
@@ -655,18 +649,10 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                                     // Also populate the character-index CACHE2 as before.
                                     for (char c : name2.toCharArray()) {
                                         char d = Character.toLowerCase(c);
-                                        CACHE2.putIfAbsent(d, new SoftReference<>(new HashSet<>()));
-                                        Reference<Set<SlimefunItem>> ref = CACHE2.get(d);
-                                        if (ref != null) {
-                                            Set<SlimefunItem> set = ref.get();
-                                            if (set == null) {
-                                                set = new HashSet<>();
-                                                CACHE2.put(d, new SoftReference<>(set));
-                                            }
-                                            if (!inBanlist(slimefunItem)
-                                                    && !inBlacklist(slimefunItem)) {
-                                                set.add(slimefunItem);
-                                            }
+                                        Set<SlimefunItem> set = CACHE2.computeIfAbsent(d, k -> new HashSet<>());
+                                        if (!inBanlist(slimefunItem)
+                                                && !inBlacklist(slimefunItem)) {
+                                            set.add(slimefunItem);
                                         }
                                     }
                                 }
@@ -686,16 +672,10 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                                 for (String s : cache2) {
                                     for (char c : s.toCharArray()) {
                                         char d = Character.toLowerCase(c);
-                                        CACHE2.putIfAbsent(d, new SoftReference<>(new HashSet<>()));
-                                        Reference<Set<SlimefunItem>> ref = CACHE2.get(d);
-                                        if (ref != null) {
-                                            Set<SlimefunItem> set = ref.get();
-                                            if (set != null) {
-                                                if (!inBanlist(slimefunItem)
-                                                        && !inBlacklist(slimefunItem)) {
-                                                    set.add(slimefunItem);
-                                                }
-                                            }
+                                        Set<SlimefunItem> set = CACHE2.computeIfAbsent(d, k -> new HashSet<>());
+                                        if (!inBanlist(slimefunItem)
+                                                && !inBlacklist(slimefunItem)) {
+                                            set.add(slimefunItem);
                                         }
                                     }
                                 }
@@ -757,48 +737,32 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                     JustEnoughGuide.getConfigManager().getSharedChars()) {
                 Set<SlimefunItem> sharedItems = new HashSet<>();
                 for (char c : s.toCharArray()) {
-                    Reference<Set<SlimefunItem>> ref = CACHE.get(c);
-                    if (ref == null) {
-                        continue;
+                    Set<SlimefunItem> set = CACHE.get(c);
+                    if (set != null) {
+                        sharedItems.addAll(set);
                     }
-                    Set<SlimefunItem> set = ref.get();
-                    if (set == null) {
-                        continue;
-                    }
-                    sharedItems.addAll(set);
                 }
                 if (!sharedItems.isEmpty()) {
                     for (char c : s.toCharArray()) {
-                        Reference<Set<SlimefunItem>> ref = CACHE.get(c);
-                        if (ref != null) {
-                            Set<SlimefunItem> set = ref.get();
-                            if (set != null) {
-                                set.addAll(sharedItems);
-                            }
+                        Set<SlimefunItem> set = CACHE.get(c);
+                        if (set != null) {
+                            set.addAll(sharedItems);
                         }
                     }
                 }
 
                 Set<SlimefunItem> sharedItems2 = new HashSet<>();
                 for (char c : s.toCharArray()) {
-                    Reference<Set<SlimefunItem>> ref = CACHE2.get(c);
-                    if (ref == null) {
-                        continue;
+                    Set<SlimefunItem> set = CACHE2.get(c);
+                    if (set != null) {
+                        sharedItems2.addAll(set);
                     }
-                    Set<SlimefunItem> set = ref.get();
-                    if (set == null) {
-                        continue;
-                    }
-                    sharedItems2.addAll(set);
                 }
                 if (!sharedItems2.isEmpty()) {
                     for (char c : s.toCharArray()) {
-                        Reference<Set<SlimefunItem>> ref = CACHE2.get(c);
-                        if (ref != null) {
-                            Set<SlimefunItem> set = ref.get();
-                            if (set != null) {
-                                set.addAll(sharedItems2);
-                            }
+                        Set<SlimefunItem> set = CACHE2.get(c);
+                        if (set != null) {
+                            set.addAll(sharedItems2);
                         }
                     }
                 }
@@ -1125,20 +1089,15 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
             Set<SlimefunItem> nameMatched = new HashSet<>();
             Set<SlimefunItem> allMatched = null;
             for (char c : actualSearchTerm.toCharArray()) {
-                Set<SlimefunItem> cache;
-                Reference<Set<SlimefunItem>> ref = CACHE.get(c);
-                if (ref == null) {
-                    cache = new HashSet<>();
-                } else {
-                    cache = ref.get();
-                }
-                if (cache == null) {
-                    cache = new HashSet<>();
+                Set<SlimefunItem> cache = CACHE.get(c);
+                if (cache == null || cache.isEmpty()) {
+                    allMatched = null;
+                    break;
                 }
                 if (allMatched == null) {
                     allMatched = new HashSet<>(cache);
                 } else {
-                    allMatched.retainAll(new HashSet<>(cache));
+                    allMatched.removeIf(item -> !cache.contains(item));
                 }
             }
             if (allMatched != null) {
@@ -1147,20 +1106,15 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
             Set<SlimefunItem> machineMatched = new HashSet<>();
             Set<SlimefunItem> allMatched2 = null;
             for (char c : actualSearchTerm.toCharArray()) {
-                Set<SlimefunItem> cache;
-                Reference<Set<SlimefunItem>> ref = CACHE2.get(c);
-                if (ref == null) {
-                    cache = new HashSet<>();
-                } else {
-                    cache = ref.get();
-                }
-                if (cache == null) {
-                    cache = new HashSet<>();
+                Set<SlimefunItem> cache = CACHE2.get(c);
+                if (cache == null || cache.isEmpty()) {
+                    allMatched2 = null;
+                    break;
                 }
                 if (allMatched2 == null) {
                     allMatched2 = new HashSet<>(cache);
                 } else {
-                    allMatched2.retainAll(new HashSet<>(cache));
+                    allMatched2.removeIf(item -> !cache.contains(item));
                 }
             }
             if (allMatched2 != null) {
