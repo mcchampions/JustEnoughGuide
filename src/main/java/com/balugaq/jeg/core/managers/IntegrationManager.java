@@ -29,6 +29,7 @@ package com.balugaq.jeg.core.managers;
 
 import com.balugaq.jeg.api.managers.AbstractManager;
 import com.balugaq.jeg.core.integrations.Integration;
+import com.balugaq.jeg.core.integrations.ItemsAdderIntegration;
 import com.balugaq.jeg.core.integrations.alchimiavitae.AlchimiaVitaeIntegrationMain;
 import com.balugaq.jeg.core.integrations.bedrocktechnology.BedrockTechnologyIntegrationMain;
 import com.balugaq.jeg.core.integrations.claytech.ClayTechIntegrationMain;
@@ -228,9 +229,11 @@ public class IntegrationManager extends AbstractManager {
             addIntegration(enabledSlimeTinker, SlimeTinkerIntegrationMain::new);
             addIntegration(enabledTsingshanTechnology, TsingshanTechnologyIntegrationMain::new);
             addIntegration(enabledWilderNether, WilderNetherIntegrationMain::new);
+
+
             addIntegration(true, SlimefunIntegrationMain::new);
             addIntegration(true, JustEnoughGuideIntegrationMain::new);
-
+            addIntegration(true, ItemsAdderIntegration::new);
             startupIntegrations();
         }, 1L);
     }

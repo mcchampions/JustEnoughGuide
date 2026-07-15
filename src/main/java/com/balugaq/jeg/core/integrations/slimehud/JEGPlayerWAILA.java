@@ -58,6 +58,7 @@ import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.UnknownNullability;
 import org.jspecify.annotations.NullMarked;
 
+import com.balugaq.jeg.core.integrations.ItemsAdderIntegration;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
@@ -78,6 +79,7 @@ public class JEGPlayerWAILA extends PlayerWAILA {
     public boolean visible;
     public @Nullable BossBar kyoriBossBar = null;
 
+    public static boolean enableItemsAdder = false;
     @SuppressWarnings("DataFlowIssue")
     public JEGPlayerWAILA(Player player, @Nullable PlayerWAILA waila) {
         super(player);
@@ -258,6 +260,19 @@ public class JEGPlayerWAILA extends PlayerWAILA {
         SlimefunItem item = StorageCacheUtils.getSfItem(targetBlock.getLocation());
         if (item == null) {
             if (VanillaBlockHUDDisplayGuideOption.isEnabled(getPlayer())) {
+                if (enableItemsAdder) {
+                    if (ItemsAdderIntegration.isItemsAdder(targetBlock)) {
+                        ReflectionUtil.setValue(this, "facingBlock", ItemsAdderIntegration.getDisplayName(targetBlock));
+                        ReflectionUtil.setValue(this, "facingBlockInfo", "");
+                        ReflectionUtil.setValue(
+                                this, "facing", ChatColor.translateAlternateColorCodes(
+                                        '&',
+                                        getFacingBlock() + (getFacingBlockInfo().isEmpty() ? "" : " &7| " + getFacingBlockInfo())
+                                )
+                        );
+                        return;
+                    }
+                }
                 ReflectionUtil.setValue(this, "facingBlock", SlimeHUDIntegrationMain.getVanillaBlockName(getPlayer(), targetBlock));
                 ReflectionUtil.setValue(this, "facingBlockInfo", "");
                 ReflectionUtil.setValue(

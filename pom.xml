@@ -174,7 +174,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
             <!-- Source plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -257,9 +257,20 @@
             <id>AlessioDP</id>
             <url>https://repo.alessiodp.com/releases/</url>
         </repository>
+        <repository>
+            <id>matteodev</id>
+            <url>https://maven.devs.beer/</url>
+        </repository>
     </repositories>
 
     <dependencies>
+        <!-- ItemsAdder -->
+        <dependency>
+            <groupId>dev.lone</groupId>
+            <artifactId>api-itemsadder</artifactId>
+            <version>4.0.10</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
