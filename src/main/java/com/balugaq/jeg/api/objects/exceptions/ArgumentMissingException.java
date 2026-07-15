@@ -37,7 +37,6 @@ import org.jspecify.annotations.NullMarked;
 @NullMarked
 public class ArgumentMissingException extends RuntimeException {
     public ArgumentMissingException() {
-        super();
     }
 
     public ArgumentMissingException(String message) {

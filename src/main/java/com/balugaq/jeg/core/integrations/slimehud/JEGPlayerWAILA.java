@@ -167,7 +167,7 @@ public class JEGPlayerWAILA extends PlayerWAILA {
     }
 
     public static JEGPlayerWAILA wrap(Player player, @Nullable PlayerWAILA waila) {
-        boolean f = waila != null && !waila.getClass().getSimpleName().equals("JEGPlayerWAILA");
+        boolean f = waila != null && !"JEGPlayerWAILA".equals(waila.getClass().getSimpleName());
 
         if (waila instanceof JEGPlayerWAILA jpw) {
             return jpw;
@@ -199,7 +199,7 @@ public class JEGPlayerWAILA extends PlayerWAILA {
             return null;
         }
 
-        if (waila.getClass().getSimpleName().equals("JEGPlayerWAILA")) {
+        if ("JEGPlayerWAILA".equals(waila.getClass().getSimpleName())) {
             Supplier<BossBar> kyoriBossBarSupplier = ReflectionUtil.getValue(
                     waila, "kyoriBossBarSupplier",
                     Supplier.class

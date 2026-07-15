@@ -242,7 +242,7 @@ public class CERCalculator {
             List<RSCMachineTemplate> templates = rctmd.getTemplates();
             for (var template /* record MachineTemplate */: templates) {
                 ItemStack t = template.template();
-                int mavg = t.getMaxStackSize() * 2;
+                int mavg = t.getMaxStackSize() << 1;
                 List<RSCCustomMachineRecipe> recipes = template.recipes();
                 for (var recipe : recipes) {
                     if (recipe.isForDisplay()) continue;

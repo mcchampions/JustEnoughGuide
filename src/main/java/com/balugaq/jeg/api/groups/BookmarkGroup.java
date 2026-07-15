@@ -76,7 +76,6 @@ public class BookmarkGroup extends BaseGroup<BookmarkGroup> {
     public BookmarkGroup(
             final SlimefunGuideImplementation implementation,
             final List<Bookmark> bookmarks) {
-        super();
         this.page = 1;
         this.implementation = implementation;
         this.bookmarks = bookmarks;

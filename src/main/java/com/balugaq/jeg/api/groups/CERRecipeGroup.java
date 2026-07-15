@@ -88,7 +88,6 @@ public class CERRecipeGroup extends BaseGroup<CERRecipeGroup> {
             final Player player,
             final SlimefunItem machine,
             final List<RecipeWrapper> recipes) {
-        super();
         this.page = 1;
         this.implementation = implementation;
         this.pageMap.put(1, this);

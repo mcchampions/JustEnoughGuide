@@ -61,7 +61,6 @@ public class ActionSelectGroup extends BaseGroup<ActionSelectGroup> {
     private final List<? extends BaseAction> actions;
 
     public ActionSelectGroup(Player player, OnClick keybind, BaseAction from) {
-        super();
         this.page = 1;
         this.keybind = from;
         List<BaseAction> filtered = new ArrayList<>();

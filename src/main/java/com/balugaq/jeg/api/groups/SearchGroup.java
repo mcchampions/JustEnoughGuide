@@ -154,7 +154,6 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
             final Player player,
             final String searchTerm,
             boolean re_search_when_cache_failed) {
-        super();
         if (!LOADED) {
             init();
         }
@@ -1079,7 +1078,7 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                 actualSearchTerm = actualSearchTerm.replaceAll(Pattern.quote(symbol), Matcher.quoteReplacement(symbol));
             }
         }
-        Set<SlimefunItem> merge = new HashSet<>(36 * 4);
+        Set<SlimefunItem> merge = new HashSet<>(36 << 2);
         // The unfiltered items
         Set<SlimefunItem> items = new HashSet<>(AVAILABLE_ITEMS.stream()
                                                         .filter(item -> item.getItemGroup().isAccessible(player))

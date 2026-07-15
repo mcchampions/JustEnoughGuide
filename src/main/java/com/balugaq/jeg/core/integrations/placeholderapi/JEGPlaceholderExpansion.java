@@ -30,7 +30,6 @@ package com.balugaq.jeg.core.integrations.placeholderapi;
 import com.balugaq.jeg.api.patches.JEGGuideSettings;
 import com.balugaq.jeg.implementation.JustEnoughGuide;
 import com.balugaq.jeg.utils.GuideUtil;
-import io.github.thebusybiscuit.slimefun4.core.guide.options.SlimefunGuideOption;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

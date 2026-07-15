@@ -55,7 +55,6 @@ public class KeybindsItemsGroup extends BaseGroup<KeybindsItemsGroup> {
     private final ObjectImmutableList<? extends OnClick> keybindsSet = OnClick.keybindSets();
 
     public KeybindsItemsGroup() {
-        super();
         this.page = 1;
         this.pageMap.put(1, this);
     }

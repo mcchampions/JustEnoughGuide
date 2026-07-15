@@ -78,7 +78,6 @@ public class ItemMarkGroup extends BaseGroup<ItemMarkGroup> {
     }
 
     public ItemMarkGroup(JEGSlimefunGuideImplementation implementation, ItemGroup itemGroup, Player player, int page) {
-        super();
         this.page = page;
         this.player = player;
         this.itemGroup = itemGroup;

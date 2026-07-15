@@ -464,7 +464,7 @@ public final class GuideUtil {
                 || clazz == LockedItemGroup.class
                 || clazz == SeasonalItemGroup.class
                 || itemGroup instanceof BookmarkRelocation
-                || clazz.getName().equalsIgnoreCase("me.voper.slimeframe.implementation.groups.ChildGroup")
+                || "me.voper.slimeframe.implementation.groups.ChildGroup".equalsIgnoreCase(clazz.getName())
                 || clazz.getName().endsWith("DummyItemGroup")
                 || clazz.getName().endsWith("SubGroup"));
     }
@@ -612,14 +612,14 @@ public final class GuideUtil {
                         if ("AdvancementsItemGroup".equals(sm)) {
                             continue;
                         }
-                        if (!(group instanceof SubItemGroup) && !sm.equals("DummyItemGroup")) {
+                        if (!(group instanceof SubItemGroup) && !"DummyItemGroup".equals(sm)) {
                             String key = group.getKey().getKey();
-                            if (sm.equals("SubGroup")) {
-                                if (!key.equals("infinity_cheat") && !key.equals("omc_forge_cheat")) {
+                            if ("SubGroup".equals(sm)) {
+                                if (!"infinity_cheat".equals(key) && !"omc_forge_cheat".equals(key)) {
                                     continue;
                                 }
                             }
-                            if (key.equals("momotech_final_")) {
+                            if ("momotech_final_".equals(key)) {
                                 continue;
                             }
                             specialGroups.add(group);

@@ -34,7 +34,6 @@ import com.balugaq.jeg.api.objects.annotations.CallTimeSensitive;
 import com.balugaq.jeg.api.objects.enums.PatchScope;
 import com.balugaq.jeg.api.objects.events.GuideEvents;
 import com.balugaq.jeg.api.patches.JEGGuideSettings;
-import com.balugaq.jeg.core.integrations.slimefunrecipe.SlimeFunRecipeIntegrationMain;
 import com.balugaq.jeg.core.listeners.GuideListener;
 import com.balugaq.jeg.implementation.JustEnoughGuide;
 import com.balugaq.jeg.utils.Debug;
@@ -92,7 +91,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.logging.Level;
 
 /**
  * This is JEG's implementation of the Survival Guide. It extends {@link SurvivalSlimefunGuide} to compatibly with the

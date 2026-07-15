@@ -123,7 +123,7 @@ public class ReplacementCardAdapter {
                 if (item != null
                         && item.getType() != Material.AIR
                         && item.getMaxStackSize() == 1
-                        && !sf.getRecipeType().getKey().getNamespace().equals("logitech")
+                        && !"logitech".equals(sf.getRecipeType().getKey().getNamespace())
                         && getReplacementCards(item) != null) {
                     adaptItem(sf);
                     break;
@@ -179,7 +179,7 @@ public class ReplacementCardAdapter {
             try {
                 newSf.load();
             } catch (IllegalStateException ex) {
-                if (ex.getMessage().equals("Asynchronous Recipe Add!")) {
+                if ("Asynchronous Recipe Add!".equals(ex.getMessage())) {
                     JustEnoughGuide.runNextTick(newSf::load);
                 }
             } catch (Exception ignored) {

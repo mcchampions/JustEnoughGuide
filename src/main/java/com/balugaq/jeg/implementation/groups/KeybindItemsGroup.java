@@ -61,7 +61,6 @@ public class KeybindItemsGroup extends BaseGroup<KeybindItemsGroup> {
     private final List<? extends BaseAction> actions;
 
     public KeybindItemsGroup(Player player, OnClick keybind) {
-        super();
         this.page = 1;
         this.keybind = keybind;
         List<BaseAction> filtered = new ArrayList<>();

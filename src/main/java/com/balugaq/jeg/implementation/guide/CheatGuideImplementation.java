@@ -95,7 +95,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.logging.Level;
 
 /**
  * This is JEG's implementation of the Cheat Guide. It extends {@link CheatSheetSlimefunGuide} to compatibly with the

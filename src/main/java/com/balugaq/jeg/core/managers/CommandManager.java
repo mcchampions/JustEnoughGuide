@@ -29,10 +29,8 @@ package com.balugaq.jeg.core.managers;
 
 import com.balugaq.jeg.api.managers.AbstractManager;
 import com.balugaq.jeg.core.commands.*;
-import com.balugaq.jeg.implementation.JustEnoughGuide;
 import lombok.Getter;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jspecify.annotations.NullMarked;
 
