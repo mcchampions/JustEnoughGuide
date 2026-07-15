@@ -93,23 +93,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
         }
 
         final AtomicInteger index = new AtomicInteger(0);
-        doIf(
-                JustEnoughGuide.getConfigManager().isPinyinSearch(),
-                () -> addGuide(
-                        GUIDE_SLOTS[index.getAndIncrement()],
-                        Converter.getItem(Material.CLOCK, "&b功能: 拼音搜索", "&b介绍: 你可以通过拼音搜索指南来快速找到你想要的物品。", "&b点击尝试功能。"),
-                        (p, s, i, a) -> {
-                            try {
-                                p.performCommand("sf search ding");
-                            } catch (Exception e) {
-                                p.sendMessage("§c无法执行操作，请检查 Slimefun 是否正确安装。");
-                                Debug.trace(e);
-                            }
-                            return false;
-                        }
-                )
-        );
-
         addGuide(
                 GUIDE_SLOTS[index.getAndIncrement()],
                 Converter.getItem(Material.NAME_TAG, "&b功能: 搜索翻页", "&b介绍: 你可以在搜索中翻页来浏览更多搜索结果。", "&b点击尝试功能。"),
@@ -373,7 +356,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
                         Material.COMPARATOR,
                         "&b功能: 智能搜索",
                         "&b介绍: 当你使用搜索时，会自动搜索相关的机器，并添加到显示列表中",
-                        "&c     不支持拼音搜索。",
                         "&b点击尝试功能。"
                 ),
                 (p, s, i, a) -> {
@@ -395,7 +377,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
                         "&b功能: 搜索拓展",
                         "&b介绍: 你可以通过在开头或末尾添加 " + flag_recipe_item_name + "<recipe_item_name> 来指定搜索范围",
                         "&b      例如: " + flag_recipe_item_name + "电池 附加搜索 配方使用的物品的名字包含\"电池\" 的物品",
-                        "&c      不支持拼音搜索。",
                         "&c      附加搜索会组合生效",
                         "&b点击尝试功能。"
                 ),
@@ -418,7 +399,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
                         "&b功能: 搜索拓展",
                         "&b介绍: 你可以在开头或末尾添加 " + flag_recipe_type_name + "<recipe_type_name> 来指定搜索范围",
                         "&b      例如: " + flag_recipe_type_name + "工作台 附加搜索 配方类型名称包含\"工作台\" 的物品",
-                        "&c      不支持拼音搜索。",
                         "&c      附加搜索会组合生效",
                         "&b点击尝试功能。"
                 ),
@@ -441,7 +421,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
                         "&b功能: 搜索拓展",
                         "&b介绍: 你可以在开头或末尾添加 " + flag_display_item_name + "<display_item_name> 来指定搜索范围",
                         "&b      例如: " + flag_display_item_name + "铜粉 附加搜索 配方展示涉及的物品的名字包含\"铜粉\" 的物品",
-                        "&c      不支持拼音搜索。",
                         "&c      附加搜索会组合生效",
                         "&b点击尝试功能。"
                 ),
@@ -464,7 +443,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
                         "&b功能: 搜索拓展",
                         "&b介绍: 你可以在开头或末尾添加 " + flag_addon_name + "<addon_name> 来指定搜索范围",
                         "&b      例如: " + flag_addon_name + "粘液科技 附加搜索 附属名称包含\"粘液科技\" 的物品",
-                        "&c      不支持拼音搜索。",
                         "&c      附加搜索会组合生效",
                         "&b点击尝试功能。"
                 ),
@@ -487,7 +465,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
                         "&b功能: 搜索拓展",
                         "&b介绍: 你可以在开头或末尾添加 " + flag_item_name + "<item_name> 来指定搜索范围",
                         "&b      例如: " + flag_item_name + "电池 附加搜索 物品名称包含\"电池\" 的物品",
-                        "&b      支持拼音搜索。",
                         "&c      附加搜索会组合生效",
                         "&b点击尝试功能。"
                 ),
@@ -510,7 +487,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
                         "&b功能: 搜索拓展",
                         "&b介绍: 你可以在开头或末尾添加 " + flag_item_lore + "<item_lore> 来指定搜索范围",
                         "&b      例如: " + flag_item_lore + "胡萝卜 附加搜索 物品描述包含\"胡萝卜\" 的物品",
-                        "&b      支持拼音搜索。",
                         "&c      附加搜索会组合生效",
                         "&b点击尝试功能。"
                 ),
@@ -533,7 +509,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
                         "&b功能: 搜索拓展",
                         "&b介绍: 你可以在开头或末尾添加 " + flag_material_name + "<material_name> 来指定搜索范围",
                         "&b      例如: " + flag_material_name + "iron 附加搜索 物品材质名称包含\"iron\" 的物品",
-                        "&c      不支持拼音搜索。",
                         "&c      附加搜索会组合生效",
                         "&b点击尝试功能。"
                 ),
@@ -556,7 +531,6 @@ public class JEGGuideGroup extends ClassicGuideGroup {
                         "&b功能: 搜索拓展",
                         "&b介绍: 你可以在开头或末尾添加 " + flag_full_name + "<item_name> 来指定搜索范围",
                         "&b      例如: " + flag_full_name + "铝锭 附加搜索 名字完全为 铝锭 的物品",
-                        "&c      不支持拼音搜索。",
                         "&c      附加搜索会组合生效",
                         "&b点击尝试功能。"
                 ),

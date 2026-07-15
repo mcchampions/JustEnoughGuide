@@ -170,7 +170,6 @@ public class RTSListener implements Listener {
                 implementation,
                 player,
                 event.getNewSearchTerm(),
-                JustEnoughGuide.getConfigManager().isPinyinSearch(),
                 true
         );
         if (!isRTSPlayer(player)) {

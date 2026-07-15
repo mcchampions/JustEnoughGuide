@@ -12,7 +12,6 @@ JustEnoughGuide (JEG for short) is a Slimefun addon for Minecraft that significa
 - **Multi-page Support**: Support for more complex interface designs with more functional areas
 
 ### 2. Powerful Search Functionality
-- **Pinyin Search**: Search Chinese item names using pinyin
 - **Real-Time Search (RTS)**: Search items in real-time within an anvil interface without typing complete names
 - **Smart Filtering**: Support for blacklist and ban list to control which items can be searched
 - **Character Mapping**: Allow searching across similar characters (e.g. "粘黏" and "荧萤")
@@ -49,7 +48,6 @@ guide:
   cheat-guide-title: "..."        # Cheat mode guide title
 
 improvements:
-  pinyin-search: true             # Enable pinyin search
   bookmark: true                  # Enable bookmark functionality
   rts-search: true                # Enable real-time search
   beginner-option: true           # Enable beginner option
@@ -108,7 +106,6 @@ JustEnoughGuide（简称JEG）是一个针对Slimefun的插件附属，它显著
 - **多页面支持**：支持更复杂的界面设计，提供更多功能区域
 
 ### 2. 强大的搜索功能
-- **拼音搜索**：支持使用拼音搜索中文物品名称
 - **实时搜索（RTS）**：在铁砧界面中实时搜索物品，无需输入完整名称
 - **智能过滤**：支持黑名单和禁用列表，控制哪些物品可以被搜索到
 - **字符映射**：允许相似字符间互通搜索（如"粘黏"和"荧萤"）
@@ -145,7 +142,6 @@ guide:
   cheat-guide-title: "..."        # 作弊模式指南标题
 
 improvements:
-  pinyin-search: true             # 启用拼音搜索
   bookmark: true                  # 启用书签功能
   rts-search: true                # 启用实时搜索
   beginner-option: true           # 启用新手选项

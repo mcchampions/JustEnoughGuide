@@ -588,14 +588,6 @@ public class JustEnoughGuide extends JavaPlugin implements SlimefunAddon {
 //                .build();
 //        libraryManager.loadLibrary(anvilgui);
 
-        getLogger().info("正在加载 Pinyin");
-        Library pinyin = Library.builder()
-                .groupId("com{}github{}houbb")
-                .artifactId("pinyin")
-                .version("0.4.0")
-                .build();
-        libraryManager.loadLibrary(pinyin);
-
         getLogger().info("正在加载 opencc4j");
         Library opencc4j = Library.builder()
                 .groupId("com{}github{}houbb")

@@ -330,13 +330,6 @@
 
         <dependency>
             <groupId>com.github.houbb</groupId>
-            <artifactId>pinyin</artifactId>
-            <version>0.4.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.houbb</groupId>
             <artifactId>opencc4j</artifactId>
             <version>1.14.0</version>
             <scope>provided</scope>

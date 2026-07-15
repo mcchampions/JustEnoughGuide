@@ -46,8 +46,6 @@ import com.balugaq.jeg.utils.SpecialMenuProvider;
 import com.balugaq.jeg.utils.clickhandler.OnClick;
 import com.balugaq.jeg.utils.clickhandler.OnDisplay;
 import com.balugaq.jeg.utils.formatter.Formats;
-import com.github.houbb.pinyin.constant.enums.PinyinStyleEnum;
-import com.github.houbb.pinyin.util.PinyinHelper;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.player.PlayerProfile;
@@ -95,7 +93,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * This group is used to display the search results of the search feature. Supports Pinyin search and page turning.
+ * This group is used to display the search results of the search feature. Supports page turning.
  *
  * @author balugaq
  * @since 1.0
@@ -141,23 +139,20 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
     public final SlimefunGuideImplementation implementation;
     public final Player player;
     public final String searchTerm;
-    public final boolean pinyin;
     public final List<SlimefunItem> slimefunItemList;
     public final boolean re_search_when_cache_failed;
 
     public SearchGroup(
             SlimefunGuideImplementation implementation,
             final Player player,
-            final String searchTerm,
-            boolean pinyin) {
-        this(implementation, player, searchTerm, pinyin, true);
+            final String searchTerm) {
+        this(implementation, player, searchTerm, true);
     }
 
     public SearchGroup(
             SlimefunGuideImplementation implementation,
             final Player player,
             final String searchTerm,
-            boolean pinyin,
             boolean re_search_when_cache_failed) {
         super();
         if (!LOADED) {
@@ -165,15 +160,14 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
         }
         this.page = 1;
         this.searchTerm = searchTerm;
-        this.pinyin = pinyin;
         this.player = player;
         this.re_search_when_cache_failed = re_search_when_cache_failed;
         this.implementation = implementation;
-        this.slimefunItemList = filterItems(player, searchTerm, pinyin);
+        this.slimefunItemList = filterItems(player, searchTerm);
         this.pageMap.put(1, this);
     }
 
-    public static boolean isFullNameApplicable(Player player, SlimefunItem slimefunItem, String searchTerm, boolean pinyin) {
+    public static boolean isFullNameApplicable(Player player, SlimefunItem slimefunItem, String searchTerm) {
         if (slimefunItem == null) {
             return false;
         }
@@ -184,82 +178,51 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
             return false;
         }
 
-        // Quick escape for common cases
-        boolean result = itemName.equalsIgnoreCase(searchTerm.toLowerCase());
-        if (result) {
-            return true;
-        }
-
-        if (pinyin) {
-            final String pinyinFirstLetter = getPinyin(itemName);
-            return pinyinFirstLetter.equalsIgnoreCase(searchTerm.toLowerCase());
-        }
-
-        return false;
+        return itemName.equalsIgnoreCase(searchTerm.toLowerCase());
     }
 
-    public static String getPinyin(String string) {
-        return getPinyin(string, PinyinStyleEnum.FIRST_LETTER);
-    }
-
-    public static String getPinyin(String string, PinyinStyleEnum style) {
-        return PinyinHelper.toPinyin(string, style, "");
-    }
-
-    public static boolean isSearchFilterApplicable(Player player, SlimefunItem slimefunItem, String searchTerm, boolean pinyin) {
+    public static boolean isSearchFilterApplicable(Player player, SlimefunItem slimefunItem, String searchTerm) {
         if (slimefunItem == null) {
             return false;
         }
         String itemName = ChatColor.stripColor(SlimefunTranslationIntegrationMain.getTranslatedItemName(player, slimefunItem)).toLowerCase(Locale.ROOT);
-        return isSearchFilterApplicable(itemName, searchTerm.toLowerCase(), pinyin);
+        return isSearchFilterApplicable(itemName, searchTerm.toLowerCase());
     }
 
-    public static boolean isSearchFilterApplicable(String itemName, String searchTerm, boolean pinyin) {
+    public static boolean isSearchFilterApplicable(String itemName, String searchTerm) {
         if (itemName.isEmpty()) {
             return false;
         }
 
-        // Quick escape for common cases
-        boolean result = itemName.contains(searchTerm);
-        if (result) {
-            return true;
-        }
-
-        if (pinyin) {
-            final String pinyinFirstLetter = getPinyin(itemName);
-            return pinyinFirstLetter.contains(searchTerm);
-        }
-
-        return false;
+        return itemName.contains(searchTerm);
     }
 
     @Deprecated
-    public static boolean isSearchFilterApplicable(SlimefunItem slimefunItem, String searchTerm, boolean pinyin) {
+    public static boolean isSearchFilterApplicable(SlimefunItem slimefunItem, String searchTerm) {
         if (slimefunItem == null) {
             return false;
         }
         String itemName = ChatColor.stripColor(slimefunItem.getItemName()).toLowerCase(Locale.ROOT);
-        return isSearchFilterApplicable(itemName, searchTerm.toLowerCase(), pinyin);
+        return isSearchFilterApplicable(itemName, searchTerm.toLowerCase());
     }
 
-    public static boolean isSearchFilterApplicable(ItemStack itemStack, String searchTerm, boolean pinyin) {
+    public static boolean isSearchFilterApplicable(ItemStack itemStack, String searchTerm) {
         if (itemStack == null) {
             return false;
         }
         String itemName =
                 ChatColor.stripColor(ItemStackHelper.getDisplayName(itemStack)).toLowerCase(Locale.ROOT);
-        return isSearchFilterApplicable(itemName, searchTerm.toLowerCase(), pinyin);
+        return isSearchFilterApplicable(itemName, searchTerm.toLowerCase());
     }
 
     public static List<SlimefunItem> filterItems(
             Player player,
             FilterType filterType,
             String filterValue,
-            boolean pinyin,
             List<SlimefunItem> items) {
         String lowerFilterValue = filterValue.toLowerCase();
         return items.stream()
-                .filter(item -> filterType.getFilter().apply(player, item, lowerFilterValue, pinyin))
+                .filter(item -> filterType.getFilter().apply(player, item, lowerFilterValue))
                 .toList();
     }
 
@@ -267,11 +230,10 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
             Player player,
             FilterType filterType,
             String filterValue,
-            boolean pinyin,
             Set<SlimefunItem> items) {
         String lowerFilterValue = filterValue.toLowerCase();
         return items.stream()
-                .filter(item -> filterType.getFilter().apply(player, item, lowerFilterValue, pinyin))
+                .filter(item -> filterType.getFilter().apply(player, item, lowerFilterValue))
                 .collect(Collectors.toSet());
     }
 
@@ -663,26 +625,6 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                         }
                     }
 
-                    if (JustEnoughGuide.getConfigManager().isPinyinSearch()) {
-                        final String pinyinFirstLetter =
-                                PinyinHelper.toPinyin(name, PinyinStyleEnum.FIRST_LETTER, "");
-                        for (char c : pinyinFirstLetter.toCharArray()) {
-                            char d = Character.toLowerCase(c);
-                            CACHE.putIfAbsent(d, new SoftReference<>(new HashSet<>()));
-                            Reference<Set<SlimefunItem>> ref = CACHE.get(d);
-                            if (ref != null) {
-                                Set<SlimefunItem> set = ref.get();
-                                if (set == null) {
-                                    set = new HashSet<>();
-                                    CACHE.put(d, new SoftReference<>(set));
-                                }
-                                if (!inBanlist(slimefunItem)) {
-                                    set.add(slimefunItem);
-                                }
-                            }
-                        }
-                    }
-
                     List<ItemStack> displayRecipes = null;
                     if (slimefunItem instanceof AContainer ac) {
                         displayRecipes = ac.getDisplayRecipes();
@@ -907,15 +849,6 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
         return false;
     }
 
-    public static boolean onlyAscii(String str) {
-        for (char c : str.toCharArray()) {
-            if (c > 127) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public static int levenshteinDistance(String s1, String s2) {
         if (s1.length() < s2.length()) {
             return levenshteinDistance(s2, s1);
@@ -979,18 +912,6 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                 .sorted(Comparator.comparingInt(item ->
                                                         /* Intentionally negative */
                                                         -nameFit(ChatColor.stripColor(item.getItemName()), searchTerm)))
-                .toList();
-    }
-
-    public static List<SlimefunItem> sortByPinyinContinuity(
-            Set<SlimefunItem> origin, String searchTerm) {
-        return origin.stream()
-                .sorted(Comparator.comparingInt(item ->
-                                                        /* Intentionally negative */
-                                                        -nameFit(
-                                                                getPinyin(ChatColor.stripColor(item.getItemName())),
-                                                                searchTerm
-                                                        )))
                 .toList();
     }
 
@@ -1154,11 +1075,11 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
 
     @Deprecated
     public List<SlimefunItem> getAllMatchedItems(
-            Player p, String searchTerm, boolean pinyin) {
-        return filterItems(p, searchTerm, pinyin);
+            Player p, String searchTerm) {
+        return filterItems(p, searchTerm);
     }
 
-    public List<SlimefunItem> filterItems(Player player, String searchTerm, boolean pinyin) {
+    public List<SlimefunItem> filterItems(Player player, String searchTerm) {
         StringBuilder actualSearchTermBuilder = new StringBuilder();
         String[] split = searchTerm.split(" ");
         Map<FilterType, String> filters = new HashMap<>();
@@ -1253,14 +1174,14 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
                 if (nameMatched.isEmpty()) {
                     Debug.debug("Re-searching item name by filters (Normal search)");
                     Set<SlimefunItem> clone = new HashSet<>(items);
-                    Set<SlimefunItem> result = filterItems(FilterType.BY_ITEM_NAME, actualSearchTerm, pinyin, clone);
+                    Set<SlimefunItem> result = filterItems(FilterType.BY_ITEM_NAME, actualSearchTerm, clone);
                     merge.addAll(result);
                 }
                 if (machineMatched.isEmpty()) {
                     Debug.debug("Re-searching display item name by filters (Normal search)");
                     Set<SlimefunItem> clone = new HashSet<>(items);
                     Set<SlimefunItem> result =
-                            filterItems(FilterType.BY_DISPLAY_ITEM_NAME, actualSearchTerm, pinyin, clone);
+                            filterItems(FilterType.BY_DISPLAY_ITEM_NAME, actualSearchTerm, clone);
                     merge.addAll(result);
                 }
             }
@@ -1269,38 +1190,32 @@ public class SearchGroup extends BaseGroup<SearchGroup> {
         // Filter items
         if (!filters.isEmpty()) {
             for (Map.Entry<FilterType, String> entry : filters.entrySet()) {
-                items = filterItems(entry.getKey(), entry.getValue(), pinyin, items);
+                items = filterItems(entry.getKey(), entry.getValue(), items);
             }
 
             merge.addAll(items);
         }
 
-        if (pinyin && onlyAscii(searchTerm)) {
-            return sortByPinyinContinuity(merge, actualSearchTerm);
-        } else {
-            return sortByNameFit(merge, actualSearchTerm);
-        }
+        return sortByNameFit(merge, actualSearchTerm);
     }
 
     public List<SlimefunItem> filterItems(
             FilterType filterType,
             String filterValue,
-            boolean pinyin,
             List<SlimefunItem> items) {
         String lowerFilterValue = filterValue.toLowerCase();
         return items.stream()
-                .filter(item -> filterType.getFilter().apply(player, item, lowerFilterValue, pinyin))
+                .filter(item -> filterType.getFilter().apply(player, item, lowerFilterValue))
                 .toList();
     }
 
     public Set<SlimefunItem> filterItems(
             FilterType filterType,
             String filterValue,
-            boolean pinyin,
             Set<SlimefunItem> items) {
         String lowerFilterValue = filterValue.toLowerCase();
         return items.stream()
-                .filter(item -> filterType.getFilter().apply(player, item, lowerFilterValue, pinyin))
+                .filter(item -> filterType.getFilter().apply(player, item, lowerFilterValue))
                 .collect(Collectors.toSet());
     }
 }
